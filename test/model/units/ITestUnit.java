@@ -93,6 +93,36 @@ public interface ITestUnit {
    */
   Bow getBow();
 
+
+  @Test
+  void equipLuzBookTest();
+
+  /**
+   * @return the test luzBook
+   */
+  LuzBook getLuzBook();
+
+  @Test
+  void equipOscuridadBookTest();
+
+  /**
+   * @return the test luzBook
+   */
+  OscuridadBook getOscuridadBook();
+
+  @Test
+  void equipAnimaBookTest();
+
+  /**
+   * @return the test luzBook
+   */
+  AnimaBook getAnimaBook();
+
+
+
+
+
+
   /**
    * Checks if the unit moves correctly     //testea movimiento
    */

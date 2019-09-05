@@ -72,6 +72,10 @@ public abstract class AbstractTestUnit implements ITestUnit {
     this.spear = new Spear("Spear", 10, 1, 2);
     this.staff = new Staff("Staff", 10, 1, 2);
     this.bow = new Bow("Bow", 10, 2, 3);
+    this.luzBook = new LuzBook("LuzBook", 10,  1, 2);
+    this.oscuridadBook = new OscuridadBook("OscuridadBook", 10,  1, 2);
+    this.animaBook = new AnimaBook("AnimaBook", 10,  1, 2);
+
   }
 
   /**
@@ -177,6 +181,52 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public Bow getBow() {
     return bow;
   }
+
+  @Override
+  @Test
+  public void equipLuzBookTest() { checkEquippedItem(getLuzBook()); }
+
+  /**
+   * @return the test luzBook
+   */
+  @Override
+  public LuzBook getLuzBook() {
+    return luzBook;
+  }
+
+  @Override
+  @Test
+  public void equipOscuridadBookTest() {
+    checkEquippedItem(getOscuridadBook());
+  }
+
+  /**
+   * @return the test luzBook
+   */
+  @Override
+  public OscuridadBook getOscuridadBook() {
+    return oscuridadBook;
+  }
+
+  @Override
+  @Test
+  public void equipAnimaBookTest() {
+    checkEquippedItem(getAnimaBook());
+  }
+
+  /**
+   * @return the test luzBook
+   */
+  @Override
+  public AnimaBook getAnimaBook() {
+    return animaBook;
+  }
+
+
+
+
+
+
 
   /**
    * Checks if the unit moves correctly

@@ -17,11 +17,11 @@ public class AnimaBook extends Book {
      */
     public AnimaBook(final String name, final int power, final int minRange, final int maxRange) {
         super(name, power, minRange, maxRange);
-        //this.minRange = Math.max(minRange, 2);
-        //this.maxRange = Math.max(maxRange, this.minRange);
     }
 
-    public void equipSorcerer(final Sorcerer sorcerer) { this.equipTo(sorcerer); }
+    public void equipSorcerer(final Sorcerer sorcerer) {
+        this.equipTo(sorcerer);
+    }
 
 
 

@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * @author Ignacio Slater Muñoz
- */
 public class SorcererTest extends AbstractTestUnit {
 
     private Sorcerer sorcerer;
@@ -28,6 +25,7 @@ public class SorcererTest extends AbstractTestUnit {
         return sorcerer;
     }
 
+
     @Override
     @Test
     public void equipLuzBookTest() {
@@ -36,32 +34,9 @@ public class SorcererTest extends AbstractTestUnit {
         assertEquals(luzBook, sorcerer.getEquippedItem());
     }
 
-    @Override
-    @Test
-    public void equipOscuridadLuzTest() {
-        assertNull(sorcerer.getEquippedItem());
-        sorcerer.equipItem(oscuridadBook);
-        assertEquals(oscuridadBook, sorcerer.getEquippedItem());
-    }
 
     @Override
     @Test
-    public void equipAnimaBookTest() {
-        assertNull(sorcerer.getEquippedItem());
-        sorcerer.equipItem(animaBook);
-        assertEquals(animaBook, sorcerer.getEquippedItem());
-    }
-
-    //otro
-
-    @Override
-    public void equipLuzBookTest() {
-        assertNull(sorcerer.getEquippedItem());
-        sorcerer.equipItem(luzBook);
-        assertEquals(luzBook, sorcerer.getEquippedItem());
-    }
-
-    @Override
     public void equipOscuridadBookTest() {
         assertNull(sorcerer.getEquippedItem());
         sorcerer.equipItem(oscuridadBook);
@@ -69,11 +44,14 @@ public class SorcererTest extends AbstractTestUnit {
     }
 
     @Override
+    @Test
     public void equipAnimaBookTest() {
         assertNull(sorcerer.getEquippedItem());
-        sorcerer.equipItem(animaBook);
+        sorcerer.equipItem(animaBook);checkEquippedItem(getAnimaBook());
         assertEquals(animaBook, sorcerer.getEquippedItem());
     }
+
+
 
 
 }

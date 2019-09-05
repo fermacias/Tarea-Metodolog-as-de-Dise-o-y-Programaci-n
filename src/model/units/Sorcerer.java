@@ -24,7 +24,7 @@ public class Sorcerer extends AbstractUnit{
     /**
      * Sets the currently equipped item of this unit.
      * <p>
-     * The <i>Archer</i> can <b>only equip Bows</b>.
+     * The <i>Sorcerer</i> can <b>only equip Books</b>.
      *
      * @param item
      *     the item to equip
