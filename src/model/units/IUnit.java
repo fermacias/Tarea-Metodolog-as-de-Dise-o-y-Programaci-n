@@ -34,6 +34,12 @@ public interface IUnit {
   List<IEquipableItem> getItems();
 
   /**
+   * @param item
+   *      add item to items
+   */
+  void addItem(IEquipableItem item);
+
+  /**
    * @return the currently equipped item
    */
   IEquipableItem getEquippedItem();
@@ -65,4 +71,13 @@ public interface IUnit {
    * If the other location is out of this unit's movement range, the unit doesn't move.
    */
   void moveTo(Location targetLocation);
+
+  /**
+   *
+   * @param item
+   *    se entrega
+   * @param unit2
+   *    recibe el item
+   */
+  void giveItem(IEquipableItem item, IUnit unit2);
 }

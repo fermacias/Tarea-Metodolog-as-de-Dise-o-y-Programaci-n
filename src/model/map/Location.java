@@ -21,8 +21,8 @@ import model.units.IUnit;
  */
 public class Location {
 
-  private final int row;
-  private final int column;
+  private final int row;            //fila
+  private final int column;         //columna
   private final String id;
   private Set<Location> neighbours = new HashSet<>();
   private IUnit unit;

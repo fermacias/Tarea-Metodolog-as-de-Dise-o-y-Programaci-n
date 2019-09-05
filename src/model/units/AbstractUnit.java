@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.items.Axe;
-import model.items.Bow;
+
 import model.items.IEquipableItem;
-import model.items.Sword;
 import model.map.Location;
 
 /**
@@ -24,11 +22,11 @@ import model.map.Location;
  */
 public abstract class AbstractUnit implements IUnit {
 
-  protected final List<IEquipableItem> items = new ArrayList<>();
-  private final int currentHitPoints;
-  private final int movement;
-  protected IEquipableItem equippedItem;
-  private Location location;
+  protected final List<IEquipableItem> items = new ArrayList<>(); //Lista con los objetos que porta la unidad
+  private final int currentHitPoints;                             //Cantidad de daño actual max que puede recibir la unidad
+  private final int movement;                                     //Cantinan max de celdas que se puede desplazar en un turno
+  protected IEquipableItem equippedItem;                          //Item que esta equipado (lo que tiene en la mano)
+  private Location location;                                      //Ubicación actual en el mapa
 
   /**
    * Creates a new Unit.
@@ -61,6 +59,9 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
+  public void addItem(IEquipableItem item) { this.items.add(item); }
+
+  @Override
   public IEquipableItem getEquippedItem() {
     return equippedItem;
   }
@@ -90,6 +91,21 @@ public abstract class AbstractUnit implements IUnit {
     if (getLocation().distanceTo(targetLocation) <= getMovement()
             && targetLocation.getUnit() == null) {
       setLocation(targetLocation);
+    }
+  }
+
+  @Override
+  public void giveItem(IEquipableItem item, IUnit unit2) {
+    Location loc1 = this.location;
+    Location loc2 = unit2.getLocation();
+    if(this.items.contains(item) && loc1.distanceTo(loc2) == 1) {
+      //si estaba equipado con dicho item
+      if( this.equippedItem == item ) {
+        this.equippedItem = null;
+      }
+      this.items.remove(item);
+      unit2.addItem(item);
+      item.setOwner(unit2);
     }
   }
 

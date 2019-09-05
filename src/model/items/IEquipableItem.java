@@ -27,6 +27,13 @@ public interface IEquipableItem {
   IUnit getOwner();
 
   /**
+   * @param unit
+   *    es el nuevo owner del item
+   */
+  void setOwner(IUnit unit);
+
+
+  /**
    * @return the name of the item
    */
   String getName();

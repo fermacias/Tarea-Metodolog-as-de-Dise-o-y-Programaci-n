@@ -31,8 +31,8 @@ public abstract class AbstractItem implements IEquipableItem {
   public AbstractItem(final String name, final int power, final int minRange, final int maxRange) {
     this.name = name;
     this.power = power;
-    this.minRange = Math.max(minRange, 1);
-    this.maxRange = Math.max(maxRange, this.minRange);
+    this.minRange = Math.max(minRange, 1);                //El min debe ser mayor a 0
+    this.maxRange = Math.max(maxRange, this.minRange);    //El max debe ser mayor estricto al min
   }
 
   @Override
@@ -45,6 +45,9 @@ public abstract class AbstractItem implements IEquipableItem {
   public IUnit getOwner() {
     return owner;
   }
+
+  @Override
+  public void setOwner(IUnit unit) { this.owner = unit; }
 
   @Override
   public String getName() {
@@ -78,5 +81,9 @@ public abstract class AbstractItem implements IEquipableItem {
   public void equipHero(final Hero hero) {  }
 
   public void equipSorcerer(final Sorcerer sorcerer) {  }
+
+
+
+
 
 }
