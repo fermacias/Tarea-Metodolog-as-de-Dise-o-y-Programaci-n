@@ -77,5 +77,6 @@ public abstract class AbstractItem implements IEquipableItem {
 
   public void equipHero(final Hero hero) {  }
 
+  public void equipSorcerer(final Sorcerer sorcerer) {  }
 
 }

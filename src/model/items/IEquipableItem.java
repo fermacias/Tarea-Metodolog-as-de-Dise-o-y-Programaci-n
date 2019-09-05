@@ -56,4 +56,6 @@ public interface IEquipableItem {
 
   void equipHero(Hero hero);
 
+  void equipSorcerer(Sorcerer sorcerer);
+
 }

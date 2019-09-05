@@ -23,6 +23,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Sword sword;
   protected Staff staff;
   protected Spear spear;
+  protected LuzBook luzBook;
+  protected OscuridadBook oscuridadBook;
+  protected AnimaBook animaBook;
 
   //crea la alpaca target
   @Override
