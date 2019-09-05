@@ -5,7 +5,11 @@ import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import model.items.Axe;
+import model.items.Bow;
 import model.items.IEquipableItem;
+import model.items.Sword;
 import model.map.Location;
 
 /**
@@ -39,7 +43,7 @@ public abstract class AbstractUnit implements IUnit {
    *     maximum amount of items this unit can carry
    */
   protected AbstractUnit(final int hitPoints, final int movement,
-      final Location location, final int maxItems, final IEquipableItem... items) {
+                         final Location location, final int maxItems, final IEquipableItem... items) {
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
@@ -84,8 +88,10 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void moveTo(final Location targetLocation) {
     if (getLocation().distanceTo(targetLocation) <= getMovement()
-        && targetLocation.getUnit() == null) {
+            && targetLocation.getUnit() == null) {
       setLocation(targetLocation);
     }
   }
+
+
 }

@@ -1,7 +1,12 @@
 package model.units;
 
+import model.items.Axe;
+import model.items.Bow;
 import model.items.IEquipableItem;
+import model.items.Sword;
 import model.map.Location;
+
+import java.util.List;
 
 /**
  * This class represents a <i>SwordMaster</i> type unit.
@@ -14,7 +19,7 @@ import model.map.Location;
 public class SwordMaster extends AbstractUnit {
 
   public SwordMaster(final int hitPoints, final int movement, final Location location,
-      IEquipableItem... items) {
+                     IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
 
@@ -26,8 +31,7 @@ public class SwordMaster extends AbstractUnit {
    */
   @Override
   public void equipItem(final IEquipableItem item) {
-    if (item instanceof SwordMaster) {
-      equippedItem = item;
-    }
+    item.equipSword(this);
   }
+
 }

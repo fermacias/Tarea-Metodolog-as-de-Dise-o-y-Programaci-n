@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.*;
 
 /**
  * Abstract class that defines some common information and behaviour between all items.
@@ -65,4 +65,17 @@ public abstract class AbstractItem implements IEquipableItem {
   public int getMaxRange() {
     return maxRange;
   }
+
+
+  public void equipArcher(final Archer archer) {  }
+
+  public void equipFighter(final Fighter fighter) {  }
+
+  public void equipSword(final SwordMaster sword) {  }
+
+  public void equipCleric(final Cleric cleric) {  }
+
+  public void equipHero(final Hero hero) {  }
+
+
 }

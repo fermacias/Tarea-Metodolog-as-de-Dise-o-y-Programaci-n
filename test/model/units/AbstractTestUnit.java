@@ -24,6 +24,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Staff staff;
   protected Spear spear;
 
+  //crea la alpaca target
   @Override
   public void setTargetAlpaca() {
     targetAlpaca = new Alpaca(50, 2, field.getCell(1, 0));
@@ -41,7 +42,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   }
 
   /**
-   * Set up the game field
+   * Set up the game field    //crea el campo de juego
    */
   @Override
   public void setField() {
@@ -62,6 +63,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   public void setWeapons() {
+    //inicializa las armas declaradas anteriormente
     this.axe = new Axe("Axe", 10, 1, 2);
     this.sword = new Sword("Sword", 10, 1, 2);
     this.spear = new Spear("Spear", 10, 1, 2);
@@ -70,7 +72,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   }
 
   /**
-   * Checks that the constructor works properly.
+   * Checks that the constructor works properly.    //testea el constructor de una unidad
    */
   @Override
   @Test
@@ -93,7 +95,6 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   @Test
   public void equipAxeTest() {
-    assertNull(getTestUnit().getEquippedItem());
     checkEquippedItem(getAxe());
   }
 

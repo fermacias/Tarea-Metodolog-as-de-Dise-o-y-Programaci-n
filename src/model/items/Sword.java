@@ -1,5 +1,9 @@
 package model.items;
 
+import model.units.Archer;
+import model.units.Fighter;
+import model.units.SwordMaster;
+
 /**
  * This class represents a sword type item.
  * <p>
@@ -25,4 +29,9 @@ public class Sword extends AbstractItem {
   public Sword(final String name, final int power, final int minRange, final int maxRange) {
     super(name, power, minRange, maxRange);
   }
+
+  public void equipSword(final SwordMaster swordM) {
+    this.equipTo(swordM);
+  }
+
 }

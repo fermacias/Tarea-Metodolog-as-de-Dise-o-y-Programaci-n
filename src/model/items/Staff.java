@@ -1,5 +1,8 @@
 package model.items;
 
+import model.units.Archer;
+import model.units.Cleric;
+
 /**
  * This class represents a <i>Staff</i> type item.
  * <p>
@@ -25,4 +28,9 @@ public class Staff extends AbstractItem {
   public Staff(final String name, final int power, final int minRange, final int maxRange) {
     super(name, power, minRange, maxRange);
   }
+
+  public void equipCleric(final Cleric cleric) {
+    this.equipTo(cleric);
+  }
+
 }

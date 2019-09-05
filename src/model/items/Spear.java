@@ -1,17 +1,20 @@
 package model.items;
 
+import model.units.Archer;
+import model.units.Hero;
+
 /**
  * This class represents a <i>spear</i>.
  * <p>
- * Spears are strong against swords and weak against axes
- *
- * @author Ignacio Slater Muñoz
- * @since 1.0
- */
-public class Spear extends AbstractItem {
+   * Spears are strong against swords and weak against axes
+   *
+   * @author Ignacio Slater Muñoz
+   * @since 1.0
+   */
+  public class Spear extends AbstractItem {
 
-  /**
-   * Creates a new Axe item
+    /**
+     * Creates a new Axe item
    *
    * @param name
    *     the name of the Axe
@@ -25,4 +28,10 @@ public class Spear extends AbstractItem {
   public Spear(final String name, final int power, final int minRange, final int maxRange) {
     super(name, power, minRange, maxRange);
   }
+
+  public void equipHero(final Hero hero){
+    this.equipTo(hero);
+  }
+
+
 }

@@ -4,6 +4,8 @@ import model.items.IEquipableItem;
 import model.items.Staff;
 import model.map.Location;
 
+import java.util.List;
+
 /**
  * This class represents a cleric type unit. A cleric can only use staff type weapons, which means
  * that it can receive attacks but can't counter attack any of those.
@@ -22,7 +24,7 @@ public class Cleric extends AbstractUnit {
    *     the number of panels a unit can move
    */
   public Cleric(final int hitPoints, final int movement, final Location location,
-      IEquipableItem... items) {
+                IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
 
@@ -34,8 +36,8 @@ public class Cleric extends AbstractUnit {
    */
   @Override
   public void equipItem(final IEquipableItem item) {
-    if (item instanceof Staff) {
-      equippedItem = item;
-    }
+    item.equipCleric(this);
   }
+
+
 }

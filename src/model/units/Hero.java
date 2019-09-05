@@ -4,6 +4,8 @@ import model.items.IEquipableItem;
 import model.items.Spear;
 import model.map.Location;
 
+import java.util.List;
+
 /**
  * A <i>Hero</i> is a special kind of unit, the player that defeats this unit wins the game.
  * <p>
@@ -23,7 +25,7 @@ public class Hero extends AbstractUnit {
    *     the number of panels a unit can move
    */
   public Hero(final int hitPoints, final int movement, final Location location,
-      IEquipableItem... items) {
+              IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
 
@@ -35,8 +37,8 @@ public class Hero extends AbstractUnit {
    */
   @Override
   public void equipItem(final IEquipableItem item) {
-    if (item instanceof Spear) {
-      equippedItem = item;
-    }
+    item.equipHero(this);
   }
+
+
 }

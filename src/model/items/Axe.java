@@ -1,5 +1,9 @@
 package model.items;
 
+import model.units.Archer;
+import model.units.Fighter;
+import model.units.SwordMaster;
+
 /**
  * This class represents an Axe.
  * <p>
@@ -25,4 +29,14 @@ public class Axe extends AbstractItem {
   public Axe(final String name, final int power, final int minRange, final int maxRange) {
     super(name, power, minRange, maxRange);
   }
+
+
+  public void equipArcher(final Archer archer) {  }
+
+  public void equipFighter(final Fighter fighter) {
+    this.equipTo(fighter);
+  }
+
+  public void equipSword(final SwordMaster swordM) {  }
+
 }

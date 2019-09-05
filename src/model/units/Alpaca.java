@@ -3,6 +3,8 @@ package model.units;
 import model.items.IEquipableItem;
 import model.map.Location;
 
+import java.util.List;
+
 /**
  * This class represents an <i>Alpaca</i> type unit.
  * <p>
@@ -12,6 +14,7 @@ import model.map.Location;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
+
 public class Alpaca extends AbstractUnit {
 
   /**
