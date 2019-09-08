@@ -36,6 +36,14 @@ public class Bow extends AbstractItem {
     this.equipTo(archer);
   }
 
+  /*
+  COMBATE
+  */
+
+  public boolean stronger(IEquipableItem item) {
+    return item.weakerThanBow();
+  }
+
 
 
 }

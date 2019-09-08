@@ -79,7 +79,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   }
 
   /**
-   * Checks that the constructor works properly.    //testea el constructor de una unidad
+   * Checks that the constructor works properly.
    */
   @Override
   @Test
@@ -102,6 +102,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   @Test
   public void equipAxeTest() {
+    assertNull(getTestUnit().getEquippedItem());
     checkEquippedItem(getAxe());
   }
 
@@ -117,6 +118,10 @@ public abstract class AbstractTestUnit implements ITestUnit {
     getTestUnit().equipItem(item);
     assertNull(getTestUnit().getEquippedItem());
   }
+
+  /*
+  TESTS PARA EQUIPAR ITEM
+  */
 
   /**
    * @return the test axe
@@ -224,8 +229,84 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
 
 
+  /*
+  TESTS PARA INTERCAMBIO DE ITEMS
+   */
+  @Override
+  @Test
+  public void giveSpear(){
+    Alpaca alpaca = new Alpaca(50, 2, field.getCell(1, 0));
+    alpaca.addItem(axe);
+    alpaca.addItem(spear);
 
+    Archer archer = new Archer(50, 2, field.getCell(0, 0));
+    archer.addItem(luzBook);
 
+    alpaca.giveItem(spear, archer);
+    assertEquals(true, archer.items.contains(spear));
+  }
+
+  @Override
+  @Test
+  public void wrongGiveSpear() {
+    Alpaca alpaca = new Alpaca(50, 2, field.getCell(1, 0));
+    alpaca.addItem(axe);
+    alpaca.addItem(spear);
+
+    //no podra recibirlo porque ya tiene tres items en su inventario
+    Archer archer = new Archer(50, 2, field.getCell(0, 0));
+    archer.addItem(oscuridadBook);
+    archer.addItem(bow);
+    archer.addItem(luzBook);
+
+    alpaca.giveItem(spear, archer);
+    assertEquals(false, archer.items.contains(spear));
+  }
+
+  @Override
+  @Test
+  public void giveLuzBook() {
+    Hero hero = new  Hero(50, 2, field.getCell(1, 0));
+    hero.addItem(animaBook);
+    hero.addItem(luzBook);
+
+    Fighter fighter = new Fighter(50, 2, field.getCell(0, 0));
+    fighter.addItem(animaBook);
+    fighter.addItem(oscuridadBook);
+
+    hero.giveItem(luzBook, fighter);
+    assertEquals(true, fighter.items.contains(luzBook));
+  }
+
+  @Override
+  @Test
+  public void wrongGiveLuzBook() {
+    //no podra recibirlo porque hero no tiene un luzBook
+    Hero hero = new  Hero(50, 2, field.getCell(1, 0));
+    hero.addItem(animaBook);
+
+    Fighter fighter = new Fighter(50, 2, field.getCell(0, 0));
+
+    fighter.giveItem(luzBook, fighter);
+    assertEquals(false, fighter.items.contains(luzBook));
+  }
+
+  @Override
+  @Test
+  public void wrongGiveSword() {
+    //no podra recibirlo porque la distancia entre las unidades es distinta de 1
+    Sorcerer sorcerer = new  Sorcerer(50, 2, field.getCell(2, 0));
+    sorcerer.addItem(sword);
+    
+    SwordMaster swordMaster = new SwordMaster(50, 2, field.getCell(0, 0));
+
+    sorcerer.giveItem(sword, swordMaster);
+    assertEquals(false, swordMaster.items.contains(luzBook));
+  }
+
+  /*
+  OTROS
+   */
 
 
   /**

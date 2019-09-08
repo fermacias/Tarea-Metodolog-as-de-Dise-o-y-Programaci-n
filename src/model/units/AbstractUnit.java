@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-import model.items.IEquipableItem;
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -23,7 +23,7 @@ import model.map.Location;
 public abstract class AbstractUnit implements IUnit {
 
   protected final List<IEquipableItem> items = new ArrayList<>(); //Lista con los objetos que porta la unidad
-  private final int currentHitPoints;                             //Cantidad de daño actual max que puede recibir la unidad
+  private int currentHitPoints;                                   //Cantidad de daño actual max que puede recibir la unidad
   private final int movement;                                     //Cantinan max de celdas que se puede desplazar en un turno
   protected IEquipableItem equippedItem;                          //Item que esta equipado (lo que tiene en la mano)
   private Location location;                                      //Ubicación actual en el mapa
@@ -40,7 +40,7 @@ public abstract class AbstractUnit implements IUnit {
    * @param maxItems
    *     maximum amount of items this unit can carry
    */
-  protected AbstractUnit(final int hitPoints, final int movement,
+  protected AbstractUnit(int hitPoints, final int movement,
                          final Location location, final int maxItems, final IEquipableItem... items) {
     this.currentHitPoints = hitPoints;
     this.movement = movement;
@@ -52,6 +52,9 @@ public abstract class AbstractUnit implements IUnit {
   public int getCurrentHitPoints() {
     return currentHitPoints;
   }
+
+  @Override
+  public void setCurrentHitPoints(int hp) { this.currentHitPoints = hp; }
 
   @Override
   public List<IEquipableItem> getItems() {
@@ -95,11 +98,10 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void giveItem(IEquipableItem item, IUnit unit2) {
+  public void giveItem(IEquipableItem item, IUnit unit2){
     Location loc1 = this.location;
     Location loc2 = unit2.getLocation();
-    if(this.items.contains(item) && loc1.distanceTo(loc2) == 1) {
-      //si estaba equipado con dicho item
+    if(this.items.contains(item) && loc1.distanceTo(loc2) == 1 && unit2.canTake()) {
       if( this.equippedItem == item ) {
         this.equippedItem = null;
       }
@@ -108,6 +110,50 @@ public abstract class AbstractUnit implements IUnit {
       item.setOwner(unit2);
     }
   }
+
+  @Override
+  public abstract boolean canTake();
+
+  public void attack(IUnit unit2) {
+    IEquipableItem item1 = equippedItem;
+    IEquipableItem item2= unit2.getEquippedItem();
+    int minDist = item1.getMinRange();
+    int maxDist = item1.getMaxRange();
+    double dist = location.distanceTo(unit2.getLocation());
+
+    //si la unidad1 esta equipada y la otra unidad esta en el rango del item
+    if (item1 != null && minDist <= dist && dist <= maxDist) {
+      int damage = item1.getPower();
+
+      //compara los items
+      if(item2 != null && item1.stronger(item2)) { damage = damage*3/2; }
+      else if(item2 != null && item2.stronger(item1)) { damage = damage - 20; }
+
+      if(damage >= unit2.getCurrentHitPoints()){
+        unit2.setCurrentHitPoints(0);
+        return;
+      }
+      unit2.setCurrentHitPoints( unit2.getCurrentHitPoints() - damage );
+    }
+  }
+
+
+
+  //COMBATE
+  @Override
+  public void combat (IUnit unit2, boolean bool) {
+    if ( currentHitPoints != 0) {
+      this.attack(unit2);
+      if ( unit2.getCurrentHitPoints() != 0) {
+        unit2.attack(this);
+      }
+    }
+  }
+
+
+
+
+
 
 
 }

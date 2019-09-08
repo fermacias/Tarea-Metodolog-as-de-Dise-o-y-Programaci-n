@@ -39,5 +39,18 @@ public class Cleric extends AbstractUnit {
     item.equipCleric(this);
   }
 
+  /**
+   *
+   * @return boolean
+   *      infica si tiene menos de 3 items
+   */
+  public boolean canTake() {
+    if(this.items.size()<3)
+      return true;
+    return false;
+  }
+
+
+
 
 }

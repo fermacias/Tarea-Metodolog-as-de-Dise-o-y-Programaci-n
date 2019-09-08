@@ -43,18 +43,18 @@ public interface ITestUnit {
   IUnit getTestUnit();
 
   /**
-   * Checks if the axe is equipped correctly to the unit    //chequea si el axe (hacha) fue equipada correctamente
-   */
-  @Test
-  void equipAxeTest();
-
-  /**
    * Tries to equip a weapon to the alpaca and verifies that it was not equipped    //tarta de equipar un arma en un lugar y verifica que no fue eequipada
    *
    * @param item
    *     to be equipped
    */
   void checkEquippedItem(IEquipableItem item);
+
+  /**
+   * Checks if the axe is equipped correctly to the unit    //chequea si el axe (hacha) fue equipada correctamente
+   */
+  @Test
+  void equipAxeTest();
 
   /**
    * @return the test axe     //retorna el hacha testeada
@@ -119,9 +119,44 @@ public interface ITestUnit {
   AnimaBook getAnimaBook();
 
 
+  /*
+  TESTS PARA INTERCAMBIO DE ITEMS
+   */
 
+  //test metodo take
+  /**
+   * prueba el traspaso de una spear de una unidad a otra
+   */
+  @Test
+  void giveSpear();
 
+  /**
+   * prueba el no traspado de una spear de una unidad a otra que tiene su inventario lleno
+   */
+  @Test
+  void wrongGiveSpear();
 
+  /**
+   * prueba el traspaso de un luzBook de una unidad a otra
+   */
+  @Test
+  void giveLuzBook();
+
+  /**
+   * prueba el traspaso fallido de un item de una unidad que no lo posee a otra
+   */
+  @Test
+  void wrongGiveLuzBook();
+
+  /**
+   * prueba el traspaso fallido de un item de una unidad a otra porque no estan a dist 1
+   */
+  @Test
+  void wrongGiveSword();
+
+  /*
+  OTROS
+   */
 
   /**
    * Checks if the unit moves correctly     //testea movimiento

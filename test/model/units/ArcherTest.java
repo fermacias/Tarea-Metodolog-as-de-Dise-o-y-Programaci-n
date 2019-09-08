@@ -41,4 +41,23 @@ public class ArcherTest extends AbstractTestUnit {
     archer.equipItem(bow);
     assertEquals(bow, archer.getEquippedItem());
   }
+
+  @Test
+  public void canTakeArcherTest() {
+    Archer archer = new Archer(50, 2, field.getCell(0, 0));
+    assertEquals(true, archer.canTake());
+
+  }
+
+  @Test
+  public void cantTakeArcherTest() {
+    Archer archer = new Archer(50, 2, field.getCell(0, 0));
+    archer.addItem(bow);
+    archer.addItem(luzBook);
+    archer.addItem(staff);
+    assertEquals(false, archer.canTake());
+
+  }
+
+
 }

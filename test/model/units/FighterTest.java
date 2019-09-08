@@ -38,4 +38,34 @@ public class FighterTest extends AbstractTestUnit {
     fighter.equipItem(axe);
     assertEquals(axe, fighter.getEquippedItem());
   }
+
+  // test equip
+
+  /**
+   * Checks if the axe is equipped correctly to the unit
+   */
+  @Test
+  public void equipFighterTest() {
+    assertNull(fighter.getEquippedItem());
+    fighter.equipItem(axe);
+    assertEquals(axe, fighter.getEquippedItem());
+  }
+
+  @Test
+  public void canTakeFighterTest() {
+    Fighter fighter = new Fighter(50, 2, field.getCell(0, 0));
+    assertEquals(true, fighter.canTake());
+
+  }
+
+  @Test
+  public void cantTakeFighterTest() {
+    Fighter fighter = new Fighter(50, 2, field.getCell(0, 0));
+    fighter.addItem(bow);
+    fighter.addItem(luzBook);
+    fighter.addItem(staff);
+    assertEquals(false, fighter.canTake());
+
+  }
+
 }

@@ -35,4 +35,25 @@ public class HeroTest extends AbstractTestUnit {
     hero.equipItem(spear);
     assertEquals(spear, hero.getEquippedItem());
   }
+
+  @Test
+  public void canTakeHeroTest() {
+    Hero hero = new Hero(50, 2, field.getCell(0, 0));
+    hero.addItem(spear);
+    hero.addItem(bow);
+    assertEquals(true, hero.canTake());
+
+  }
+
+  @Test
+  public void cantTakeHeroTest() {
+    Hero hero = new Hero(50, 2, field.getCell(0, 0));
+    hero.addItem(spear);
+    hero.addItem(bow);
+    hero.addItem(luzBook);
+    assertEquals(false, hero.canTake());
+
+  }
+
+
 }

@@ -51,6 +51,24 @@ public class SorcererTest extends AbstractTestUnit {
         assertEquals(animaBook, sorcerer.getEquippedItem());
     }
 
+    @Test
+    public void canTakeSorcererTest() {
+        Sorcerer sorcerer = new Sorcerer(50, 2, field.getCell(0, 0));
+        sorcerer.addItem(luzBook);
+        sorcerer.addItem(bow);
+        assertEquals(true, sorcerer.canTake());
+
+    }
+
+    @Test
+    public void cantTakeSorcererTest() {
+        Sorcerer sorcerer = new Sorcerer(50, 2, field.getCell(0, 0));
+        sorcerer.addItem(luzBook);
+        sorcerer.addItem(bow);
+        sorcerer.addItem(axe);
+        assertEquals(false, sorcerer.canTake());
+
+    }
 
 
 

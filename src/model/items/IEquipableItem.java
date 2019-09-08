@@ -65,4 +65,35 @@ public interface IEquipableItem {
 
   void equipSorcerer(Sorcerer sorcerer);
 
+
+  /*
+  COMBATE
+   */
+
+  /**
+   *
+   * @param item
+   *      inidica si un item es fuerte con respecto a este
+   */
+  boolean stronger(IEquipableItem item);
+
+  boolean weakerThanAnimaBook();
+
+  boolean weakerThanAxe();
+
+  boolean weakerThanLuzBook();
+
+  boolean weakerThanOscuridadBook();
+
+  boolean weakerThanSpear();
+
+  boolean weakerThanSword();
+
+  boolean weakerThanStaff();
+
+  boolean weakerThanBow();
+
+
+
+
 }

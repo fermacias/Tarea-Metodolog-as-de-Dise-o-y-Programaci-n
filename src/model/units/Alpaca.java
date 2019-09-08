@@ -42,6 +42,16 @@ public class Alpaca extends AbstractUnit {
     // Method body intentionally left empty
   }
 
+  /**
+   *
+   * @return boolean
+   *      no tiene limite para recibir items
+   *      siempre retorna true
+   */
+  public boolean canTake() {
+    return true;
+  }
+
 
 
 }

@@ -46,6 +46,17 @@ public class Archer extends AbstractUnit {
   }
 
 
+  /**
+   *
+   * @return boolean
+   *      infica si tiene menos de 3 items
+   */
+  public boolean canTake() {
+    if(this.items.size()<3)
+      return true;
+    return false;
+  }
+
 
 
 

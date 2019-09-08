@@ -29,8 +29,25 @@ public class Staff extends AbstractItem {
     super(name, power, minRange, maxRange);
   }
 
-  public void equipCleric(final Cleric cleric) {
-    this.equipTo(cleric);
+  public void equipCleric(final Cleric cleric) { this.equipTo(cleric); }
+
+  /*
+  COMBATE
+  */
+  @Override
+  public boolean stronger(IEquipableItem item) {
+    return item.weakerThanStaff();
   }
+
+
+
+  @Override
+  public boolean weakerThanAnimaBook() { return true; }
+
+  @Override
+  public boolean weakerThanLuzBook() { return true; }
+
+  @Override
+  public boolean weakerThanOscuridadBook()  { return true; }
 
 }

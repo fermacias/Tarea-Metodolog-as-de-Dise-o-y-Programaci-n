@@ -33,5 +33,17 @@ import model.units.Hero;
     this.equipTo(hero);
   }
 
+  /*
+  COMBATE
+  */
+
+  public boolean stronger(IEquipableItem item) {
+    return item.weakerThanSpear();
+  }
+
+  @Override
+  public boolean weakerThanAxe() { return true; }
+
+
 
 }

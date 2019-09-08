@@ -34,4 +34,18 @@ public class Sword extends AbstractItem {
     this.equipTo(swordM);
   }
 
+  /*
+  COMBATE
+  */
+  public boolean stronger(IEquipableItem item) {
+    return item.weakerThanSword();
+  }
+
+  @Override
+  public boolean weakerThanSpear() { return true; }
+
+
+
+
+
 }

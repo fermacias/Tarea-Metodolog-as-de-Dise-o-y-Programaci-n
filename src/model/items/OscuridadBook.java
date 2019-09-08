@@ -23,6 +23,33 @@ public class OscuridadBook extends Book{
         this.equipTo(sorcerer);
     }
 
+    /*
+  COMBATE
+  */
+
+    public boolean stronger(IEquipableItem item) {
+        return item.weakerThanOscuridadBook();
+    }
+
+    @Override
+    public boolean weakerThanLuzBook() { return true; }
+
+
+    @Override
+    public boolean weakerThanAxe() { return true; }
+
+    @Override
+    public boolean weakerThanSpear() { return true; }
+
+    @Override
+    public boolean weakerThanSword()  { return true; }
+
+    @Override
+    public boolean weakerThanBow()  { return true; }
+
+    @Override
+    public boolean weakerThanStaff()  { return true; }
+
 
 
 }

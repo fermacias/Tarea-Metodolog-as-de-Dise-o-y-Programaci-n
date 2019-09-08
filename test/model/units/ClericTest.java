@@ -35,4 +35,25 @@ public class ClericTest extends AbstractTestUnit {
     cleric.equipItem(staff);
     assertEquals(staff, cleric.getEquippedItem());
   }
+
+  //metodo Cantake tests
+
+  @Test
+  public void canTakeClericTest() {
+    Cleric cleric = new Cleric(50, 2, field.getCell(0, 0));
+    assertEquals(true, cleric.canTake());
+
+  }
+
+  @Test
+  public void cantTakeClericTest() {
+    Cleric cleric = new Cleric(50, 2, field.getCell(0, 0));
+    cleric.addItem(bow);
+    cleric.addItem(luzBook);
+    cleric.addItem(staff);
+    assertEquals(false, cleric.canTake());
+
+  }
+
+
 }

@@ -29,6 +29,12 @@ public interface IUnit {
   int getCurrentHitPoints();
 
   /**
+   * @param hp
+   *    the new value to currentHitPoints
+   */
+  void setCurrentHitPoints(int hp);
+
+  /**
    * @return the items carried by this unit
    */
   List<IEquipableItem> getItems();
@@ -73,11 +79,48 @@ public interface IUnit {
   void moveTo(Location targetLocation);
 
   /**
-   *
    * @param item
    *    se entrega
    * @param unit2
    *    recibe el item
    */
   void giveItem(IEquipableItem item, IUnit unit2);
+
+  /**
+   * @return boolean
+   *    indica si una unidad puede recibir un item o no
+   *    en las alpacas siempre es true
+   *    en el resto es true si tiene menos de tres items
+   */
+  boolean canTake();
+
+
+  /*
+  COMBATE
+   */
+
+  void attack(IUnit unit2);
+
+
+  /**
+   *
+   * unit1.combat(item, unit1, true) indica un ataque
+   * caso 1: si el ataque es posible se produce y se ejecuta
+   * unit2.combat(item, unit2, false) el contra ataque
+   * si estes es posible se ejecuta y el combate acaba
+   * caso 2: si el ataque no es posible el combate acaba
+   *
+   * si en algun momento del combate una de las unidades es
+   * derrotada el combate acaba
+   * para atacar se debe estar equipado
+   *
+   * @param unit
+   *      unidad a la que deseo atacar
+   * @param bool
+   *      es true si es el primer ataque
+   *      es false si es el contra ataque
+   */
+  void combat(IUnit unit, boolean bool);
+
+
 }

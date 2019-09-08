@@ -31,12 +31,20 @@ public class Axe extends AbstractItem {
   }
 
 
-  public void equipArcher(final Archer archer) {  }
-
   public void equipFighter(final Fighter fighter) {
     this.equipTo(fighter);
   }
 
-  public void equipSword(final SwordMaster swordM) {  }
+  /*
+  COMBATE
+  */
+
+  public boolean stronger(IEquipableItem item) {
+    return item.weakerThanAxe();
+  }
+
+  @Override
+  public boolean weakerThanSword()  { return true; }
+
 
 }

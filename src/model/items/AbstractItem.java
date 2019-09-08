@@ -69,6 +69,9 @@ public abstract class AbstractItem implements IEquipableItem {
     return maxRange;
   }
 
+  /*
+  PARA EQUIPAR
+  */
 
   public void equipArcher(final Archer archer) {  }
 
@@ -82,7 +85,25 @@ public abstract class AbstractItem implements IEquipableItem {
 
   public void equipSorcerer(final Sorcerer sorcerer) {  }
 
+  /*
+  PARA EL COMBATE
+  */
 
+  public boolean weakerThanAnimaBook() { return false; }
+
+  public boolean weakerThanAxe() { return false; }
+
+  public boolean weakerThanLuzBook() { return false; }
+
+  public boolean weakerThanOscuridadBook() { return false; }
+
+  public boolean weakerThanSpear() { return false; }
+
+  public boolean weakerThanSword()  { return false; }
+
+  public boolean weakerThanStaff()  { return false; }
+
+  public boolean weakerThanBow()  { return false; }
 
 
 
