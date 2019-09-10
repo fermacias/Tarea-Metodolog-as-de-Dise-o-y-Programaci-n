@@ -116,11 +116,9 @@ public interface IUnit {
    *
    * @param unit
    *      unidad a la que deseo atacar
-   * @param bool
-   *      es true si es el primer ataque
-   *      es false si es el contra ataque
+   *
    */
-  void combat(IUnit unit, boolean bool);
+  void combat(IUnit unit);
 
 
 }

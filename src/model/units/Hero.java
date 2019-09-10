@@ -40,16 +40,6 @@ public class Hero extends AbstractUnit {
     item.equipHero(this);
   }
 
-  /**
-   *
-   * @return boolean
-   *      infica si tiene menos de 3 items
-   */
-  public boolean canTake() {
-    if(this.items.size()<3)
-      return true;
-    return false;
-  }
 
 
 }

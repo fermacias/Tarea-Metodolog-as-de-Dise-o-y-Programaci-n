@@ -26,23 +26,13 @@ public class SwordMaster extends AbstractUnit {
   /**
    * Sets the currently equipped item of this unit.
    *
-   * @param item
-   *     the item to equip
+   * @param item the item to equip
    */
   @Override
   public void equipItem(final IEquipableItem item) {
     item.equipSword(this);
   }
 
-  /**
-   *
-   * @return boolean
-   *      infica si tiene menos de 3 items
-   */
-  public boolean canTake() {
-    if(this.items.size()<3)
-      return true;
-    return false;
-  }
-
 }
+
+

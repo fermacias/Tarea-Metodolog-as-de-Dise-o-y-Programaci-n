@@ -97,6 +97,22 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
 
+
+
+  /**
+   *
+   * @return boolean
+   *      indica si tiene menos de 3 items
+   */
+  @Override
+  public boolean canTake() {
+    if(this.items.size()<3)
+      return true;
+    return false;
+  }
+
+
+
   @Override
   public void giveItem(IEquipableItem item, IUnit unit2){
     Location loc1 = this.location;
@@ -111,29 +127,26 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
 
-  @Override
-  public abstract boolean canTake();
 
+  @Override
   public void attack(IUnit unit2) {
-    IEquipableItem item1 = equippedItem;
-    IEquipableItem item2= unit2.getEquippedItem();
-    int minDist = item1.getMinRange();
-    int maxDist = item1.getMaxRange();
+    IEquipableItem item1 = equippedItem, item2= unit2.getEquippedItem();
+    int minDist = item1.getMinRange(), maxDist = item1.getMaxRange();
     double dist = location.distanceTo(unit2.getLocation());
 
     //si la unidad1 esta equipada y la otra unidad esta en el rango del item
     if (item1 != null && minDist <= dist && dist <= maxDist) {
       int damage = item1.getPower();
 
-      //compara los items
-      if(item2 != null && item1.stronger(item2)) { damage = damage*3/2; }
-      else if(item2 != null && item2.stronger(item1)) { damage = damage - 20; }
-
-      if(damage >= unit2.getCurrentHitPoints()){
-        unit2.setCurrentHitPoints(0);
-        return;
+      if(item2 != null) {
+        if (item1.stronger(item2)) { damage = damage * 3 / 2; }
+        else if (item2 != null && item2.weaker(item1)) { damage = damage - 20; }
       }
+
       unit2.setCurrentHitPoints( unit2.getCurrentHitPoints() - damage );
+
+      if(unit2.getCurrentHitPoints()<0){ unit2.setCurrentHitPoints(0); }
+
     }
   }
 
@@ -141,7 +154,7 @@ public abstract class AbstractUnit implements IUnit {
 
   //COMBATE
   @Override
-  public void combat (IUnit unit2, boolean bool) {
+  public void combat (IUnit unit2) {
     if ( currentHitPoints != 0) {
       this.attack(unit2);
       if ( unit2.getCurrentHitPoints() != 0) {
@@ -149,11 +162,6 @@ public abstract class AbstractUnit implements IUnit {
       }
     }
   }
-
-
-
-
-
 
 
 }
