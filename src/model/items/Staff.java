@@ -36,18 +36,30 @@ public class Staff extends AbstractItem {
   */
   @Override
   public boolean stronger(IEquipableItem item) {
-    return item.weakerThanStaff();
+    return item.staffStrongerThan();
   }
 
+  @Override
+  public boolean weaker(IEquipableItem item) { return item.staffWeakerThan(); }
 
 
   @Override
-  public boolean weakerThanAnimaBook() { return true; }
+  public boolean animaBookStrongerThan() {return true;}
 
   @Override
-  public boolean weakerThanLuzBook() { return true; }
+  public boolean luzBookStrongerThan() {return true;}
 
   @Override
-  public boolean weakerThanOscuridadBook()  { return true; }
+  public boolean oscuridadBookStrongerThan() {return true;}
+
+  @Override
+  public boolean animaBookWeakerThan() {return true;}
+
+  @Override
+  public boolean luzBookWeakerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookWeakerThan() {return true;}
+
 
 }

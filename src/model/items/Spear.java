@@ -37,13 +37,39 @@ import model.units.Hero;
   COMBATE
   */
 
+  @Override
   public boolean stronger(IEquipableItem item) {
-    return item.weakerThanSpear();
+    return item.spearStrongerThan();
   }
 
   @Override
-  public boolean weakerThanAxe() { return true; }
+  public boolean weaker(IEquipableItem item) { return item.spearWeakerThan(); }
 
+
+  @Override
+  public boolean axeStrongerThan() { return true; }
+
+  @Override
+  public boolean swordWeakerThan() { return true; }
+
+
+  @Override
+  public boolean animaBookStrongerThan() {return true;}
+
+  @Override
+  public boolean luzBookStrongerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookStrongerThan() {return true;}
+
+  @Override
+  public boolean animaBookWeakerThan() {return true;}
+
+  @Override
+  public boolean luzBookWeakerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookWeakerThan() {return true;}
 
 
 }

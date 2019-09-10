@@ -28,28 +28,58 @@ public class LuzBook extends Book {
   COMBATE
   */
 
+    @Override
     public boolean stronger(IEquipableItem item) {
-        return item.weakerThanLuzBook();
+        return item.luzBookStrongerThan();
     }
 
-    @Override
-    public boolean weakerThanAnimaBook() { return true; }
+    public boolean weaker(IEquipableItem item) { return item.luzBookWeakerThan(); }
 
 
     @Override
-    public boolean weakerThanAxe() { return true; }
+    public boolean animaBookStrongerThan() {return true;}
 
     @Override
-    public boolean weakerThanSpear() { return true; }
+    public boolean oscuridadBookWeakerThan() {return true;}
+
+
+    //Un book es mas fuerte que to do lo que no es un book
 
     @Override
-    public boolean weakerThanSword()  { return true; }
+    public boolean axeStrongerThan() {return true;}
 
     @Override
-    public boolean weakerThanBow()  { return true; }
+    public boolean spearStrongerThan() {return true;}
 
     @Override
-    public boolean weakerThanStaff()  { return true; }
+    public boolean swordStrongerThan() {return true;}
+
+    @Override
+    public boolean staffStrongerThan() {return true;}
+
+    @Override
+    public boolean bowStrongerThan() {return true;}
+
+
+
+    //Un libro es mas debil que to do lo que no es un book
+
+    @Override
+    public boolean axeWeakerThan() {return true;}
+
+    @Override
+    public boolean spearWeakerThan() {return true;}
+
+    @Override
+    public boolean swordWeakerThan() {return true;}
+
+    @Override
+    public boolean staffWeakerThan() {return true;}
+
+    @Override
+    public boolean bowWeakerThan() {return true;}
+
+
 
 
 }

@@ -38,13 +38,39 @@ public class Axe extends AbstractItem {
   /*
   COMBATE
   */
-
+  @Override
   public boolean stronger(IEquipableItem item) {
-    return item.weakerThanAxe();
+    return item.axeStrongerThan();
   }
 
   @Override
-  public boolean weakerThanSword()  { return true; }
+  public boolean weaker(IEquipableItem item) { return item.axeWeakerThan(); }
+
+
+  @Override
+  public boolean swordStrongerThan()  { return true; }
+
+  @Override
+  public boolean spearWeakerThan() {return true;}
+
+
+  @Override
+  public boolean animaBookStrongerThan() {return true;}
+
+  @Override
+  public boolean luzBookStrongerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookStrongerThan() {return true;}
+
+  @Override
+  public boolean animaBookWeakerThan() {return true;}
+
+  @Override
+  public boolean luzBookWeakerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookWeakerThan() {return true;}
 
 
 }

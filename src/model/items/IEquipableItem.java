@@ -77,21 +77,41 @@ public interface IEquipableItem {
    */
   boolean stronger(IEquipableItem item);
 
-  boolean weakerThanAnimaBook();
+  boolean animaBookStrongerThan();
 
-  boolean weakerThanAxe();
+  boolean axeStrongerThan();
 
-  boolean weakerThanLuzBook();
+  boolean luzBookStrongerThan();
 
-  boolean weakerThanOscuridadBook();
+  boolean oscuridadBookStrongerThan();
 
-  boolean weakerThanSpear();
+  boolean spearStrongerThan();
 
-  boolean weakerThanSword();
+  boolean swordStrongerThan();
 
-  boolean weakerThanStaff();
+  boolean staffStrongerThan();
 
-  boolean weakerThanBow();
+  boolean bowStrongerThan();
+
+  boolean weaker(IEquipableItem item);
+
+  boolean animaBookWeakerThan();
+
+  boolean axeWeakerThan();
+
+  boolean luzBookWeakerThan();
+
+  boolean oscuridadBookWeakerThan();
+
+  boolean spearWeakerThan();
+
+  boolean swordWeakerThan();
+
+  boolean staffWeakerThan();
+
+  boolean bowWeakerThan();
+
+
 
 
 

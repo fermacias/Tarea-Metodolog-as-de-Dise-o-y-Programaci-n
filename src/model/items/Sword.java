@@ -37,13 +37,40 @@ public class Sword extends AbstractItem {
   /*
   COMBATE
   */
+
+  @Override
   public boolean stronger(IEquipableItem item) {
-    return item.weakerThanSword();
+    return item.swordStrongerThan();
   }
 
   @Override
-  public boolean weakerThanSpear() { return true; }
+  public boolean weaker(IEquipableItem item) { return item.swordWeakerThan(); }
 
+
+  @Override
+  public boolean spearStrongerThan() {return true;}
+
+  @Override
+  public boolean axeWeakerThan() {return true;}
+
+
+  @Override
+  public boolean animaBookStrongerThan() {return true;}
+
+  @Override
+  public boolean luzBookStrongerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookStrongerThan() {return true;}
+
+  @Override
+  public boolean animaBookWeakerThan() {return true;}
+
+  @Override
+  public boolean luzBookWeakerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookWeakerThan() {return true;}
 
 
 

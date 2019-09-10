@@ -41,8 +41,32 @@ public class Bow extends AbstractItem {
   */
 
   public boolean stronger(IEquipableItem item) {
-    return item.weakerThanBow();
+    return item.bowStrongerThan();
   }
+
+  public boolean weaker(IEquipableItem item) {return item.bowWeakerThan(); }
+
+
+  @Override
+  public boolean animaBookStrongerThan() {return true;}
+
+  @Override
+  public boolean luzBookStrongerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookStrongerThan() {return true;}
+
+  @Override
+  public boolean animaBookWeakerThan() {return true;}
+
+  @Override
+  public boolean luzBookWeakerThan() {return true;}
+
+  @Override
+  public boolean oscuridadBookWeakerThan() {return true;}
+
+
+
 
 
 

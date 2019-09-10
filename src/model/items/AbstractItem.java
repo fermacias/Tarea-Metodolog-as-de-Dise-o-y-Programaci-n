@@ -89,21 +89,37 @@ public abstract class AbstractItem implements IEquipableItem {
   PARA EL COMBATE
   */
 
-  public boolean weakerThanAnimaBook() { return false; }
+  public boolean animaBookStrongerThan() {return false;}
 
-  public boolean weakerThanAxe() { return false; }
+  public boolean axeStrongerThan() {return false;}
 
-  public boolean weakerThanLuzBook() { return false; }
+  public boolean luzBookStrongerThan() {return false;}
 
-  public boolean weakerThanOscuridadBook() { return false; }
+  public boolean oscuridadBookStrongerThan() {return false;}
 
-  public boolean weakerThanSpear() { return false; }
+  public boolean spearStrongerThan() {return false;}
 
-  public boolean weakerThanSword()  { return false; }
+  public boolean swordStrongerThan() {return false;}
 
-  public boolean weakerThanStaff()  { return false; }
+  public boolean staffStrongerThan() {return false;}
 
-  public boolean weakerThanBow()  { return false; }
+  public boolean bowStrongerThan() {return false;}
+
+  public boolean animaBookWeakerThan() {return false;}
+
+  public boolean axeWeakerThan() {return false;}
+
+  public boolean luzBookWeakerThan() {return false;}
+
+  public boolean oscuridadBookWeakerThan() {return false;}
+
+  public boolean spearWeakerThan() {return false;}
+
+  public boolean swordWeakerThan() {return false;}
+
+  public boolean staffWeakerThan() {return false;}
+
+  public boolean bowWeakerThan() {return false;}
 
 
 
