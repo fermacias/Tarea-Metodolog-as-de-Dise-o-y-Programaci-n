@@ -39,27 +39,13 @@ public class Cleric extends AbstractUnit {
     item.equipCleric(this);
   }
 
-
-  // Cleric no puede realizar ataques
-  @Override
-  public void attack(IUnit unit2) { this.heal(unit2); }
-
-  public void heal(IUnit unit2) {
-    IEquipableItem item1 = equippedItem;
-    int minDist = item1.getMinRange(), maxDist = item1.getMaxRange();
-    double dist = this.getLocation().distanceTo(unit2.getLocation());
-    if (item1 != null && minDist <= dist && dist <= maxDist) {
-      unit2.setCurrentHitPoints( unit2.getCurrentHitPoints() + item1.getPower() );
-    }
-  }
+  /*
+  COMBAT
+   */
 
   // Si no puede iniciar un ataque no puede iniciar un combate
   @Override
-  public void combat(IUnit unit2) {
-    if ( this.getCurrentHitPoints() != 0) {
-      this.heal(unit2);
-    }
-  }
+  public void combat(IUnit unit2) {  }
 
 
 

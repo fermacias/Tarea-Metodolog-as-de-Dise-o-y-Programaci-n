@@ -23,6 +23,7 @@ import model.map.Location;
 public abstract class AbstractUnit implements IUnit {
 
   protected final List<IEquipableItem> items = new ArrayList<>(); //Lista con los objetos que porta la unidad
+  private final int maxHitPoints;
   private int currentHitPoints;                                   //Cantidad de daño actual max que puede recibir la unidad
   private final int movement;                                     //Cantinan max de celdas que se puede desplazar en un turno
   protected IEquipableItem equippedItem;                          //Item que esta equipado (lo que tiene en la mano)
@@ -40,13 +41,20 @@ public abstract class AbstractUnit implements IUnit {
    * @param maxItems
    *     maximum amount of items this unit can carry
    */
-  protected AbstractUnit(int hitPoints, final int movement,
+  protected AbstractUnit(final int hitPoints, final int movement,
                          final Location location, final int maxItems, final IEquipableItem... items) {
+    this.maxHitPoints = hitPoints;
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
+    NullItem nullItem = new NullItem();
+    //nullItem.setOwner(this);
+    this.equippedItem = nullItem;
   }
+
+  @Override
+  public int getMaxHitPoints() { return maxHitPoints; }
 
   @Override
   public int getCurrentHitPoints() {
@@ -128,40 +136,19 @@ public abstract class AbstractUnit implements IUnit {
   }
 
 
-  @Override
-  public void attack(IUnit unit2) {
-    IEquipableItem item1 = equippedItem, item2= unit2.getEquippedItem();
-    int minDist = item1.getMinRange(), maxDist = item1.getMaxRange();
-    double dist = location.distanceTo(unit2.getLocation());
-
-    //si la unidad1 esta equipada y la otra unidad esta en el rango del item
-    if (item1 != null && minDist <= dist && dist <= maxDist) {
-      int damage = item1.getPower();
-
-      if(item2 != null) {
-        if (item1.stronger(item2)) { damage = damage * 3 / 2; }
-        else if (item2 != null && item2.weaker(item1)) { damage = damage - 20; }
-      }
-
-      unit2.setCurrentHitPoints( unit2.getCurrentHitPoints() - damage );
-
-      if(unit2.getCurrentHitPoints()<0){ unit2.setCurrentHitPoints(0); }
-
-    }
-  }
-
 
 
   //COMBATE
   @Override
-  public void combat (IUnit unit2) {
-    if ( currentHitPoints != 0) {
-      this.attack(unit2);
-      if ( unit2.getCurrentHitPoints() != 0) {
-        unit2.attack(this);
-      }
-    }
+  public void combat(IUnit unit2) {
+    IEquipableItem item1 = equippedItem;
+    IEquipableItem item2 = unit2.getEquippedItem();
+    if(currentHitPoints != 0) { item1.attack(item2); }
+    if(unit2.getCurrentHitPoints() != 0) { item2.attack(item1); }
   }
+
+
+
 
 
 }

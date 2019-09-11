@@ -43,41 +43,7 @@ public class LuzBook extends Book {
     public boolean oscuridadBookWeakerThan() {return true;}
 
 
-    //Un book es mas fuerte que to do lo que no es un book
 
-    @Override
-    public boolean axeStrongerThan() {return true;}
-
-    @Override
-    public boolean spearStrongerThan() {return true;}
-
-    @Override
-    public boolean swordStrongerThan() {return true;}
-
-    @Override
-    public boolean staffStrongerThan() {return true;}
-
-    @Override
-    public boolean bowStrongerThan() {return true;}
-
-
-
-    //Un libro es mas debil que to do lo que no es un book
-
-    @Override
-    public boolean axeWeakerThan() {return true;}
-
-    @Override
-    public boolean spearWeakerThan() {return true;}
-
-    @Override
-    public boolean swordWeakerThan() {return true;}
-
-    @Override
-    public boolean staffWeakerThan() {return true;}
-
-    @Override
-    public boolean bowWeakerThan() {return true;}
 
 
 

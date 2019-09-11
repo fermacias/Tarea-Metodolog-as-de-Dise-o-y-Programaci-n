@@ -1,14 +1,14 @@
 package model.units;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import model.items.*;
 import model.map.Field;
 import model.map.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.security.PublicKey;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -114,9 +114,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   public void checkEquippedItem(IEquipableItem item) {
-    assertNull(getTestUnit().getEquippedItem());
+    assertTrue(getTestUnit().getEquippedItem().IamNull());
     getTestUnit().equipItem(item);
-    assertNull(getTestUnit().getEquippedItem());
+    assertFalse(getTestUnit().getEquippedItem().IamNull());
   }
 
   /*
@@ -133,14 +133,13 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Override
   @Test
-  public void equipSwordTest() {
-    checkEquippedItem(getSword());
-  }
+  public void equipSwordTest() { checkEquippedItem(getSword()); }
 
   /**
    * @return the test sword
    */
   @Override
+  @Test
   public Sword getSword() {
     return sword;
   }
@@ -341,4 +340,69 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public Alpaca getTargetAlpaca() {
     return targetAlpaca;
   }
+
+
+  /*
+  COMBAT
+   */
+
+  @Override
+  @Test
+  public void alpacaCombat() {
+    Alpaca alpaca1 = new Alpaca(50, 2, field.getCell(1, 0));
+    alpaca1.addItem(axe);
+
+    Hero hero = new Hero(50, 2, field.getCell(2, 0));
+    hero.addItem(spear);
+    hero.equipItem(spear);
+
+    alpaca1.combat(hero);
+    assertEquals(50, alpaca1.getCurrentHitPoints());
+
+    hero.combat(alpaca1);
+    assertEquals(40, alpaca1.getCurrentHitPoints());
+    assertEquals(50, hero.getCurrentHitPoints());
+
+  }
+
+  @Override
+  @Test
+  public void clericCombat() {
+    Cleric cleric1 = new Cleric(50, 2, field.getCell(1, 0));
+    cleric1.addItem(staff);
+    cleric1.equipItem(staff);
+
+    Archer archer1 = new Archer(50, 2, field.getCell(2, 0));
+    archer1.setCurrentHitPoints(30);
+    archer1.addItem(bow);
+    archer1.equipItem(bow);
+
+    /*
+    cleric1.heal(archer1);
+    assertEquals(50, cleric1.getCurrentHitPoints());
+    assertEquals(40, archer1.getCurrentHitPoints());
+
+    archer1.combat(cleric1);
+    assertEquals();
+  */
+
+
+  }
+
+  @Override
+  @Test
+  public void completeCombat() {}
+
+  @Override
+  @Test
+  public void incompleteCombat() {}
+
+  @Override
+  @Test
+  public void wrongCombat() {}
+
+
+
+
+
 }

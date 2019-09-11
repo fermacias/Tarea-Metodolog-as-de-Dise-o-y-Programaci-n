@@ -121,6 +121,30 @@ public abstract class AbstractItem implements IEquipableItem {
 
   public boolean bowWeakerThan() {return false;}
 
+  /*
+  COMBAT
+   */
+
+  @Override
+  public void attack(IEquipableItem item2) {
+    int minDist = minRange;
+    int maxDist = maxRange;
+    double dist = this.owner.getLocation().distanceTo(item2.getOwner().getLocation());
+
+    if (minDist <= dist && dist <= maxDist) {
+      int damage = power;
+      if(this.stronger(item2)) { damage = (int)(damage * 1.5); }
+      if(this.weaker(item2)) { damage = damage - 20; }
+
+      if(damage < 0) { damage = 0; }
+      item2.getOwner().setCurrentHitPoints(damage);
+
+    }
+  }
+
+  public boolean IamNull(){
+    return false;
+  }
 
 
 }

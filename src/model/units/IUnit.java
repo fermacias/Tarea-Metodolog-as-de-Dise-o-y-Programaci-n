@@ -16,6 +16,12 @@ import model.map.Location;
 public interface IUnit {
 
   /**
+   *
+   * @return max hit points of the unit
+   */
+  int getMaxHitPoints();
+
+  /**
    * Sets the currently equipped item of this unit.
    *
    * @param item
@@ -98,9 +104,6 @@ public interface IUnit {
   /*
   COMBATE
    */
-
-  void attack(IUnit unit2);
-
 
   /**
    *

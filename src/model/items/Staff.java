@@ -2,6 +2,7 @@ package model.items;
 
 import model.units.Archer;
 import model.units.Cleric;
+import model.units.IUnit;
 
 /**
  * This class represents a <i>Staff</i> type item.
@@ -29,7 +30,7 @@ public class Staff extends AbstractItem {
     super(name, power, minRange, maxRange);
   }
 
-  public void equipCleric(final Cleric cleric) { this.equipTo(cleric); }
+  public void equipCleric( Cleric cleric) { this.equipTo(cleric); }
 
   /*
   COMBATE
@@ -60,6 +61,24 @@ public class Staff extends AbstractItem {
 
   @Override
   public boolean oscuridadBookWeakerThan() {return true;}
+
+
+  @Override
+  public void attack(IEquipableItem item2) {  }
+
+  public void heal(IEquipableItem item2) {
+    int minDist = minRange;
+    int maxDist = maxRange;
+    double dist = this.getOwner().getLocation().distanceTo(item2.getOwner().getLocation());
+
+    if (minDist <= dist && dist <= maxDist) {
+      int hp = this.getPower() + item2.getOwner().getCurrentHitPoints();
+
+      if(hp > item2.getOwner().getMaxHitPoints()) { hp = item2.getOwner().getMaxHitPoints(); }
+      item2.getOwner().setCurrentHitPoints(hp);
+
+    }
+  }
 
 
 }

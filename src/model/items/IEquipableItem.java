@@ -53,6 +53,7 @@ public interface IEquipableItem {
    */
   int getMaxRange();
 
+
   void equipArcher(Archer archer);
 
   void equipFighter(Fighter fighter);
@@ -110,6 +111,12 @@ public interface IEquipableItem {
   boolean staffWeakerThan();
 
   boolean bowWeakerThan();
+
+
+  void attack(IEquipableItem item2);
+
+
+  boolean IamNull();
 
 
 

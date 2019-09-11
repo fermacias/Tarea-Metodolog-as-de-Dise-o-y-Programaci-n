@@ -48,7 +48,7 @@ public interface ITestUnit {
    * @param item
    *     to be equipped
    */
-  void checkEquippedItem(IEquipableItem item);
+  IEquipableItem checkEquippedItem(IEquipableItem item);
 
   /**
    * Checks if the axe is equipped correctly to the unit    //chequea si el axe (hacha) fue equipada correctamente
@@ -173,4 +173,41 @@ public interface ITestUnit {
    * @return the target Alpaca      //retorna la alpaca que cree como blanco
    */
   Alpaca getTargetAlpaca();
+
+  /*
+  COMBAT
+   */
+
+  /**
+   * Testea un combate desde y hacia una alpaca
+   */
+  @Test
+  void alpacaCombat();
+
+  /**
+   * Testea un combate desde y para un cleric
+   */
+  @Test
+  void clericCombat();
+
+  /**
+   * Testea un combate con ataque y contra ataque
+   */
+  @Test
+  void completeCombat();
+
+  /**
+   * Testea un combate con ataque y sin contra ataque
+   */
+  @Test
+  void incompleteCombat();
+
+  /**
+   * Testea un combate que no sucede
+   */
+  @Test
+  void wrongCombat();
+
+
+
 }

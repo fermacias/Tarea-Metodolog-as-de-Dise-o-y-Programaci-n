@@ -30,9 +30,7 @@ public class Sword extends AbstractItem {
     super(name, power, minRange, maxRange);
   }
 
-  public void equipSword(final SwordMaster swordM) {
-    this.equipTo(swordM);
-  }
+  public void equipSword(final SwordMaster swordM) { this.equipTo(swordM); }
 
   /*
   COMBATE
@@ -45,7 +43,6 @@ public class Sword extends AbstractItem {
 
   @Override
   public boolean weaker(IEquipableItem item) { return item.swordWeakerThan(); }
-
 
   @Override
   public boolean spearStrongerThan() {return true;}
