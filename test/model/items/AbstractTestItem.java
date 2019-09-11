@@ -29,6 +29,7 @@ public abstract class AbstractTestItem implements ITestItem{
   protected LuzBook luzBook = new LuzBook("LuzBook", 10, 1, 2);
   protected OscuridadBook oscuridadBook = new OscuridadBook("OscuridadBook", 10, 1, 2);
   protected AnimaBook animaBook = new AnimaBook("AnimaBook", 10, 1, 2);
+  protected NullItem nullItem = new NullItem();
 
   /**
    * Sets up the items to be tested
@@ -252,6 +253,13 @@ public abstract class AbstractTestItem implements ITestItem{
     assertEquals(false, bow.weaker(spear));
     assertEquals(true, bow.stronger(animaBook));
     assertEquals(true, bow.weaker(animaBook));
+
+    assertEquals(false, nullItem.stronger(luzBook));
+    assertEquals(false, nullItem.weaker(luzBook));
+    assertEquals(false, nullItem.stronger(spear));
+    assertEquals(false, nullItem.weaker(spear));
+    assertEquals(false, nullItem.stronger(axe));
+    assertEquals(false, nullItem.weaker(axe));
 
   }
 

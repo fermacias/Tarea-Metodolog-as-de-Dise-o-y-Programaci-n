@@ -49,7 +49,7 @@ public abstract class AbstractUnit implements IUnit {
     this.location = location;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
     NullItem nullItem = new NullItem();
-    //nullItem.setOwner(this);
+    nullItem.setOwner(this);
     this.equippedItem = nullItem;
   }
 
@@ -127,7 +127,7 @@ public abstract class AbstractUnit implements IUnit {
     Location loc2 = unit2.getLocation();
     if(this.items.contains(item) && loc1.distanceTo(loc2) == 1 && unit2.canTake()) {
       if( this.equippedItem == item ) {
-        this.equippedItem = null;
+        this.equippedItem = new NullItem();
       }
       this.items.remove(item);
       unit2.addItem(item);
@@ -143,8 +143,13 @@ public abstract class AbstractUnit implements IUnit {
   public void combat(IUnit unit2) {
     IEquipableItem item1 = equippedItem;
     IEquipableItem item2 = unit2.getEquippedItem();
-    if(currentHitPoints != 0) { item1.attack(item2); }
-    if(unit2.getCurrentHitPoints() != 0) { item2.attack(item1); }
+    if(currentHitPoints != 0) {
+      item1.attack(item2);
+      if(unit2.getCurrentHitPoints() != 0) {
+        item2.attack(item1);
+      }
+    }
+
   }
 
 

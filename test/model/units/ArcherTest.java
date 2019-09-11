@@ -37,7 +37,7 @@ public class ArcherTest extends AbstractTestUnit {
   @Test
   @Override
   public void equipBowTest() {
-    assertNull(archer.getEquippedItem());
+    assert(archer.getEquippedItem().IamNull());
     archer.equipItem(bow);
     assertEquals(bow, archer.getEquippedItem());
   }

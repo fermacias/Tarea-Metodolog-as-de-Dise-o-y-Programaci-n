@@ -102,9 +102,10 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   @Test
   public void equipAxeTest() {
-    assertNull(getTestUnit().getEquippedItem());
+    assert(getTestUnit().getEquippedItem().IamNull());
     checkEquippedItem(getAxe());
   }
+
 
   /**
    * Tries to equip a weapon to the alpaca and verifies that it was not equipped
@@ -114,10 +115,11 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   public void checkEquippedItem(IEquipableItem item) {
-    assertTrue(getTestUnit().getEquippedItem().IamNull());
+    assert(getTestUnit().getEquippedItem().IamNull());
     getTestUnit().equipItem(item);
-    assertFalse(getTestUnit().getEquippedItem().IamNull());
+    assert(getTestUnit().getEquippedItem().IamNull());
   }
+
 
   /*
   TESTS PARA EQUIPAR ITEM
@@ -360,7 +362,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
     assertEquals(50, alpaca1.getCurrentHitPoints());
 
     hero.combat(alpaca1);
-    assertEquals(40, alpaca1.getCurrentHitPoints());
+    assertEquals(40, alpaca1.getCurrentHitPoints());  //10
     assertEquals(50, hero.getCurrentHitPoints());
 
   }
@@ -368,38 +370,91 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   @Test
   public void clericCombat() {
+
     Cleric cleric1 = new Cleric(50, 2, field.getCell(1, 0));
     cleric1.addItem(staff);
     cleric1.equipItem(staff);
 
-    Archer archer1 = new Archer(50, 2, field.getCell(2, 0));
-    archer1.setCurrentHitPoints(30);
-    archer1.addItem(bow);
-    archer1.equipItem(bow);
+    Fighter fighter = new Fighter(50, 2, field.getCell(2, 0));
+    fighter.setCurrentHitPoints(30);
+    fighter.addItem(axe);
+    fighter.equipItem(axe);
 
-    /*
-    cleric1.heal(archer1);
+
+    staff.heal(fighter);
     assertEquals(50, cleric1.getCurrentHitPoints());
-    assertEquals(40, archer1.getCurrentHitPoints());
+    assertEquals(40, fighter.getCurrentHitPoints());
 
-    archer1.combat(cleric1);
-    assertEquals();
-  */
+    fighter.combat(cleric1);
+    assertEquals(40, cleric1.getCurrentHitPoints());
+    assertEquals(40, fighter.getCurrentHitPoints());
 
+
+  }
+
+
+  @Override
+  @Test
+  public void completeCombat() {
+    Fighter fighter = new Fighter(50, 2, field.getCell(2, 0));
+    fighter.addItem(axe);
+    fighter.equipItem(axe);
+
+    SwordMaster swordMaster = new SwordMaster(50, 2, field.getCell(1, 0));
+    swordMaster.addItem(sword);
+    swordMaster.equipItem(sword);
+
+    //Cubre caso en que un item es fuerte y debil contra otra
+    fighter.combat(swordMaster);
+    assertEquals(50, swordMaster.getCurrentHitPoints());
+    assertEquals(35, fighter.getCurrentHitPoints());
 
   }
 
   @Override
   @Test
-  public void completeCombat() {}
+  public void incompleteCombat() {
+    Sorcerer sorcerer = new Sorcerer(50, 2, field.getCell(1, 0));
+    sorcerer.addItem(animaBook);
+    sorcerer.equipItem(animaBook);
+
+    Alpaca alpaca = new Alpaca(50, 2, field.getCell(1, 0));
+    //alpaca.addItem();
+
+  }
 
   @Override
   @Test
-  public void incompleteCombat() {}
+  public void wrongCombat() {
+    Fighter fighter = new Fighter(50, 2, field.getCell(8, 0));
+    fighter.addItem(axe);
+    fighter.equipItem(axe);
 
-  @Override
-  @Test
-  public void wrongCombat() {}
+    SwordMaster swordMaster = new SwordMaster(50, 2, field.getCell(1, 0));
+    swordMaster.addItem(sword);
+    swordMaster.equipItem(sword);
+
+    fighter.combat(swordMaster);
+    assertEquals(50, swordMaster.getCurrentHitPoints());
+    assertEquals(50, fighter.getCurrentHitPoints());
+
+    Alpaca alpaca = new Alpaca(50, 2, field.getCell(1, 0));
+    alpaca.addItem(animaBook);
+    alpaca.equipItem(animaBook);
+
+    alpaca.combat(swordMaster);
+    assertEquals(50, swordMaster.getCurrentHitPoints());
+    assertEquals(50, alpaca.getCurrentHitPoints());
+
+    Cleric cleric = new Cleric(50, 2, field.getCell(7, 0));
+    cleric.addItem(staff);
+    cleric.equipItem(staff);
+
+    cleric.combat(fighter);
+    assertEquals(50, fighter.getCurrentHitPoints());
+    assertEquals(50, cleric.getCurrentHitPoints());
+
+  }
 
 
 

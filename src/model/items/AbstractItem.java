@@ -129,7 +129,7 @@ public abstract class AbstractItem implements IEquipableItem {
   public void attack(IEquipableItem item2) {
     int minDist = minRange;
     int maxDist = maxRange;
-    double dist = this.owner.getLocation().distanceTo(item2.getOwner().getLocation());
+    double dist = (this.owner.getLocation()).distanceTo(item2.getOwner().getLocation());
 
     if (minDist <= dist && dist <= maxDist) {
       int damage = power;
@@ -137,7 +137,7 @@ public abstract class AbstractItem implements IEquipableItem {
       if(this.weaker(item2)) { damage = damage - 20; }
 
       if(damage < 0) { damage = 0; }
-      item2.getOwner().setCurrentHitPoints(damage);
+      item2.getOwner().setCurrentHitPoints( item2.getOwner().getCurrentHitPoints() - damage);
 
     }
   }

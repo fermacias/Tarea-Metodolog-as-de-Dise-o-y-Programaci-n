@@ -52,6 +52,9 @@ public class Alpaca extends AbstractUnit {
     return true;
   }
 
+  @Override
+  public void combat(IUnit unit2) { }
+
 
 
 }

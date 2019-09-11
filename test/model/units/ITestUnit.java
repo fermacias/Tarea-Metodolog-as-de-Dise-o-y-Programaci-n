@@ -48,7 +48,7 @@ public interface ITestUnit {
    * @param item
    *     to be equipped
    */
-  IEquipableItem checkEquippedItem(IEquipableItem item);
+  void checkEquippedItem(IEquipableItem item);
 
   /**
    * Checks if the axe is equipped correctly to the unit    //chequea si el axe (hacha) fue equipada correctamente

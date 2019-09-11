@@ -29,7 +29,7 @@ public class SorcererTest extends AbstractTestUnit {
     @Override
     @Test
     public void equipLuzBookTest() {
-        assertNull(sorcerer.getEquippedItem());
+        assert(sorcerer.getEquippedItem().IamNull());
         sorcerer.equipItem(luzBook);
         assertEquals(luzBook, sorcerer.getEquippedItem());
     }
@@ -38,7 +38,7 @@ public class SorcererTest extends AbstractTestUnit {
     @Override
     @Test
     public void equipOscuridadBookTest() {
-        assertNull(sorcerer.getEquippedItem());
+        assert(sorcerer.getEquippedItem().IamNull());
         sorcerer.equipItem(oscuridadBook);
         assertEquals(oscuridadBook, sorcerer.getEquippedItem());
     }
@@ -46,7 +46,7 @@ public class SorcererTest extends AbstractTestUnit {
     @Override
     @Test
     public void equipAnimaBookTest() {
-        assertNull(sorcerer.getEquippedItem());
+        assert(sorcerer.getEquippedItem().IamNull());
         sorcerer.equipItem(animaBook);
         assertEquals(animaBook, sorcerer.getEquippedItem());
     }

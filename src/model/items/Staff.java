@@ -66,19 +66,20 @@ public class Staff extends AbstractItem {
   @Override
   public void attack(IEquipableItem item2) {  }
 
-  public void heal(IEquipableItem item2) {
+  public void heal(IUnit unit2) {
     int minDist = minRange;
     int maxDist = maxRange;
-    double dist = this.getOwner().getLocation().distanceTo(item2.getOwner().getLocation());
+    double dist = this.getOwner().getLocation().distanceTo(unit2.getLocation());
 
     if (minDist <= dist && dist <= maxDist) {
-      int hp = this.getPower() + item2.getOwner().getCurrentHitPoints();
+      int hp = this.getPower() + unit2.getCurrentHitPoints();
 
-      if(hp > item2.getOwner().getMaxHitPoints()) { hp = item2.getOwner().getMaxHitPoints(); }
-      item2.getOwner().setCurrentHitPoints(hp);
+      if(hp > unit2.getMaxHitPoints()) { hp = unit2.getMaxHitPoints(); }
+      unit2.setCurrentHitPoints(hp);
 
     }
   }
+
 
 
 }
