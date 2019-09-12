@@ -3,6 +3,16 @@ package model.units;
 import model.items.IEquipableItem;
 import model.map.Location;
 
+/**
+ * This class represents an <i>Sorcerer</i> type unit.
+ * <p>
+ * This kind of unit <b>can only use books</b>.
+ *
+ * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
+ *
+ * @since 1.0
+ */
 public class Sorcerer extends AbstractUnit{
     /**
      * Creates a new sorcerer
@@ -29,6 +39,7 @@ public class Sorcerer extends AbstractUnit{
      * @param item
      *     the item to equip
      */
+    @Override
     public void equipItem(final IEquipableItem item) {
         item.equipSorcerer(this);
     }

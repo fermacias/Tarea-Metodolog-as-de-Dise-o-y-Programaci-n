@@ -1,14 +1,12 @@
 package model.units;
-
 import static java.lang.Math.min;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-
 import model.items.*;
 import model.map.Location;
+
+
 
 /**
  * This class represents an abstract unit.
@@ -18,16 +16,19 @@ import model.map.Location;
  * units.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macias Herrera
+ *
  * @since 1.0
  */
 public abstract class AbstractUnit implements IUnit {
 
-  protected final List<IEquipableItem> items = new ArrayList<>(); //Lista con los objetos que porta la unidad
+  protected final List<IEquipableItem> items = new ArrayList<>();
   private final int maxHitPoints;
-  private int currentHitPoints;                                   //Cantidad de daño actual max que puede recibir la unidad
-  private final int movement;                                     //Cantinan max de celdas que se puede desplazar en un turno
-  protected IEquipableItem equippedItem;                          //Item que esta equipado (lo que tiene en la mano)
-  private Location location;                                      //Ubicación actual en el mapa
+  private int currentHitPoints;
+  private final int movement;
+  protected IEquipableItem equippedItem;
+  private Location location;
+
 
   /**
    * Creates a new Unit.
@@ -52,6 +53,8 @@ public abstract class AbstractUnit implements IUnit {
     nullItem.setOwner(this);
     this.equippedItem = nullItem;
   }
+
+
 
   @Override
   public int getMaxHitPoints() { return maxHitPoints; }
@@ -107,11 +110,6 @@ public abstract class AbstractUnit implements IUnit {
 
 
 
-  /**
-   *
-   * @return boolean
-   *      indica si tiene menos de 3 items
-   */
   @Override
   public boolean canTake() {
     if(this.items.size()<3)
@@ -137,8 +135,10 @@ public abstract class AbstractUnit implements IUnit {
 
 
 
+  /*
+  COMBAT
+   */
 
-  //COMBATE
   @Override
   public void combat(IUnit unit2) {
     IEquipableItem item1 = equippedItem;

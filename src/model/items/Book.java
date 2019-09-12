@@ -1,8 +1,12 @@
 package model.items;
 
-import model.units.Archer;
-import model.units.Sorcerer;
-
+/**
+ * Abstract class that defines the behaviour of Magic Books.
+ *
+ * @author Fernanda Macías Herrera
+ *
+ * @since 1.0
+ */
 public abstract class Book extends AbstractItem{
 
     /**
@@ -21,39 +25,85 @@ public abstract class Book extends AbstractItem{
         super(name, power, minRange, maxRange);
     }
 
-    //Un book es mas fuerte que to do lo que no es un book
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The axe is stronger than <i>Books</i>.
+     */
     @Override
     public boolean axeStrongerThan() {return true;}
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The spear is stronger than <i>Books</i>.
+     */
     @Override
     public boolean spearStrongerThan() {return true;}
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The sword is stronger than <i>Books</i>.
+     */
     @Override
     public boolean swordStrongerThan() {return true;}
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The staff is stronger than <i>Books</i>.
+     */
     @Override
     public boolean staffStrongerThan() {return true;}
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The bow is stronger than <i>Books</i>.
+     */
     @Override
     public boolean bowStrongerThan() {return true;}
 
 
-
-    //Un libro es mas debil que to do lo que no es un book
-
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The axe is weaker than <i>Books</i>.
+     */
     @Override
     public boolean axeWeakerThan() {return true;}
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The spear is weaker than <i>Books</i>.
+     */
     @Override
     public boolean spearWeakerThan() {return true;}
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The sword is weaker than <i>Books</i>.
+     */
     @Override
     public boolean swordWeakerThan() {return true;}
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The staff is weaker than <i>Books</i>.
+     */
     @Override
     public boolean staffWeakerThan() {return true;}
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The bow is weaker than <i>Books</i>.
+     */
     @Override
     public boolean bowWeakerThan() {return true;}
 

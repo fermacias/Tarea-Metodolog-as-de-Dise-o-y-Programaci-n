@@ -1,6 +1,5 @@
 package model.items;
 
-import model.units.Archer;
 import model.units.Cleric;
 import model.units.IUnit;
 
@@ -10,6 +9,8 @@ import model.units.IUnit;
  * A staff is an item that can heal other units nut cannot counter any attack
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
+ *
  * @since 1.0
  */
 public class Staff extends AbstractItem {
@@ -30,42 +31,98 @@ public class Staff extends AbstractItem {
     super(name, power, minRange, maxRange);
   }
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The <i>Staff</i> can equip a Cleric.
+   */
   public void equipCleric( Cleric cleric) { this.equipTo(cleric); }
 
   /*
   COMBATE
   */
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The <i>Staff</i> is stronger than AnimaBook, LuzBook, OscuridadBook
+   */
   @Override
   public boolean stronger(IEquipableItem item) {
     return item.staffStrongerThan();
   }
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The <i>Staff</i> is weaker than AnimaBook, LuzBook, OscuridadBook
+   */
   @Override
   public boolean weaker(IEquipableItem item) { return item.staffWeakerThan(); }
 
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The AnimaBook is stronger than <i>Spear</i>.
+   */
   @Override
   public boolean animaBookStrongerThan() {return true;}
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The LuzBook is stronger than <i>Spear</i>.
+   */
   @Override
   public boolean luzBookStrongerThan() {return true;}
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The OscuridadBook is stronger than <i>Spear</i>.
+   */
   @Override
   public boolean oscuridadBookStrongerThan() {return true;}
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The AnimaBook is weaker than <i>Spear</i>.
+   */
   @Override
   public boolean animaBookWeakerThan() {return true;}
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The LuzBook is weaker than <i>Spear</i>.
+   */
   @Override
   public boolean luzBookWeakerThan() {return true;}
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The OscuridadBook is weaker than <i>Spear</i>.
+   */
   @Override
   public boolean oscuridadBookWeakerThan() {return true;}
 
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The <i>Staff</i> cannot attack.
+   */
   @Override
   public void attack(IEquipableItem item2) {  }
 
+  /**
+   *
+   * @param unit2
+   *    Is cured by the staff
+   */
   public void heal(IUnit unit2) {
     int minDist = minRange;
     int maxDist = maxRange;

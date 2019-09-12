@@ -11,6 +11,8 @@ import model.map.Location;
  * except some special ones can carry at most 3 weapons.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
+ *
  * @since 1.0
  */
 public interface IUnit {
@@ -20,14 +22,6 @@ public interface IUnit {
    * @return max hit points of the unit
    */
   int getMaxHitPoints();
-
-  /**
-   * Sets the currently equipped item of this unit.
-   *
-   * @param item
-   *     the item to equip
-   */
-  void equipItem(IEquipableItem item);
 
   /**
    * @return hit points of the unit
@@ -84,19 +78,41 @@ public interface IUnit {
    */
   void moveTo(Location targetLocation);
 
+  /*
+  EQUIP ITEM
+   */
+
   /**
+   *
+   * Sets the currently equipped item of this unit.
+   *
    * @param item
-   *    se entrega
+   *     the item to equip
+   */
+  void equipItem(IEquipableItem item);
+
+  /*
+  EXCHANGE ITEMS
+   */
+  /**
+   *
+   * An unit gives an item to another
+   *
+   * @param item
+   *    unit give that item
    * @param unit2
-   *    recibe el item
+   *    unite that recieve the item
    */
   void giveItem(IEquipableItem item, IUnit unit2);
 
   /**
+   * Says if an unit can recieve a new item
+   *
    * @return boolean
-   *    indica si una unidad puede recibir un item o no
-   *    en las alpacas siempre es true
-   *    en el resto es true si tiene menos de tres items
+   *    return true if the unit can recieve an item
+   *    and false if the unit cant recieve an item
+   *    alpaca can always recieve an item
+   *
    */
   boolean canTake();
 
@@ -107,18 +123,12 @@ public interface IUnit {
 
   /**
    *
-   * unit1.combat(item, unit1, true) indica un ataque
-   * caso 1: si el ataque es posible se produce y se ejecuta
-   * unit2.combat(item, unit2, false) el contra ataque
-   * si estes es posible se ejecuta y el combate acaba
-   * caso 2: si el ataque no es posible el combate acaba
-   *
-   * si en algun momento del combate una de las unidades es
-   * derrotada el combate acaba
-   * para atacar se debe estar equipado
+   * Makes a combat, if the first unit is eqquiped, the item attack.
+   * Then, if the second unit is eqquiped, the item attack.
+   * If the unit has 0 hit points, the combat ends.
    *
    * @param unit
-   *      unidad a la que deseo atacar
+   *      the second unit
    *
    */
   void combat(IUnit unit);

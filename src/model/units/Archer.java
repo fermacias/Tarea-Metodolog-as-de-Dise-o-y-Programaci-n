@@ -1,10 +1,8 @@
 package model.units;
 
-import model.items.Axe;
-import model.items.Bow;
 import model.items.IEquipableItem;
-import model.items.Sword;
 import model.map.Location;
+
 
 /**
  * This class represents an <i>Archer</i> type unit.
@@ -12,6 +10,8 @@ import model.map.Location;
  * This kind of unit <b>can only use bows</b>.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
+ *
  * @since 1.0
  */
 public class Archer extends AbstractUnit {

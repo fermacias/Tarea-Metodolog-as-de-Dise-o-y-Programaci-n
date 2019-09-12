@@ -3,7 +3,6 @@ package model.units;
 import model.items.IEquipableItem;
 import model.map.Location;
 
-import java.util.List;
 
 /**
  * This class represents an <i>Alpaca</i> type unit.
@@ -12,6 +11,8 @@ import java.util.List;
  * them.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
+ *
  * @since 1.0
  */
 
@@ -43,15 +44,20 @@ public class Alpaca extends AbstractUnit {
   }
 
   /**
-   *
-   * @return boolean
-   *      no tiene limite para recibir items
-   *      siempre retorna true
+   * {@inheritDoc}
+   * <p>
+   * The <i>Alpaca</i> always can take a new item.
    */
+  @Override
   public boolean canTake() {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * The <i>Alpaca</i> cannot begin a combat.
+   */
   @Override
   public void combat(IUnit unit2) { }
 

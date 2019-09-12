@@ -1,12 +1,8 @@
 package model.units;
 
-import model.items.Axe;
-import model.items.Bow;
 import model.items.IEquipableItem;
-import model.items.Sword;
 import model.map.Location;
 
-import java.util.List;
 
 /**
  * This class represents a <i>SwordMaster</i> type unit.
@@ -14,6 +10,8 @@ import java.util.List;
  * A <i>SwordMaster</i> is a unit that <b>can only use sword type weapons</b>.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
+ *
  * @since 1.0
  */
 public class SwordMaster extends AbstractUnit {
@@ -25,6 +23,8 @@ public class SwordMaster extends AbstractUnit {
 
   /**
    * Sets the currently equipped item of this unit.
+   * <p>
+   * The <i>SwordMaster</i> can <b>only equip Swords</b>.
    *
    * @param item the item to equip
    */

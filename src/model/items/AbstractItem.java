@@ -6,6 +6,8 @@ import model.units.*;
  * Abstract class that defines some common information and behaviour between all items.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
+ *
  * @since 1.0
  */
 public abstract class AbstractItem implements IEquipableItem {
@@ -73,52 +75,74 @@ public abstract class AbstractItem implements IEquipableItem {
   PARA EQUIPAR
   */
 
+  @Override
   public void equipArcher(final Archer archer) {  }
 
+  @Override
   public void equipFighter(final Fighter fighter) {  }
 
+  @Override
   public void equipSword(final SwordMaster sword) {  }
 
+  @Override
   public void equipCleric(final Cleric cleric) {  }
 
+  @Override
   public void equipHero(final Hero hero) {  }
 
+  @Override
   public void equipSorcerer(final Sorcerer sorcerer) {  }
 
   /*
   PARA EL COMBATE
   */
 
+  @Override
   public boolean animaBookStrongerThan() {return false;}
 
+  @Override
   public boolean axeStrongerThan() {return false;}
 
+  @Override
   public boolean luzBookStrongerThan() {return false;}
 
+  @Override
   public boolean oscuridadBookStrongerThan() {return false;}
 
+  @Override
   public boolean spearStrongerThan() {return false;}
 
+  @Override
   public boolean swordStrongerThan() {return false;}
 
+  @Override
   public boolean staffStrongerThan() {return false;}
 
+  @Override
   public boolean bowStrongerThan() {return false;}
 
+  @Override
   public boolean animaBookWeakerThan() {return false;}
 
+  @Override
   public boolean axeWeakerThan() {return false;}
 
+  @Override
   public boolean luzBookWeakerThan() {return false;}
 
+  @Override
   public boolean oscuridadBookWeakerThan() {return false;}
 
+  @Override
   public boolean spearWeakerThan() {return false;}
 
+  @Override
   public boolean swordWeakerThan() {return false;}
 
+  @Override
   public boolean staffWeakerThan() {return false;}
 
+  @Override
   public boolean bowWeakerThan() {return false;}
 
   /*
@@ -142,6 +166,7 @@ public abstract class AbstractItem implements IEquipableItem {
     }
   }
 
+  @Override
   public boolean IamNull(){
     return false;
   }

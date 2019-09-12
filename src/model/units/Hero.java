@@ -1,10 +1,8 @@
 package model.units;
 
 import model.items.IEquipableItem;
-import model.items.Spear;
 import model.map.Location;
 
-import java.util.List;
 
 /**
  * A <i>Hero</i> is a special kind of unit, the player that defeats this unit wins the game.
@@ -31,6 +29,8 @@ public class Hero extends AbstractUnit {
 
   /**
    * Sets the currently equipped item of this unit.
+   * <p>
+   * The <i>Hero</i> can <b>only equip Spears</b>.
    *
    * @param item
    *     the item to equip

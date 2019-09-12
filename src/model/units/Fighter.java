@@ -1,18 +1,15 @@
 package model.units;
 
-import model.items.Axe;
-import model.items.Bow;
 import model.items.IEquipableItem;
-import model.items.Sword;
 import model.map.Location;
 
-import java.util.List;
 
 /**
  * This class represents a fighter type unit.
  * A fighter is a unit that can only use axe type weapons.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernandda Macías Herrera
  * @since 1.0
  */
 public class Fighter extends AbstractUnit {
@@ -24,6 +21,8 @@ public class Fighter extends AbstractUnit {
 
   /**
    * Sets the currently equipped item of this unit.
+   * <p>
+   * The <i>Fighter</i> can <b>only equip Axes</b>.
    *
    * @param item
    *     the item to equip
