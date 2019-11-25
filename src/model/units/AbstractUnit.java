@@ -143,13 +143,12 @@ public abstract class AbstractUnit implements IUnit {
   public void combat(IUnit unit2) {
     IEquipableItem item1 = equippedItem;
     IEquipableItem item2 = unit2.getEquippedItem();
-    if(currentHitPoints != 0) {
+    if(currentHitPoints != 0 && unit2.getCurrentHitPoints() != 0) {
       item1.attack(item2);
-      if(unit2.getCurrentHitPoints() != 0) {
+      if(currentHitPoints != 0 && unit2.getCurrentHitPoints() != 0) {
         item2.attack(item1);
       }
     }
-
   }
 
 
