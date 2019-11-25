@@ -1,4 +1,4 @@
-package Factory.UnitFactory;
+package factory.UnitFactory;
 
 import model.units.IUnit;
 

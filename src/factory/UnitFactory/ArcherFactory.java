@@ -1,4 +1,4 @@
-package Factory.UnitFactory;
+package factory.UnitFactory;
 
 public class ArcherFactory implements Factory {
 }

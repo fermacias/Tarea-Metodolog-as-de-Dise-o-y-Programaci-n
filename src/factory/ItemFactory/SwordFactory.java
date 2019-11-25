@@ -1,4 +1,4 @@
-package Factory.ItemFactory;
+package factory.ItemFactory;
 
 import model.items.Sword;
 
