@@ -2,8 +2,18 @@ package factory.ItemFactory;
 
 import model.items.AnimaBook;
 
-public class AnimaBookFactory implements ItemFactory {
+/**
+ * This class represents a Factory that can create only AnimaBook items.
+ *
+ * @author Fernanda Macías Herrera
+ *
+ * @since 1.0
+ */
+public class AnimaBookFactory implements IItemFactory {
 
-    public AnimaBook create() { return new AnimaBook("AnimaBook", 0, 0, 0); }
+    @Override
+    public AnimaBook create() {
+        return new AnimaBook("AnimaBook", 0, 0, 0);
+    }
 
 }

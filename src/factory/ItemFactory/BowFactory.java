@@ -2,8 +2,18 @@ package factory.ItemFactory;
 
 import model.items.Bow;
 
-public class BowFactory implements ItemFactory {
+/**
+ * This class represents a Factory that can create only Bow items.
+ *
+ * @author Fernanda Macías Herrera
+ *
+ * @since 1.0
+ */
+public class BowFactory implements IItemFactory {
 
-    public Bow create() { return new Bow("Bow", 0, 0, 0); }
+    @Override
+    public Bow create() {
+        return new Bow("Bow", 0, 0, 0);
+    }
 
 }

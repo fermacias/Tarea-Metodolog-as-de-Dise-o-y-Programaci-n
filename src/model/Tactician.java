@@ -1,6 +1,9 @@
 package model;
 
 import controller.GameController;
+import factory.ItemFactory.IItemFactory;
+import factory.UnitFactory.IUnitFactory;
+import model.items.IEquipableItem;
 import model.units.IUnit;
 
 import java.util.ArrayList;
@@ -24,6 +27,10 @@ public class Tactician {
     private List<IUnit> unitList = new ArrayList<>();
     private GameController controller;
     private IUnit selectedUnit;
+
+    /* Factory */
+    private IUnitFactory unitFactory;
+    private IItemFactory itemFactory;
 
 
     /**
@@ -60,8 +67,42 @@ public class Tactician {
     public IUnit getSelectedUnit() { return selectedUnit; }
 
 
+    /* Factory */
 
+    /**
+     *
+     * @param unitFactory
+     *      the unitFactory I want to use
+     */
+    public void unitFactory(IUnitFactory unitFactory) {
+        this.unitFactory = unitFactory;
+    }
 
+    /**
+     *
+     * @return
+     *      a new unit created by the selected unitFactory
+     */
+    public IUnit newUnit() {
+        return unitFactory.create();
+    }
 
+    /**
+     *
+     * @param itemFactory
+     *      the itemFactory I want to use
+     */
+    public void itemFactory(IItemFactory itemFactory) {
+        this.itemFactory = itemFactory;
+    }
+
+    /**
+     *
+     * @return
+     *      a new item created by the selected unitFactory
+     */
+    public IEquipableItem newItem() {
+        return itemFactory.create();
+    }
 
 }

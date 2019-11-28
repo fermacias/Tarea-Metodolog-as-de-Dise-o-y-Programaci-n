@@ -2,8 +2,18 @@ package factory.ItemFactory;
 
 import model.items.Sword;
 
-public class SwordFactory implements ItemFactory {
+/**
+ * This class represents a Factory that can create only Sword items.
+ *
+ * @author Fernanda Macías Herrera
+ *
+ * @since 1.0
+ */
+public class SwordFactory implements IItemFactory {
 
-    public Sword create() { return new Sword("Sword", 0, 0, 0); }
+    @Override
+    public Sword create() {
+        return new Sword("Sword", 0, 0, 0);
+    }
 
 }

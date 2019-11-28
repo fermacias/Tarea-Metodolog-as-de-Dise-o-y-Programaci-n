@@ -2,7 +2,17 @@ package factory.ItemFactory;
 
 import model.items.Axe;
 
-public class AxeFactory implements ItemFactory {
+/**
+ * This class represents a Factory that can create only Axe items.
+ *
+ * @author Fernanda Macías Herrera
+ *
+ * @since 1.0
+ */
+public class AxeFactory implements IItemFactory {
 
-    public Axe create() { return new Axe("Axe", 0, 0, 0); }
+    @Override
+    public Axe create() {
+        return new Axe("Axe", 0, 0, 0);
+    }
 }

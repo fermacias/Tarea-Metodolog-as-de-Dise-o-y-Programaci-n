@@ -3,7 +3,18 @@ package factory.UnitFactory;
 import model.map.Location;
 import model.units.SwordMaster;
 
-public class SwordMasterFactory implements UnitFactory {
+/**
+ * This class represents a Factory that can create only Sword Master units.
+ *
+ * @author Fernanda Macías Herrera
+ *
+ * @since 1.0
+ */
+public class SwordMasterFactory implements IUnitFactory {
 
-    public SwordMaster create() { return new SwordMaster(0,0, new Location(0,0)); }
+    @Override
+    public SwordMaster create() {
+        return new SwordMaster(0,0, new Location(0,0));
+    }
+
 }

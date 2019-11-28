@@ -188,15 +188,12 @@ public class Field {
         c++;  // I added a new cell
       }
 
-      // para evitar quedarme con la cola vacia
+      // Becouse I don´t want an empty queue
       else if(colaX.isEmpty()) {
         colaX.add(x+1);
         colaY.add(y);
       }
-
     }
-
-
   }
 
 
