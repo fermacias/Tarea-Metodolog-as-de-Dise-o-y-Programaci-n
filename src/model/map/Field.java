@@ -18,6 +18,7 @@ public class Field {
   private Random random = new Random();
   private StringBuilder builder = new StringBuilder();
 
+
   /**
    * Add cells to the map.
    *
@@ -38,6 +39,7 @@ public class Field {
     }
   }
 
+
   /**
    * Adds a cell to the map
    *
@@ -47,6 +49,7 @@ public class Field {
   private void addCell(final Location cell) {
     map.put(cell.toString(), cell);
   }
+
 
   /**
    * Gets the possible adjacent cells to a given cell
@@ -62,12 +65,14 @@ public class Field {
         getCell(row, col + 1)};
   }
 
+
   /**
    * Creates a connection between 2 cells
    */
   private void addConnection(Location cell1, Location cell2) {
     cell1.addNeighbour(cell2);
   }
+
 
   /**
    * @param row
@@ -80,6 +85,7 @@ public class Field {
     String id = generateID(row, col);
     return map.getOrDefault(id, new InvalidLocation());
   }
+
 
   /**
    * Creates a map key from a row and a column
@@ -99,6 +105,7 @@ public class Field {
   public Map<String, Location> getMap() {
     return Map.copyOf(map);
   }
+
 
   /**
    * Checks if the map is connected using BFS.
@@ -125,6 +132,7 @@ public class Field {
     return false;
   }
 
+
   /**
    * Removes a connection from two locations of the field
    */
@@ -134,10 +142,65 @@ public class Field {
     }
   }
 
+
   /**
    * Checks if two cells of the map are connected
    */
   public boolean checkConnection(final Location cell1, final Location cell2) {
     return cell1.isNeighbour(cell2);
   }
+
+
+
+  /**
+   *
+   * Creates a new random map from a cell in (0,0)
+   *
+   * @param n
+   *    the number of cells you want to add
+   */
+  public void randomField(int n) {
+
+    Queue<Integer> colaX= new LinkedList();
+    Queue<Integer> colaY= new LinkedList();
+    colaX.add(0);
+    colaY.add(0);
+    int x, y, c=0;
+
+    while (c!=n) {
+
+      x=colaX.poll();
+      y=colaY.poll();
+
+      // I decide whether to advance in x from (x,y)
+      if (c%2!=0 && Math.random()<0.5 && !map.containsKey("(" + (x+1) + ", " + y + ")")) {
+        this.addCells(c%3!=0, new Location(x+1, y));
+        colaX.add(x+1);
+        colaY.add(y);
+        c++;  // I added a new cell
+      }
+
+      // I decide whether to advance in y from (x,y)
+      else if(c%2==0 && c<n && Math.random()<0.5 && !map.containsKey("(" + x + ", " + (y+1) + ")")) {
+        this.addCells(c%3!=0, new Location(x, y+1));
+        colaX.add(x);
+        colaY.add(y+1);
+        c++;  // I added a new cell
+      }
+
+      // para evitar quedarme con la cola vacia
+      else if(colaX.isEmpty()) {
+        colaX.add(x+1);
+        colaY.add(y);
+      }
+
+    }
+
+
+  }
+
+
+
+
+
 }
