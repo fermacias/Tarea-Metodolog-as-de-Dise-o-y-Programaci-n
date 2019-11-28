@@ -2,7 +2,7 @@ package factory.ItemFactory;
 
 import model.items.IEquipableItem;
 
-public interface ItemFactory {
+public interface IItemFactory {
 
     public IEquipableItem create();
 }
