@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
  * @since v2.0
  */
 class GameControllerTest {
@@ -171,4 +173,18 @@ class GameControllerTest {
   @Test
   void giveItemTo() {
   }
+
+  @Test
+  void newOrderTest() {
+    controller.newOrder();
+    List<String> names = new ArrayList<>();
+    names.add("Player 0");
+    names.add("Player 1");
+    names.add("Player 2");
+    names.add("Player 3");
+    for(int i=0; i<4; i--) {
+      assertTrue(names.remove(controller.getTurns().remove(0).getName()));
+    }
+  }
+
 }

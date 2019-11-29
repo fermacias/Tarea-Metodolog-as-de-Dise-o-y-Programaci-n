@@ -66,6 +66,13 @@ public class Tactician {
      */
     public IUnit getSelectedUnit() { return selectedUnit; }
 
+    /* Funcionalidades */
+
+    public void addUnit(IUnit unit) {
+        this.unitList.add(unit);
+    }
+
+
 
     /* Factory */
 
@@ -83,8 +90,8 @@ public class Tactician {
      * @return
      *      a new unit created by the selected unitFactory
      */
-    public IUnit newUnit() {
-        return unitFactory.create();
+    public void newUnit() {
+        this.addUnit(unitFactory.create());
     }
 
     /**
@@ -104,5 +111,9 @@ public class Tactician {
     public IEquipableItem newItem() {
         return itemFactory.create();
     }
+
+
+
+
 
 }
