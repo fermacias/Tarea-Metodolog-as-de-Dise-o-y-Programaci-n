@@ -165,6 +165,21 @@ public class GameController {
   }
 
   /**
+   *
+   * @param i
+   *    the tactician´s position in tacticianList
+   * @return
+   *    the tactician´s name
+   */
+  public String getTacticianName(int i) { return tacticianList.get(0).getName();}
+
+
+
+  /*
+  FACTORY
+   */
+
+  /**
    * Assign units to each tactician, and items to each unit
    *
    * @param n
@@ -185,7 +200,7 @@ public class GameController {
 
 
   /**
-   * Assing n items to each unit of each tactician using different factories
+   * Assign n items to each unit of each tactician using different factories
    * @param n
    *    the number of items per unit
    * @param factories
@@ -197,8 +212,6 @@ public class GameController {
       tactician.createItems(4, factoryList);
     }
   }
-
-
 
 
   /* HACER */
@@ -230,14 +243,30 @@ public class GameController {
    */
   public void initEndlessGame() {
     maxRoundNumber = -1;
-    // asigna unidades e items
+    // asigna unidades
+    this.createUnits(3, new ArcherFactory(), new ArcherFactory(), new ClericFactory(),
+            new FighterFactory(), new HeroFactory(), new SorcererFactory(), new SwordMasterFactory());
+
+    // asigna items
+    this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
+            new SpearFactory(), new StaffFactory(), new SwordFactory());
   }
 
   /**
    * @return the winner of this game, if the match ends in a draw returns a list of all the winners
    */
   public List<String> getWinners() {
-    return null;
+    List<String> winners = new ArrayList<>();
+    int max = 0;
+    for (Tactician tactician : tacticianList)
+      if (tactician.getUnitsNumber() > max)
+        max = tactician.getUnitsNumber();
+
+    for (int i=0; i<tacticianList.size(); i++)
+      if (tacticianList.get(i).getUnitsNumber() == max)
+        this.getTacticianName(i);
+
+    return winners;
   }
 
   /**

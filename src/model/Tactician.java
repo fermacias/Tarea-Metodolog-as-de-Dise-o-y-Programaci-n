@@ -73,7 +73,7 @@ public class Tactician {
         this.unitList.add(unit);
     }
 
-
+    public int getUnitsNumber() {return unitList.size(); }
 
     /* Factory */
 
