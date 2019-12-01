@@ -1,6 +1,8 @@
 package model.units;
 
 import java.util.List;
+
+import factory.ItemFactory.IItemFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
 
@@ -109,7 +111,7 @@ public interface IUnit {
   void giveItem(IEquipableItem item, IUnit unit2);
 
   /**
-   * Says if an unit can recieve a new item
+   * Say if an unit can recieve a new item
    *
    * @return boolean
    *    return true if the unit can recieve an item
@@ -121,12 +123,12 @@ public interface IUnit {
 
 
   /*
-  COMBATE
+  COMBAT
    */
 
   /**
    *
-   * Makes a combat, if the first unit is eqquiped, the item attack.
+   * Make a combat, if the first unit is eqquiped, the item attack.
    * Then, if the second unit is eqquiped, the item attack.
    * If the unit has 0 hit points, the combat ends.
    *
@@ -136,5 +138,31 @@ public interface IUnit {
    */
   void combat(IUnit unit);
 
+
+  /*
+  FACTORY
+   */
+
+  /**
+   *
+   * @param itemFactory
+   *      the itemFactory I want to use
+   *
+   */
+  void itemFactory(IItemFactory itemFactory);
+
+  /**
+   *
+   * create and add to the itemsList a new item using the unitFactory
+   *
+   */
+  void newItem();
+
+  /**
+   *
+   * create and add to the itemList the equipable item of the unit
+   *
+   */
+  void addEquipableItem();
 
 }

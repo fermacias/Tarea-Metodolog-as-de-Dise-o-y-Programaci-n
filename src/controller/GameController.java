@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import factory.ItemFactory.*;
 import factory.UnitFactory.*;
 import model.Tactician;
 import model.items.IEquipableItem;
@@ -11,7 +12,6 @@ import model.map.Field;
 import model.map.Location;
 import model.units.IUnit;
 
-// import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -165,14 +165,14 @@ public class GameController {
   }
 
   /**
-   * Assing units to each tactician
+   * Assign units to each tactician, and items to each unit
    *
    * @param n
    *    the number of units per tactician
    * @param factories
    *    the factories to creat the units
    */
-  public void assingUnits(int n, IUnitFactory... factories) {
+  public void createUnits(int n, IUnitFactory... factories) {
     List<IUnitFactory> factoryList = Arrays.asList(factories);
     for(Tactician tactician : tacticianList) {
       for(int i=0; i<n; i++) {
@@ -183,6 +183,24 @@ public class GameController {
     }
   }
 
+
+  /**
+   * Assing n items to each unit of each tactician using different factories
+   * @param n
+   *    the number of items per unit
+   * @param factories
+   *    the factories to be used
+   */
+  public void giveItems(int n, IItemFactory... factories) {
+    List<IItemFactory> factoryList = Arrays.asList(factories);
+    for(Tactician tactician : tacticianList) {
+      tactician.createItems(4, factoryList);
+    }
+  }
+
+
+
+
   /* HACER */
   /**
    * Starts the game.
@@ -192,10 +210,15 @@ public class GameController {
   public void initGame(final int maxTurns) {
     maxRoundNumber = maxTurns;
     // asigna unidades
-    this.assingUnits(3, new ArcherFactory(), new ArcherFactory(), new ClericFactory(),
+    this.createUnits(3, new ArcherFactory(), new ArcherFactory(), new ClericFactory(),
             new FighterFactory(), new HeroFactory(), new SorcererFactory(), new SwordMasterFactory());
+
     // asigna items
+    this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
+              new SpearFactory(), new StaffFactory(), new SwordFactory());
+
     // asigna area de inicio
+    
 
 
 

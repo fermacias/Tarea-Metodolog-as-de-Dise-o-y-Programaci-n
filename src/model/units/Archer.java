@@ -1,5 +1,6 @@
 package model.units;
 
+import model.items.Bow;
 import model.items.IEquipableItem;
 import model.map.Location;
 
@@ -44,7 +45,6 @@ public class Archer extends AbstractUnit {
   public void equipItem(final IEquipableItem item) {
       item.equipArcher(this);
   }
-
 
 
 

@@ -3,6 +3,8 @@ import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import factory.ItemFactory.IItemFactory;
 import model.items.*;
 import model.map.Location;
 
@@ -28,6 +30,7 @@ public abstract class AbstractUnit implements IUnit {
   private final int movement;
   protected IEquipableItem equippedItem;
   private Location location;
+  private IItemFactory itemFactory;
 
 
   /**
@@ -151,6 +154,21 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
 
+
+  /*
+  FACTORY
+   */
+
+  @Override
+  public void itemFactory(IItemFactory itemFactory) {
+    this.itemFactory = itemFactory;
+  }
+
+
+  @Override
+  public void newItem() {
+    items.add(itemFactory.create());
+  }
 
 
 

@@ -7,6 +7,7 @@ import model.items.IEquipableItem;
 import model.units.IUnit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class Tactician {
 
     /* Factory */
     private IUnitFactory unitFactory;
-    private IItemFactory itemFactory;
+
 
 
     /**
@@ -94,23 +95,28 @@ public class Tactician {
         this.addUnit(unitFactory.create());
     }
 
-    /**
-     *
-     * @param itemFactory
-     *      the itemFactory I want to use
-     */
-    public void itemFactory(IItemFactory itemFactory) {
-        this.itemFactory = itemFactory;
-    }
+
 
     /**
      *
-     * @return
-     *      a new item created by the selected unitFactory
+     * Creates n item for each unit in unitList
+     *
+     * @param n
+     *      the number of items
+     * @param factories
+     *      a list with the factories to use
      */
-    public IEquipableItem newItem() {
-        return itemFactory.create();
+    public void createItems(int n, List<IItemFactory> factories) {
+        for (IUnit unit : unitList) {
+            unit.addEquipableItem();
+            for (int i=0; i<n-1; i++) {
+                unit.itemFactory(factories.get(0));
+                unit.newItem();
+                factories.add(factories.remove(0));
+            }
+        }
     }
+
 
 
 
