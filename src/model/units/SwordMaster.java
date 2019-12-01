@@ -1,6 +1,7 @@
 package model.units;
 
 import model.items.IEquipableItem;
+import model.items.Sword;
 import model.map.Location;
 
 
@@ -31,6 +32,11 @@ public class SwordMaster extends AbstractUnit {
   @Override
   public void equipItem(final IEquipableItem item) {
     item.equipSword(this);
+  }
+
+  @Override
+  public void addEquipableItem() {
+    this.addItem(new Sword("Sword", 0, 0, 0));
   }
 
 }

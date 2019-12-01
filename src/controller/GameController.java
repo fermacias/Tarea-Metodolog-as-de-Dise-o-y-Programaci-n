@@ -218,7 +218,7 @@ public class GameController {
               new SpearFactory(), new StaffFactory(), new SwordFactory());
 
     // asigna area de inicio
-    
+
 
 
 

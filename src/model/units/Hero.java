@@ -1,6 +1,7 @@
 package model.units;
 
 import model.items.IEquipableItem;
+import model.items.Spear;
 import model.map.Location;
 
 
@@ -41,5 +42,9 @@ public class Hero extends AbstractUnit {
   }
 
 
+  @Override
+  public void addEquipableItem() {
+    this.addItem(new Spear("Spear", 0, 0, 0));
+  }
 
 }

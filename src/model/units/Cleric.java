@@ -1,6 +1,7 @@
 package model.units;
 
 import model.items.IEquipableItem;
+import model.items.Staff;
 import model.map.Location;
 
 
@@ -51,7 +52,10 @@ public class Cleric extends AbstractUnit {
   @Override
   public void combat(IUnit unit2) {  }
 
-
+  @Override
+  public void addEquipableItem() {
+    this.addItem(new Staff("Staff", 0, 0, 0));
+  }
 
 
 

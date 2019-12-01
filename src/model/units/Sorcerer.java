@@ -1,6 +1,7 @@
 package model.units;
 
 import model.items.IEquipableItem;
+import model.items.LuzBook;
 import model.map.Location;
 
 /**
@@ -44,7 +45,10 @@ public class Sorcerer extends AbstractUnit{
         item.equipSorcerer(this);
     }
 
-
+    @Override
+    public void addEquipableItem() {
+        this.addItem(new LuzBook("LuzBook", 0, 0, 0));
+    }
 
 
 

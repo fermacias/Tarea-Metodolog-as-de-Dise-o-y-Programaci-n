@@ -47,6 +47,12 @@ public class Archer extends AbstractUnit {
   }
 
 
+  @Override
+  public void addEquipableItem() {
+    this.addItem(new Bow("Bow", 0, 0, 0));
+  }
+
+
 
 
 }

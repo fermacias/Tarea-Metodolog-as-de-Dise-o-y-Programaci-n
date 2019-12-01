@@ -1,5 +1,6 @@
 package model.units;
 
+import model.items.Axe;
 import model.items.IEquipableItem;
 import model.map.Location;
 
@@ -33,5 +34,9 @@ public class Fighter extends AbstractUnit {
   }
 
 
+  @Override
+  public void addEquipableItem() {
+    this.addItem(new Axe("Axe", 0, 0, 0));
+  }
 
 }

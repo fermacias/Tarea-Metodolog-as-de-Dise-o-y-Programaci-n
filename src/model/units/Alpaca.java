@@ -1,6 +1,7 @@
 package model.units;
 
 import model.items.IEquipableItem;
+import model.items.OscuridadBook;
 import model.map.Location;
 
 
@@ -60,6 +61,14 @@ public class Alpaca extends AbstractUnit {
    */
   @Override
   public void combat(IUnit unit2) { }
+
+  /**
+   * The <i>Alpaca</i> cannot be equipped, so add a OscuridadBook to its ItemList.
+   */
+  @Override
+  public void addEquipableItem() {
+    this.addItem(new OscuridadBook("OscuridadBook", 0, 0, 0));
+  }
 
 
 
