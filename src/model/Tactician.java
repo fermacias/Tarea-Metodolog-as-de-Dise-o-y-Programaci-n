@@ -3,11 +3,12 @@ package model;
 import controller.GameController;
 import factory.ItemFactory.IItemFactory;
 import factory.UnitFactory.IUnitFactory;
-import model.items.IEquipableItem;
+import handlers.DieHandler;
 import model.units.IUnit;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,11 +27,18 @@ public class Tactician {
 
     private String name;
     private List<IUnit> unitList = new ArrayList<>();
-    private GameController controller;
     private IUnit selectedUnit;
 
     /* Factory */
     private IUnitFactory unitFactory;
+
+    /* Observer */
+    private final GameController controller;    // ver si lo uso o no jiji
+
+    // Observer/listener
+    // Crea referencia bidireccional entre el listener (handler) y el observer (game controller)
+    private PropertyChangeSupport
+            dieNotification = new PropertyChangeSupport(this);
 
 
 
@@ -45,6 +53,9 @@ public class Tactician {
     public Tactician(String name, final GameController controller) {
         this.name = name;
         this.controller = controller;
+
+        final DieHandler dieHandler = new DieHandler(this);
+        dieNotification.addPropertyChangeListener(dieHandler);
     }
 
     /**
@@ -67,13 +78,24 @@ public class Tactician {
      */
     public IUnit getSelectedUnit() { return selectedUnit; }
 
-    /* Funcionalidades */
 
+    /**
+     *
+     * @param unit
+     *      add this unit to the unitList
+     */
     public void addUnit(IUnit unit) {
         this.unitList.add(unit);
     }
 
+
+    /**
+     *
+     * @return the number of units
+     */
     public int getUnitsNumber() {return unitList.size(); }
+
+
 
     /* Factory */
 
@@ -96,7 +118,6 @@ public class Tactician {
     }
 
 
-
     /**
      *
      * Creates n item for each unit in unitList
@@ -117,7 +138,14 @@ public class Tactician {
         }
     }
 
+    /* Observer */
 
+    public void killUnits() {
+        // saco a sus unidades del mapa
+        for (IUnit unit : unitList) {
+            dieNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unit));
+        }
+    }
 
 
 

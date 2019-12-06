@@ -1,9 +1,13 @@
 package controller;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import handlers.DieHandler;
+import handlers.LoseHandler;
 import factory.ItemFactory.*;
 import factory.UnitFactory.*;
 import model.Tactician;
@@ -12,7 +16,6 @@ import model.map.Field;
 import model.map.Location;
 import model.units.IUnit;
 
-import java.beans.PropertyChangeListener;
 
 /**
  * Controller of the game.
@@ -30,8 +33,13 @@ public class GameController {
   private List<Tactician> turnsList = new ArrayList<>();
   private Tactician currentTactician;
 
-  int roundNumber = 0;
-  int maxRoundNumber;
+  private int roundNumber = 0;
+  private int maxRoundNumber;
+
+  // Observer/listener
+  // Crea referencia bidireccional entre el listener (handler) y el observer (game controller)
+  private PropertyChangeSupport
+          loseNotification = new PropertyChangeSupport(this);
 
 
 
@@ -45,6 +53,11 @@ public class GameController {
    */
   public void gameController(int numberOfPlayers, int mapSize) {
 
+    // avisar al roberto
+    final LoseHandler loseHandler = new LoseHandler(this);
+    loseNotification.addPropertyChangeListener(loseHandler);
+
+
     /* Crear mapa aleatoreo */
     field = new Field();
     field.addCells(true, new Location(0,0));
@@ -56,6 +69,7 @@ public class GameController {
     while (num <= numberOfPlayers) {
       Tactician tactician = new Tactician("Player " + String.valueOf(num), this);
       tacticianList.add(tactician);
+
       // iniciar y asignar sus unidades
       num++;
     }
@@ -146,22 +160,13 @@ public class GameController {
    *     the player to be removed
    */
   public void removeTactician(String tactician) {
-
-    // if the tactician lose during his/her turn
-    if(currentTactician.getName().equals(tactician)) {
-      tacticianList.remove(currentTactician);
-      this.endTurn();
-      return;
-    }
-
-    for(Tactician tactician1 : tacticianList) {
-      if(tactician1.getName().equals(tactician)) {
+    for (Tactician tactician1 : tacticianList)
+      if (tactician1.getName().equals(tactician)) {
         tacticianList.remove(tactician1);
         turnsList.remove(tactician1);
-        return;
+        tactician1.killUnits();
+        break;
       }
-    }
-
   }
 
   /**
@@ -174,6 +179,13 @@ public class GameController {
   public String getTacticianName(int i) { return tacticianList.get(0).getName();}
 
 
+  /*
+  OBSERVER
+   */
+
+  public void tacticianDied(String tacticianName) {
+    loseNotification.firePropertyChange(new PropertyChangeEvent(this, "NewLoser", "", tacticianName));
+  }
 
   /*
   FACTORY
@@ -213,6 +225,10 @@ public class GameController {
     }
   }
 
+  /*
+  INIT GAME
+   */
+
 
   /* HACER */
   /**
@@ -223,7 +239,7 @@ public class GameController {
   public void initGame(final int maxTurns) {
     maxRoundNumber = maxTurns;
     // asigna unidades
-    this.createUnits(3, new ArcherFactory(), new ArcherFactory(), new ClericFactory(),
+    this.createUnits(3, new AlpacaFactory(), new ArcherFactory(), new ClericFactory(),
             new FighterFactory(), new HeroFactory(), new SorcererFactory(), new SwordMasterFactory());
 
     // asigna items

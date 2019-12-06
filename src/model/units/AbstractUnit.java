@@ -156,6 +156,15 @@ public abstract class AbstractUnit implements IUnit {
 
 
   /*
+  OBSERVER
+   */
+  @Override
+  public void die() {
+    location.setUnit(null);
+  }
+
+
+  /*
   FACTORY
    */
 

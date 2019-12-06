@@ -140,6 +140,17 @@ public interface IUnit {
 
 
   /*
+  OBSERVER
+   */
+
+  /**
+   *
+   * Remove the unit from the map
+   *
+   */
+  void die();
+
+  /*
   FACTORY
    */
 

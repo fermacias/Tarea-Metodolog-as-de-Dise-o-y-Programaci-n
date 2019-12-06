@@ -1,5 +1,10 @@
 package model.map;
 
+import controller.GameController;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 /**
@@ -17,6 +22,8 @@ public class Field {
   private Map<String, Location> map = new HashMap<>();
   private Random random = new Random();
   private StringBuilder builder = new StringBuilder();
+
+  private final PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
 
   /**
@@ -196,6 +203,11 @@ public class Field {
     }
   }
 
+  /*
+  OBSERVER
+   */
+
+  public void addObserver(GameController controller) { changes.addPropertyChangeListener(controller); }
 
 
 
