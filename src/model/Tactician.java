@@ -4,6 +4,7 @@ import controller.GameController;
 import factory.ItemFactory.IItemFactory;
 import factory.UnitFactory.IUnitFactory;
 import handlers.DieHandler;
+import model.items.IEquipableItem;
 import model.units.IUnit;
 
 import java.beans.PropertyChangeEvent;
@@ -74,9 +75,29 @@ public class Tactician {
 
     /**
      *
+     * @param i
+     *      the position in the unitList
+     * @return
+     *      the required unit
+     */
+    public IUnit getUnit(int i) { return unitList.get(i); }
+
+
+    /**
+     *
      * @return the selected unit of this Tactician
      */
     public IUnit getSelectedUnit() { return selectedUnit; }
+
+
+    /**
+     *
+     * @param i
+     *      the position in the unitList
+     * @return
+     *      the itemsList of the unit
+     */
+    public List<IEquipableItem> getItems(int i) { return unitList.get(i).getItems(); }
 
 
     /**
@@ -94,6 +115,14 @@ public class Tactician {
      * @return the number of units
      */
     public int getUnitsNumber() {return unitList.size(); }
+
+    /**
+     *
+     * @return
+     *      the equipped item of the selected unit
+     */
+    public IEquipableItem getEquippedItem() { return selectedUnit.getEquippedItem(); }
+
 
 
 
