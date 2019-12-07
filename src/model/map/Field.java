@@ -23,8 +23,6 @@ public class Field {
   private Random random = new Random();
   private StringBuilder builder = new StringBuilder();
 
-  private final PropertyChangeSupport changes = new PropertyChangeSupport(this);
-
 
   /**
    * Add cells to the map.
@@ -161,55 +159,25 @@ public class Field {
 
   /**
    *
-   * Creates a new random map from a cell in (0,0)
+   * Creates a new random map
    *
-   * @param n
+   * @param mapSize
    *    the number of cells you want to add
    */
-  public void randomField(int n) {
-
-    Queue<Integer> colaX= new LinkedList();
-    Queue<Integer> colaY= new LinkedList();
-    colaX.add(0);
-    colaY.add(0);
-    int x, y, c=0;
-
-    while (c!=n) {
-
-      x=colaX.poll();
-      y=colaY.poll();
-
-      // I decide whether to advance in x from (x,y)
-      if (c%2!=0 && Math.random()<0.5 && !map.containsKey("(" + (x+1) + ", " + y + ")")) {
-        this.addCells(c%3!=0, new Location(x+1, y));
-        colaX.add(x+1);
-        colaY.add(y);
-        c++;  // I added a new cell
+  public void randomField(int mapSize) {
+    int i=0, x=0, y=0;
+    int s = (int)Math.sqrt(mapSize);
+    while (i < mapSize) {
+      if(x<s) {
+        this.addCells(false, new Location(x,y));
+        x++;
       }
-
-      // I decide whether to advance in y from (x,y)
-      else if(c%2==0 && c<n && Math.random()<0.5 && !map.containsKey("(" + x + ", " + (y+1) + ")")) {
-        this.addCells(c%3!=0, new Location(x, y+1));
-        colaX.add(x);
-        colaY.add(y+1);
-        c++;  // I added a new cell
-      }
-
-      // Becouse I don´t want an empty queue
-      else if(colaX.isEmpty()) {
-        colaX.add(x+1);
-        colaY.add(y);
+      else {
+        x=0;
+        y++;
       }
     }
   }
-
-  /*
-  OBSERVER
-   */
-
-  public void addObserver(GameController controller) { changes.addPropertyChangeListener(controller); }
-
-
 
 
 }

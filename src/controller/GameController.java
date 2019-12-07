@@ -22,6 +22,7 @@ import model.units.IUnit;
  * The controller manages all the input received from de game's GUI.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macías Herrera
  * @version 2.0
  * @since 2.0
  */
@@ -57,23 +58,17 @@ public class GameController {
     final LoseHandler loseHandler = new LoseHandler(this);
     loseNotification.addPropertyChangeListener(loseHandler);
 
-
     /* Crear mapa aleatoreo */
     field = new Field();
-    field.addCells(true, new Location(0,0));
-    // agregar mapSize celdas
-
+    field.randomField(mapSize);
 
     /* Crear e iniciar tacticians */
     int num = 1;
     while (num <= numberOfPlayers) {
       Tactician tactician = new Tactician("Player " + String.valueOf(num), this);
       tacticianList.add(tactician);
-
-      // iniciar y asignar sus unidades
       num++;
     }
-
 
   }
 
