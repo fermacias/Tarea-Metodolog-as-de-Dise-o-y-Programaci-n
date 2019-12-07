@@ -44,6 +44,8 @@ public class GameController {
           loseNotification = new PropertyChangeSupport(this),
           finishedCombatNotification = new PropertyChangeSupport(this);
 
+  private IUnit selectedUnit;
+  private IEquipableItem selectedItem;
 
 
   /**
@@ -54,26 +56,22 @@ public class GameController {
    * @param mapSize
    *     the dimensions of the map, for simplicity, all maps are squares
    */
-  public void gameController(int numberOfPlayers, int mapSize) {
-
-    // avisar al roberto
+  public GameController(int numberOfPlayers, int mapSize) {
+    // Initialize the handlers
     final LoseHandler loseHandler = new LoseHandler(this);
     loseNotification.addPropertyChangeListener(loseHandler);
     final FinishedCombatHandler heroDiedHandler = new FinishedCombatHandler(this);
     finishedCombatNotification.addPropertyChangeListener(heroDiedHandler);
 
-    /* Crear mapa aleatoreo */
+    // Create a new random map
     field = new Field();
     field.randomField(mapSize);
 
-    /* Crear e iniciar tacticians */
-    int num = 0;
-    while (num < numberOfPlayers) {
+    // Create the tacticians
+    for (int num=0; num<numberOfPlayers; num++) {
       Tactician tactician = new Tactician("Player " + String.valueOf(num), this);
       tacticianList.add(tactician);
-      num++;
     }
-
   }
 
   /* ACCESS METHODS */
@@ -132,7 +130,7 @@ public class GameController {
       int n = this.tacticianList.size();
       if(roundNumber != 0 && turnsList.size()==0) { n--; }
       // It choose a new Tactician to the next turn
-      int r = (int)(Math.random()*(n));
+      int r = (int)(Math.random()*n);
       turnsList.add(tacticianList.remove(r));
     }
     tacticianList = turnsList;
@@ -150,7 +148,10 @@ public class GameController {
       currentTactician = turnsList.get(0);
       currentTactician.yourTurn();
     }
-    // else { roundNumber++; }
+    else {
+      roundNumber++;
+      this.newOrder();
+    }
   }
 
 
@@ -265,7 +266,7 @@ public class GameController {
   INIT GAME
    */
 
-  
+
   /**
    * Starts the game.
    * @param maxTurns
@@ -273,22 +274,21 @@ public class GameController {
    */
   public void initGame(final int maxTurns) {
     maxRoundNumber = maxTurns;
-    // asigna unidades
+    // Assign units
     this.createUnits(3, new AlpacaFactory(), new ArcherFactory(), new ClericFactory(),
             new FighterFactory(), new HeroFactory(), new SorcererFactory(), new SwordMasterFactory());
 
-    // asigna items
+    // Assign items
     this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
               new SpearFactory(), new StaffFactory(), new SwordFactory());
 
-    // asigna area de inicio
-
+    // Assign begin area
 
 
 
   }
 
-  /* HACER */
+
   /**
    * Starts a game without a limit of rounds.
    */
@@ -324,7 +324,7 @@ public class GameController {
    * @return the current player's selected unit
    */
   public IUnit getSelectedUnit() {
-    return null;
+    return currentTactician.getSelectedUnit();
   }
 
   /**
@@ -336,14 +336,14 @@ public class GameController {
    *     vertical position of the unit
    */
   public void selectUnitIn(int x, int y) {
-
+    selectedUnit = field.getCell(x,y).getUnit();
   }
 
   /**
    * @return the inventory of the currently selected unit.
    */
   public List<IEquipableItem> getItems() {
-    return null;
+    return selectedUnit.getItems();
   }
 
   /**
@@ -353,7 +353,7 @@ public class GameController {
    *     the location of the item in the inventory.
    */
   public void equipItem(int index) {
-
+    selectedUnit.equipItem(this.getItems().get(index));
   }
 
   /**
@@ -365,7 +365,7 @@ public class GameController {
    *     vertical position of the target
    */
   public void useItemOn(int x, int y) {
-
+    selectedUnit.combat(field.getCell(x,y).getUnit());
   }
 
   /**
@@ -375,7 +375,7 @@ public class GameController {
    *     the location of the item in the inventory.
    */
   public void selectItem(int index) {
-
+    selectedItem = selectedUnit.getItems().get(index);
   }
 
   /**
@@ -387,7 +387,7 @@ public class GameController {
    *     vertical position of the target
    */
   public void giveItemTo(int x, int y) {
-
+    selectedUnit.giveItem(selectedItem, field.getCell(x,y).getUnit());
   }
 }
 

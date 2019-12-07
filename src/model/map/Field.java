@@ -156,6 +156,7 @@ public class Field {
   }
 
 
+  public int getSize() { return map.size(); }
 
   /**
    *
