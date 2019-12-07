@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import factory.ItemFactory.IItemFactory;
+import model.Tactician;
 import model.items.*;
 import model.map.Location;
 
@@ -24,6 +25,7 @@ import model.map.Location;
  */
 public abstract class AbstractUnit implements IUnit {
 
+  protected Tactician tactician;
   protected final List<IEquipableItem> items = new ArrayList<>();
   private final int maxHitPoints;
   private int currentHitPoints;
@@ -36,14 +38,10 @@ public abstract class AbstractUnit implements IUnit {
   /**
    * Creates a new Unit.
    *
-   * @param hitPoints
-   *     the maximum amount of damage a unit can sustain
-   * @param movement
-   *     the number of panels a unit can move
-   * @param location
-   *     the current position of this unit on the map
-   * @param maxItems
-   *     maximum amount of items this unit can carry
+   * @param hitPoints the maximum amount of damage a unit can sustain
+   * @param movement  the number of panels a unit can move
+   * @param location  the current position of this unit on the map
+   * @param maxItems  maximum amount of items this unit can carry
    */
   protected AbstractUnit(final int hitPoints, final int movement,
                          final Location location, final int maxItems, final IEquipableItem... items) {
@@ -57,10 +55,18 @@ public abstract class AbstractUnit implements IUnit {
     this.equippedItem = nullItem;
   }
 
-
+  @Override
+  public void setTactician(final Tactician tactician) {
+    this.tactician = tactician;
+  }
 
   @Override
-  public int getMaxHitPoints() { return maxHitPoints; }
+  public Tactician getTactician() { return tactician; }
+
+  @Override
+  public int getMaxHitPoints() {
+    return maxHitPoints;
+  }
 
   @Override
   public int getCurrentHitPoints() {
@@ -68,7 +74,9 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void setCurrentHitPoints(int hp) { this.currentHitPoints = hp; }
+  public void setCurrentHitPoints(int hp) {
+    this.currentHitPoints = hp;
+  }
 
   @Override
   public List<IEquipableItem> getItems() {
@@ -76,7 +84,9 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void addItem(IEquipableItem item) { this.items.add(item); }
+  public void addItem(IEquipableItem item) {
+    this.items.add(item);
+  }
 
   @Override
   public IEquipableItem getEquippedItem() {
@@ -112,22 +122,20 @@ public abstract class AbstractUnit implements IUnit {
   }
 
 
-
   @Override
   public boolean canTake() {
-    if(this.items.size()<3)
+    if (items.size() < 3)
       return true;
     return false;
   }
 
 
-
   @Override
-  public void giveItem(IEquipableItem item, IUnit unit2){
+  public void giveItem(IEquipableItem item, IUnit unit2) {
     Location loc1 = this.location;
     Location loc2 = unit2.getLocation();
-    if(this.items.contains(item) && loc1.distanceTo(loc2) == 1 && unit2.canTake()) {
-      if( this.equippedItem == item ) {
+    if (this.items.contains(item) && loc1.distanceTo(loc2) == 1 && unit2.canTake()) {
+      if (this.equippedItem == item) {
         this.equippedItem = new NullItem();
       }
       this.items.remove(item);
@@ -143,16 +151,23 @@ public abstract class AbstractUnit implements IUnit {
    */
 
   @Override
+  public boolean alive() { return !(currentHitPoints==0); }
+
+  @Override
   public void combat(IUnit unit2) {
     IEquipableItem item1 = equippedItem;
     IEquipableItem item2 = unit2.getEquippedItem();
-    if(currentHitPoints != 0 && unit2.getCurrentHitPoints() != 0) {
+    if (currentHitPoints != 0 && unit2.getCurrentHitPoints() != 0) {
       item1.attack(item2);
-      if(currentHitPoints != 0 && unit2.getCurrentHitPoints() != 0) {
+      if (currentHitPoints != 0 && unit2.getCurrentHitPoints() != 0) {
         item2.attack(item1);
       }
     }
   }
+
+
+
+
 
 
   /*
@@ -161,6 +176,7 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void die() {
     location.setUnit(null);
+    tactician.deleteUnit(this);
   }
 
 
@@ -180,6 +196,12 @@ public abstract class AbstractUnit implements IUnit {
   }
 
 
+  /*
+  THE GAME
+   */
+
+  @Override
+  public boolean isAHero() { return false; }
 
 
 }

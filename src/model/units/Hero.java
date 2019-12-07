@@ -47,4 +47,11 @@ public class Hero extends AbstractUnit {
     this.addItem(new Spear("Spear", 0, 0, 0));
   }
 
+  /*
+  THE GAME
+   */
+
+  @Override
+  public boolean isAHero() { return true; }
+
 }

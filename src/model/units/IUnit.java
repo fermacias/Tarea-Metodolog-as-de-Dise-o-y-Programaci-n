@@ -1,8 +1,10 @@
 package model.units;
 
+import java.lang.annotation.Target;
 import java.util.List;
 
 import factory.ItemFactory.IItemFactory;
+import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Location;
 
@@ -18,6 +20,20 @@ import model.map.Location;
  * @since 1.0
  */
 public interface IUnit {
+
+  /**
+   * @param tactician
+   *      set this tactician as the unit´s owner
+   */
+  void setTactician(Tactician tactician);
+
+
+  /**
+   *
+   * @return
+   *      the tactician whose the unit´s owner
+   */
+  Tactician getTactician();
 
   /**
    *
@@ -145,7 +161,7 @@ public interface IUnit {
 
   /**
    *
-   * Remove the unit from the map
+   * Remove the unit from the map and the unitList
    *
    */
   void die();
@@ -176,5 +192,19 @@ public interface IUnit {
    */
   void addEquipableItem();
 
+  /**
+   *
+   * @return
+   *      true if the unit is a Hero
+   */
+  boolean isAHero();
+
+
+  /**
+   *
+   * @return
+   *      true if the current hit points are not 0
+   */
+  boolean alive();
 
 }

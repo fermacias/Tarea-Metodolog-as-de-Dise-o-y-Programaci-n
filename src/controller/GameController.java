@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import handlers.DieHandler;
+
+import handlers.FinishedCombatHandler;
 import handlers.LoseHandler;
 import factory.ItemFactory.*;
 import factory.UnitFactory.*;
@@ -40,7 +41,8 @@ public class GameController {
   // Observer/listener
   // Crea referencia bidireccional entre el listener (handler) y el observer (game controller)
   private PropertyChangeSupport
-          loseNotification = new PropertyChangeSupport(this);
+          loseNotification = new PropertyChangeSupport(this),
+          finishedCombatNotification = new PropertyChangeSupport(this);
 
 
 
@@ -57,14 +59,16 @@ public class GameController {
     // avisar al roberto
     final LoseHandler loseHandler = new LoseHandler(this);
     loseNotification.addPropertyChangeListener(loseHandler);
+    final FinishedCombatHandler heroDiedHandler = new FinishedCombatHandler(this);
+    finishedCombatNotification.addPropertyChangeListener(heroDiedHandler);
 
     /* Crear mapa aleatoreo */
     field = new Field();
     field.randomField(mapSize);
 
     /* Crear e iniciar tacticians */
-    int num = 1;
-    while (num <= numberOfPlayers) {
+    int num = 0;
+    while (num < numberOfPlayers) {
       Tactician tactician = new Tactician("Player " + String.valueOf(num), this);
       tacticianList.add(tactician);
       num++;
@@ -142,9 +146,11 @@ public class GameController {
     // puede haber algo mas jejjej
     // falta completar
     turnsList.remove(currentTactician);
-    if(!turnsList.isEmpty()){
+    if (!turnsList.isEmpty()){
       currentTactician = turnsList.get(0);
+      currentTactician.yourTurn();
     }
+    // else { roundNumber++; }
   }
 
 
@@ -171,15 +177,50 @@ public class GameController {
    * @return
    *    the tactician´s name
    */
-  public String getTacticianName(int i) { return tacticianList.get(0).getName();}
+  public String getTacticianName(int i) { return tacticianList.get(i).getName();}
 
 
-  /*
-  OBSERVER
+  /**
+   *
+   * @param tacticianName
+   *    remove this tactician from the game
    */
-
-  public void tacticianDied(String tacticianName) {
+  public void loser(String tacticianName) {
     loseNotification.firePropertyChange(new PropertyChangeEvent(this, "NewLoser", "", tacticianName));
+  }
+
+
+  /**
+   * Search the tactician state after a combat by its unit
+   *
+   * @param unit
+   *      the unit that fought
+   *
+   */
+  public void ownerState(IUnit unit) {
+    if (!unit.alive()) {
+      Tactician tactician = unit.getTactician();
+      if((unit.isAHero() && !tactician.inTurn()) || tactician.getUnitsNumber()==1) {
+        this.loser(tactician.getName());
+        return;
+      }
+      if(unit.isAHero() ) { this.endTurn(); }
+      unit.die();
+    }
+  }
+
+
+  /**
+   * Research the game state after a combat
+   *
+   * @param unit1
+   *      the first unit in combat
+   * @param unit2
+   *      the second unit in combat
+   */
+  public void afterCombat(IUnit unit1, IUnit unit2) {
+    finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitStudy", null, unit1));
+    finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitStudy", null, unit2));
   }
 
   /*
@@ -224,8 +265,7 @@ public class GameController {
   INIT GAME
    */
 
-
-  /* HACER */
+  
   /**
    * Starts the game.
    * @param maxTurns

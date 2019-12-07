@@ -29,6 +29,7 @@ public class Tactician {
     private String name;
     private List<IUnit> unitList = new ArrayList<>();
     private IUnit selectedUnit;
+    private boolean inTurn = false;
 
     /* Factory */
     private IUnitFactory unitFactory;
@@ -72,6 +73,18 @@ public class Tactician {
      */
     public List<IUnit> getUnitList() { return unitList; }
 
+    /**
+     *
+     * @return
+     *      true if is the turn of this tactician
+     */
+    public boolean inTurn() { return inTurn; }
+
+
+    /**
+     * begin the turn of this tactician making true the variable inTurn
+     */
+    public void yourTurn() { inTurn = true; }
 
     /**
      *
@@ -81,6 +94,20 @@ public class Tactician {
      *      the required unit
      */
     public IUnit getUnit(int i) { return unitList.get(i); }
+
+
+    /**
+     *
+     * @param unit
+     *      delete this unit from the unitList
+     */
+    public void deleteUnit(IUnit unit) {
+        for (IUnit unit1 : unitList)
+            if (unit.equals(unit1)) {
+                unitList.remove(unit);
+                break;
+            }
+    }
 
 
     /**
@@ -144,6 +171,7 @@ public class Tactician {
      */
     public void newUnit() {
         this.addUnit(unitFactory.create());
+        unitList.get(unitList.size()-1).setTactician(this);
     }
 
 
