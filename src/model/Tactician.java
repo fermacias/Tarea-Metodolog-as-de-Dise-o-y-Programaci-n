@@ -86,6 +86,12 @@ public class Tactician {
      */
     public void yourTurn() { inTurn = true; }
 
+
+    /**
+     * end the turn of this tactician making false the variable inTurn
+     */
+    public void yourTurnEnds() { inTurn = false; }
+
     /**
      *
      * @param i
@@ -184,7 +190,7 @@ public class Tactician {
      * @param factories
      *      a list with the factories to use
      */
-    public void createItems(int n, List<IItemFactory> factories) {
+    public void createItems(int n, ArrayList<IItemFactory> factories) {
         for (IUnit unit : unitList) {
             unit.addEquipableItem();
             for (int i=0; i<n-1; i++) {

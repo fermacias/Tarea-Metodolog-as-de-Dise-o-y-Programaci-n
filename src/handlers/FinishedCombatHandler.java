@@ -8,7 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * Handler for study a unit state after a combat.
+ * Handler for update a tactician state after one of his/her unit die in a combat.
  * Apply the observer design pattern
  *
  * @author Fernanda Macías Herrera
@@ -32,7 +32,7 @@ public class FinishedCombatHandler implements PropertyChangeListener {
      *
      * @param event
      *     A PropertyChangeEvent object describing the event source
-     *     and the property that has changed. The changed event must be the unit.
+     *     and the property that has changed. The changed event must be the died unit.
      */
     @Override
     public void propertyChange(final PropertyChangeEvent event) {

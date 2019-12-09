@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -14,7 +15,6 @@ import factory.UnitFactory.*;
 import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Field;
-import model.map.Location;
 import model.units.IUnit;
 
 
@@ -64,12 +64,15 @@ public class GameController {
     finishedCombatNotification.addPropertyChangeListener(heroDiedHandler);
 
     // Create a new random map
+    // ARREGLAR CREACIÓN DEL MAPA, DEMORA DEMASIADO
+    /*
     field = new Field();
     field.randomField(mapSize);
+    */
 
     // Create the tacticians
-    for (int num=0; num<numberOfPlayers; num++) {
-      Tactician tactician = new Tactician("Player " + String.valueOf(num), this);
+    for (int num=1; num<=numberOfPlayers; num++) {
+      Tactician tactician = new Tactician("Player " + num, this);
       tacticianList.add(tactician);
     }
   }
@@ -127,13 +130,15 @@ public class GameController {
    */
   public void newOrder() {
     while (this.tacticianList.size()!=0) {
-      int n = this.tacticianList.size();
+      int n = this.tacticianList.size()-1;
       if(roundNumber != 0 && turnsList.size()==0) { n--; }
-      // It choose a new Tactician to the next turn
       int r = (int)(Math.random()*n);
       turnsList.add(tacticianList.remove(r));
     }
-    tacticianList = turnsList;
+
+    tacticianList.addAll(turnsList);
+    currentTactician = turnsList.remove(0);
+    currentTactician.yourTurn();
   }
 
 
@@ -143,13 +148,14 @@ public class GameController {
   public void endTurn() {
     // puede haber algo mas jejjej
     // falta completar
-    turnsList.remove(currentTactician);
     if (!turnsList.isEmpty()){
-      currentTactician = turnsList.get(0);
-      currentTactician.yourTurn();
+      currentTactician.yourTurnEnds();
+      currentTactician = turnsList.remove(0);
+      currentTactician.yourTurn();  // ke es ezo
     }
     else {
       roundNumber++;
+
       this.newOrder();
     }
   }
@@ -192,27 +198,25 @@ public class GameController {
 
 
   /**
-   * Search the tactician state after a combat by its unit
+   * Update the tactician state after one of his/her units died in a combat
    *
    * @param unit
    *      the unit that fought
    *
    */
   public void ownerState(IUnit unit) {
-    if (!unit.alive()) {
-      Tactician tactician = unit.getTactician();
-      if((unit.isAHero() && !tactician.inTurn()) || tactician.getUnitsNumber()==1) {
-        this.loser(tactician.getName());
-        return;
-      }
-      if(unit.isAHero() ) { this.endTurn(); }
-      unit.die();
+    Tactician tactician = unit.getTactician();
+    if ((unit.isAHero() && !tactician.inTurn()) || tactician.getUnitsNumber()==1) {
+      this.loser(tactician.getName());
+      return;
     }
+    if (unit.isAHero()) { this.endTurn(); }
+    unit.die();
   }
 
 
   /**
-   * Research the game state after a combat
+   * Update the game state after a combat
    *
    * @param unit1
    *      the first unit in combat
@@ -220,8 +224,10 @@ public class GameController {
    *      the second unit in combat
    */
   public void afterCombat(IUnit unit1, IUnit unit2) {
-    finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitStudy", null, unit1));
-    finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitStudy", null, unit2));
+    if (!unit1.alive())
+      finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unit1));
+    if (!unit2.alive())
+      finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unit2));
   }
 
   /*
@@ -237,12 +243,14 @@ public class GameController {
    *    the factories to creat the units
    */
   public void createUnits(int n, IUnitFactory... factories) {
-    List<IUnitFactory> factoryList = Arrays.asList(factories);
+    List<IUnitFactory> factoryList = new ArrayList<>();
+    Collections.addAll(factoryList, factories);
     for(Tactician tactician : tacticianList) {
       for(int i=0; i<n; i++) {
         tactician.unitFactory(factoryList.get(0));
         tactician.newUnit();
         factoryList.add(factoryList.remove(0));
+
       }
     }
   }
@@ -256,15 +264,30 @@ public class GameController {
    *    the factories to be used
    */
   public void giveItems(int n, IItemFactory... factories) {
-    List<IItemFactory> factoryList = Arrays.asList(factories);
+    ArrayList<IItemFactory> factoryList = new ArrayList<>();
+    Collections.addAll(factoryList, factories);
     for(Tactician tactician : tacticianList) {
       tactician.createItems(4, factoryList);
     }
   }
 
+
   /*
   INIT GAME
    */
+
+  /**
+   * Create new units for each Tactician, and new items for each unit
+   */
+  public void newDistribution() {
+    // Assign units
+    this.createUnits(3, new AlpacaFactory(), new ArcherFactory(), new ClericFactory(),
+            new FighterFactory(), new HeroFactory(), new SorcererFactory(), new SwordMasterFactory());
+
+    // Assign items
+    this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
+            new SpearFactory(), new StaffFactory(), new SwordFactory());
+  }
 
 
   /**
@@ -274,18 +297,9 @@ public class GameController {
    */
   public void initGame(final int maxTurns) {
     maxRoundNumber = maxTurns;
-    // Assign units
-    this.createUnits(3, new AlpacaFactory(), new ArcherFactory(), new ClericFactory(),
-            new FighterFactory(), new HeroFactory(), new SorcererFactory(), new SwordMasterFactory());
-
-    // Assign items
-    this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
-              new SpearFactory(), new StaffFactory(), new SwordFactory());
-
-    // Assign begin area
-
-
-
+    roundNumber++;
+    this.newOrder();
+    this.newDistribution();
   }
 
 
@@ -293,15 +307,12 @@ public class GameController {
    * Starts a game without a limit of rounds.
    */
   public void initEndlessGame() {
-    maxRoundNumber = -1;
-    // asigna unidades
-    this.createUnits(3, new ArcherFactory(), new ArcherFactory(), new ClericFactory(),
-            new FighterFactory(), new HeroFactory(), new SorcererFactory(), new SwordMasterFactory());
-
-    // asigna items
-    this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
-            new SpearFactory(), new StaffFactory(), new SwordFactory());
+    maxRoundNumber=-1;
+    roundNumber++;
+    this.newOrder();
+    this.newDistribution();
   }
+
 
   /**
    * @return the winner of this game, if the match ends in a draw returns a list of all the winners
