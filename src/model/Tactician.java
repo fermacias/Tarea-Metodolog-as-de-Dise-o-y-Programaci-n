@@ -73,6 +73,10 @@ public class Tactician {
      */
     public List<IUnit> getUnitList() { return unitList; }
 
+
+
+    public void deleteUnitList() { unitList.clear(); }
+
     /**
      *
      * @return
@@ -139,7 +143,7 @@ public class Tactician {
      *      add this unit to the unitList
      */
     public void addUnit(IUnit unit) {
-        this.unitList.add(unit);
+        unitList.add(unit);
     }
 
 

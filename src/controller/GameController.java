@@ -64,11 +64,9 @@ public class GameController {
     finishedCombatNotification.addPropertyChangeListener(heroDiedHandler);
 
     // Create a new random map
-    // ARREGLAR CREACIÓN DEL MAPA, DEMORA DEMASIADO
-    /*
     field = new Field();
     field.randomField(mapSize);
-    */
+
 
     // Create the tacticians
     for (int num=1; num<=numberOfPlayers; num++) {
@@ -155,7 +153,6 @@ public class GameController {
     }
     else {
       roundNumber++;
-
       this.newOrder();
     }
   }
@@ -320,9 +317,11 @@ public class GameController {
   public List<String> getWinners() {
     List<String> winners = new ArrayList<>();
     int max = 0;
-    for (Tactician tactician : tacticianList)
+    for (Tactician tactician : tacticianList) {
       if (tactician.getUnitsNumber() > max)
         max = tactician.getUnitsNumber();
+      tactician.killUnits();
+    }
 
     for (int i=0; i<tacticianList.size(); i++)
       if (tacticianList.get(i).getUnitsNumber() == max)

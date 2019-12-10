@@ -6,6 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * This class represents the map where the units are located and the game is played.
@@ -15,6 +16,7 @@ import java.util.*;
  * Since all cells of the map should be reachable, the graph must be connected.
  *
  * @author Ignacio Slater Muñoz
+ * @author Fernanda Macìas Herrera
  * @since 1.0
  */
 public class Field {
@@ -166,19 +168,23 @@ public class Field {
    *    the number of cells you want to add
    */
   public void randomField(int mapSize) {
-    int i=0, x=0, y=0;
     int s = (int)Math.sqrt(mapSize);
-    while (i < mapSize) {
-      if(x<s) {
-        this.addCells(false, new Location(x,y));
-        x++;
-      }
-      else {
-        x=0;
-        y++;
-      }
+    int a=0;
+    while((a+1)*s<mapSize) {
+      int x=a;
+      IntStream.range(0, s).forEach( y -> this.addCells(false, new Location(x, y)) );
+      a++;
     }
+    int ms = this.getSize();
+    for (int b=0; a*s+b<mapSize; b++)
+      this.addCells(false, new Location(a, b));
+    int ms2 = this.getSize();
   }
+
+
+
+
+
 
 
 }

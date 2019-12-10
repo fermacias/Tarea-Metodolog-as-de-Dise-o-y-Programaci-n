@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 import model.Tactician;
 import model.map.Field;
+import model.units.IUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,16 +42,15 @@ class GameControllerTest {
     }
   }
 
-/*
+
   @Test
   void getGameMap() {
     Field gameMap = controller.getGameMap();
-    assertEquals(128, gameMap.getSize()); // getSize deben definirlo
-    assertTrue(controller.getGameMap().isConnected());
-    Random testRandom = new Random(randomSeed);
+    assertEquals(128, gameMap.getSize()); // que tenga dimensiones definidad
+    assertTrue(gameMap.isConnected());  // que sea conexo
+
+
     // Para testear funcionalidades que dependen de valores aleatorios se hacen 2 cosas:
-    //  - Comprobar las invariantes de las estructuras que se crean (en este caso que el mapa tenga
-    //    las dimensiones definidas y que sea conexo.
     //  - Setear una semilla para el generador de números aleatorios. Hacer esto hace que la
     //    secuencia de números generada sea siempre la misma, así pueden predecir los
     //    resultados que van a obtener.
@@ -60,11 +59,13 @@ class GameControllerTest {
     //  ESTO ÚLTIMO NO ESTÁ IMPLEMENTADO EN EL MAPA, ASÍ QUE DEBEN AGREGARLO (!)
   }
 
+
   @Test
   void getTurnOwner() {
-    //  En este caso deben hacer lo mismo que para el mapa
+    controller.initGame(-1);
+    int semilla = 0;
+    /* no se como hacer lo de la semilla lololol */
   }
-*/
 
 
   @Test
@@ -78,14 +79,23 @@ class GameControllerTest {
     }
   }
 
+  void deleteUnits() {
+    for (Tactician tactician: controller.getTacticians()) {
+      tactician.deleteUnitList();
+    }
+  }
+
 
   @Test
-  void getMaxRounds() {
+  void getMaxRounds() {            // revisar este JEJEJEJ rango inicial era hasta 50
     Random randomTurnSequence = new Random();
-    IntStream.range(0, 50).forEach(i -> {
-      controller.initGame(randomTurnSequence.nextInt());
-      assertEquals(randomTurnSequence.nextInt(), controller.getMaxRounds());
+    IntStream.range(0, 10).forEach(i -> {
+      int random = randomTurnSequence.nextInt();
+      controller.initGame(random);
+      assertEquals(random, controller.getMaxRounds());
+      this.deleteUnits();
     });
+
     controller.initEndlessGame();
     assertEquals(-1, controller.getMaxRounds());
   }
