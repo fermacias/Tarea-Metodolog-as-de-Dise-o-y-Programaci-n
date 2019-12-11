@@ -14,6 +14,6 @@ public class ClericFactory implements IUnitFactory {
 
     @Override
     public Cleric create() {
-        return new Cleric(0,0, new Location(0,0));
+        return new Cleric(0,0, null);
     }
 }

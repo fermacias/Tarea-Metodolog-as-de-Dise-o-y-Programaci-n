@@ -140,6 +140,16 @@ public class Tactician {
 
     /**
      *
+     * @param i
+     *      the position of the unit in unit list
+     * @return
+     *      the location of the unit
+     */
+    public Location getLocation(int i) { return unitList.get(i).getLocation(); }
+
+
+    /**
+     *
      * @param unit
      *      add this unit to the unitList
      */
@@ -174,17 +184,23 @@ public class Tactician {
         this.unitFactory = unitFactory;
     }
 
+
     /**
      * Place a unit in a Location
      *
      * @param i
-     *      the unit position in the unitList
+     *      the unit position in the unit list
      * @param location
      *      the new Location for the unit
+     * @return
+     *      true if the location was free and false if it was not
      */
-    public void newLocation(int i, Location location) {
+    public boolean newLocation(int i, Location location) {
+        if (location.getUnit()!= null) { return false; }
+        if (unitList.get(i).getLocation()!=null) { unitList.get(i).getLocation().setUnit(null); }
         unitList.get(i).setLocation(location);
         location.setUnit(unitList.get(i));
+        return true;
     }
 
 

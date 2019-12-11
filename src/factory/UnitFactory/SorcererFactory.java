@@ -14,6 +14,6 @@ public class SorcererFactory implements IUnitFactory {
 
     @Override
     public Sorcerer create() {
-        return new Sorcerer(0,0, new Location(0,0));
+        return new Sorcerer(0,0, null);
     }
 }

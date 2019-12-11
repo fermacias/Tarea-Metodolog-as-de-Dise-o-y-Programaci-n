@@ -14,7 +14,7 @@ public class SwordMasterFactory implements IUnitFactory {
 
     @Override
     public SwordMaster create() {
-        return new SwordMaster(0,0, new Location(0,0));
+        return new SwordMaster(0,0, null);
     }
 
 }

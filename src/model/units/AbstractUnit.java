@@ -104,9 +104,7 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void setLocation(final Location location) {
-    this.location = location;
-  }
+  public void setLocation(final Location location) { this.location = location; }
 
   @Override
   public int getMovement() {

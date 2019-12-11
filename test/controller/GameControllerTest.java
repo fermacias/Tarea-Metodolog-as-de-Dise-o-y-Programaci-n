@@ -49,6 +49,8 @@ class GameControllerTest {
     assertEquals(128, gameMap.getSize()); // que tenga dimensiones definidad
     assertTrue(gameMap.isConnected());  // que sea conexo
 
+    randomSeed.setSeed(1);
+
 
     // Para testear funcionalidades que dependen de valores aleatorios se hacen 2 cosas:
     //  - Setear una semilla para el generador de números aleatorios. Hacer esto hace que la
