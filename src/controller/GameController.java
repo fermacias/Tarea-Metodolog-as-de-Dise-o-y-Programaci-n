@@ -67,10 +67,9 @@ public class GameController {
     field = new Field();
     field.randomField(mapSize);
 
-
     // Create the tacticians
     for (int num=1; num<=numberOfPlayers; num++) {
-      Tactician tactician = new Tactician("Player " + num, this);
+      Tactician tactician = new Tactician("Player " + num);
       tacticianList.add(tactician);
     }
   }

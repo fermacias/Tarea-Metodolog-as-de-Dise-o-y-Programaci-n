@@ -35,7 +35,7 @@ public class Tactician {
     private IUnitFactory unitFactory;
 
     /* Observer */
-    private final GameController controller;    // ver si lo uso o no jiji
+    //private final GameController controller;    // ver si lo uso o no jiji
 
     // Observer/listener
     // Crea referencia bidireccional entre el listener (handler) y el observer (game controller)
@@ -52,9 +52,9 @@ public class Tactician {
      *     the name of the new Tactician
      *
      */
-    public Tactician(String name, final GameController controller) {
+    public Tactician(String name) {
         this.name = name;
-        this.controller = controller;
+        //this.controller = controller;
 
         final DieHandler dieHandler = new DieHandler(this);
         dieNotification.addPropertyChangeListener(dieHandler);
@@ -161,8 +161,6 @@ public class Tactician {
     public IEquipableItem getEquippedItem() { return selectedUnit.getEquippedItem(); }
 
 
-
-
     /* Factory */
 
     /**
@@ -208,10 +206,8 @@ public class Tactician {
     /* Observer */
 
     public void killUnits() {
-        // saco a sus unidades del mapa
-        for (IUnit unit : unitList) {
-            dieNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unit));
-        }
+        while (unitList.size() != 0)
+            dieNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unitList.get(0)));
     }
 
 
