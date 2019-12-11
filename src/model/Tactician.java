@@ -5,6 +5,7 @@ import factory.ItemFactory.IItemFactory;
 import factory.UnitFactory.IUnitFactory;
 import handlers.DieHandler;
 import model.items.IEquipableItem;
+import model.map.Location;
 import model.units.IUnit;
 
 import java.beans.PropertyChangeEvent;
@@ -164,6 +165,7 @@ public class Tactician {
     /* Factory */
 
     /**
+     * Defines the unitFactory
      *
      * @param unitFactory
      *      the unitFactory I want to use
@@ -171,6 +173,20 @@ public class Tactician {
     public void unitFactory(IUnitFactory unitFactory) {
         this.unitFactory = unitFactory;
     }
+
+    /**
+     * Place a unit in a Location
+     *
+     * @param i
+     *      the unit position in the unitList
+     * @param location
+     *      the new Location for the unit
+     */
+    public void newLocation(int i, Location location) {
+        unitList.get(i).setLocation(location);
+        location.setUnit(unitList.get(i));
+    }
+
 
     /**
      *
@@ -209,6 +225,8 @@ public class Tactician {
         while (unitList.size() != 0)
             dieNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unitList.get(0)));
     }
+
+
 
 
 

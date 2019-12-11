@@ -2,10 +2,8 @@ package controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.IntStream;
 
 
 import handlers.FinishedCombatHandler;
@@ -15,6 +13,7 @@ import factory.UnitFactory.*;
 import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Field;
+import model.map.Location;
 import model.units.IUnit;
 
 
@@ -231,6 +230,26 @@ public class GameController {
    */
 
   /**
+   * Modifies the x and y coordinates to have a free position for a new Unit
+   *
+   * @param x
+   *    the x coordinate of the last used location
+   * @param y
+   *    the y coordinate of the last used location
+   * @param mapSize
+   *    the map size
+   */
+  public void nextPosition(int x, int y, int mapSize) {
+    int s = (int)Math.sqrt(mapSize);
+    if ((x+1)*s<mapSize || y==s-1) {
+      ++x;
+      y=0;
+    }
+    else { ++y; }
+  }
+
+
+  /**
    * Assign units to each tactician, and items to each unit
    *
    * @param n
@@ -239,14 +258,16 @@ public class GameController {
    *    the factories to creat the units
    */
   public void createUnits(int n, IUnitFactory... factories) {
+    int x=0, y=0;
     List<IUnitFactory> factoryList = new ArrayList<>();
     Collections.addAll(factoryList, factories);
     for(Tactician tactician : tacticianList) {
       for(int i=0; i<n; i++) {
         tactician.unitFactory(factoryList.get(0));
         tactician.newUnit();
+        tactician.newLocation(i, field.getCell(x, y));
         factoryList.add(factoryList.remove(0));
-
+        nextPosition(x, y, field.getSize());
       }
     }
   }
@@ -284,6 +305,8 @@ public class GameController {
     this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
             new SpearFactory(), new StaffFactory(), new SwordFactory());
   }
+
+
 
 
   /**
