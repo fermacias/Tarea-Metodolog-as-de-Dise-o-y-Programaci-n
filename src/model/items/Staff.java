@@ -138,5 +138,9 @@ public class Staff extends AbstractItem {
   }
 
 
+  @Override
+  public boolean IAmStaff() { return true; }
+
+
 
 }

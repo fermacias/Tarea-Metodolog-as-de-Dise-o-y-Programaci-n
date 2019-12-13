@@ -172,4 +172,8 @@ public abstract class AbstractItem implements IEquipableItem {
   }
 
 
+  @Override
+  public boolean IAmStaff() { return false; }
+
+
 }

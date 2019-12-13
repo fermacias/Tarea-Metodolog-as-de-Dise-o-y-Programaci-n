@@ -1,18 +1,20 @@
 package controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.*;
 import java.util.stream.IntStream;
+
+import factory.UnitFactory.AlpacaFactory;
+import factory.UnitFactory.HeroFactory;
+import factory.UnitFactory.SwordMasterFactory;
 import model.Tactician;
 import model.map.Field;
+import model.map.Location;
 import model.units.IUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -29,7 +31,7 @@ class GameControllerTest {
   void setUp() {
     // Se define la semilla como un número aleatorio para generar variedad en los tests
     randomSeed = new Random().nextLong();
-    controller = new GameController(4, 128);
+    controller = new GameController(4, 128, randomSeed);
     testTacticians = List.of("Player 1", "Player 2", "Player 3", "Player 4");
   }
 
@@ -38,7 +40,7 @@ class GameControllerTest {
     List<Tactician> tacticians = controller.getTacticians();
     assertEquals(4, tacticians.size());
     for (int i = 0; i < tacticians.size(); i++) {
-      assertEquals("Player " + (i+1), tacticians.get(i).getName());
+      assertEquals("Player " + (i + 1), tacticians.get(i).getName());
     }
   }
 
@@ -46,27 +48,89 @@ class GameControllerTest {
   @Test
   void getGameMap() {
     Field gameMap = controller.getGameMap();
-    assertEquals(128, gameMap.getSize()); // que tenga dimensiones definidad
-    assertTrue(gameMap.isConnected());  // que sea conexo
+    assertEquals(128, gameMap.getSize());
+    assertTrue(gameMap.isConnected());
 
-    randomSeed.setSeed(1);
+    Field testMap = new Field();
+    testMap.getRandom().setSeed(randomSeed);
+    testMap.randomField(128);
+
+    for (Map.Entry<String, Location> entry1 : gameMap.getMap().entrySet()) {
+      String key = entry1.getKey();
+      assertTrue(testMap.getMap().containsKey(key));
+    }
+  }
+
+  @Test
+  void bornUnitsTest() {
+    controller.createUnits(2, new AlpacaFactory(), new HeroFactory());
+    for (Tactician tactician : controller.getTacticians()) {
+      assertEquals(tactician.getUnitsNumber(), 2);
+      assertFalse(tactician.getUnit(0).isAHero());
+      assertTrue(tactician.getUnit(1).isAHero());
+      assertEquals(tactician.getItems(0).size(), 0);
+      assertEquals(tactician.getItems(1).size(), 0);
+    }
+    controller.createUnits(1, new SwordMasterFactory(), new HeroFactory());
+    int i = 0;
+    for (Tactician tactician : controller.getTacticians()) {
+      assertEquals(tactician.getUnitsNumber(), 3);
+      if (i == 0 || i == 2)
+        assertFalse(tactician.getUnit(2).isAHero());
+      if (i == 1 || i == 3)
+        assertTrue(tactician.getUnit(2).isAHero());
+      i++;
+    }
+  }
 
 
-    // Para testear funcionalidades que dependen de valores aleatorios se hacen 2 cosas:
-    //  - Setear una semilla para el generador de números aleatorios. Hacer esto hace que la
-    //    secuencia de números generada sea siempre la misma, así pueden predecir los
-    //    resultados que van a obtener.
-    //    Hay 2 formas de hacer esto en Java, le pueden pasar el seed al constructor de Random, o
-    //    usar el método setSeed de Random.
-    //  ESTO ÚLTIMO NO ESTÁ IMPLEMENTADO EN EL MAPA, ASÍ QUE DEBEN AGREGARLO (!)
+  @Test
+  void positionUnitsTest() {
+    GameController gc =  new GameController(7, 22);
+    gc.initGame(-1);
+    for(Tactician tactician : gc.getTacticians())
+      for (int i = 0; i < 3; i++)
+        assertNotNull(tactician.getUnit(i).getLocation());
+  }
+
+
+  @Test
+  void newDistributionTest() {
+    controller.newDistribution();
+    List<Tactician> tacticians = controller.getTacticians();
+    for (Tactician tactician : tacticians) {
+      assertEquals(3, tactician.getUnitsNumber());
+      for (int i = 0; i < 3; i++) {
+        assertEquals(4, tactician.getItems(i).size());
+      }
+    }
+  }
+
+
+  void updateLastTactician (Tactician lastTactician, Tactician newTactician) {
+    lastTactician = newTactician;
   }
 
 
   @Test
   void getTurnOwner() {
+    //controller.getRandom().setSeed(randomSeed);
     controller.initGame(-1);
-    int semilla = 0;
-    /* no se como hacer lo de la semilla lololol */
+    List<Tactician> tacticianTestList = new ArrayList<>();
+
+    Tactician lastTactician = controller.getTurns().get(2);
+    IntStream.range(0,50).forEach(it -> {
+              tacticianTestList.addAll(controller.getTacticians());
+              if (it != 0) {
+                assertNotEquals(controller.getTurnOwner(), lastTactician);
+                updateLastTactician(lastTactician, controller.getTurns().get(2));
+              }
+              IntStream.range(0, 4).forEach(i -> {
+                assertTrue(tacticianTestList.remove(controller.getTurnOwner()));
+                assertEquals(tacticianTestList.size(), controller.getTurns().size());
+                controller.endTurn();
+              });
+            });
   }
 
 
@@ -81,21 +145,16 @@ class GameControllerTest {
     }
   }
 
-  void deleteUnits() {
-    for (Tactician tactician: controller.getTacticians()) {
-      tactician.deleteUnitList();
-    }
-  }
-
 
   @Test
-  void getMaxRounds() {            // revisar este JEJEJEJ rango inicial era hasta 50
+  void getMaxRounds() {
     Random randomTurnSequence = new Random();
-    IntStream.range(0, 10).forEach(i -> {
+    IntStream.range(0, 50).forEach(i -> {
       int random = randomTurnSequence.nextInt();
-      controller.initGame(random);
+      controller.initGame(random);    // nro random de rondas
       assertEquals(random, controller.getMaxRounds());
-      this.deleteUnits();
+      for (Tactician tactician : controller.getTacticians())
+        tactician.killUnits();
     });
 
     controller.initEndlessGame();

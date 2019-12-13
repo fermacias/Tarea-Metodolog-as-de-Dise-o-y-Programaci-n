@@ -29,7 +29,7 @@ public interface IEquipableItem {
 
   /**
    * @param unit
-   *    es el nuevo owner del item
+   *    the new owner of the item
    */
   void setOwner(IUnit unit);
 
@@ -104,55 +104,55 @@ public interface IEquipableItem {
    *    is item2
    *
    * @return boolean
-   *      says if the item is stronger that item2
+   *      say if the item is stronger that item2
    */
   boolean stronger(IEquipableItem item);
 
   /**
    * @return boolean
-   *    says if an anima book is stronger than the item
+   *    say if an anima book is stronger than the item
    */
   boolean animaBookStrongerThan();
 
   /**
    * @return boolean
-   *    says if an axe is stronger than the item
+   *    say if an axe is stronger than the item
    */
   boolean axeStrongerThan();
 
   /**
    * @return boolean
-   *    says if a luz book is stronger than the item
+   *    say if a luz book is stronger than the item
    */
   boolean luzBookStrongerThan();
 
   /**
    * @return boolean
-   *    says if an oscuridad book is stronger than the item
+   *    say if an oscuridad book is stronger than the item
    */
   boolean oscuridadBookStrongerThan();
 
   /**
    * @return boolean
-   *    says if a spear is stronger than the item
+   *    say if a spear is stronger than the item
    */
   boolean spearStrongerThan();
 
   /**
    * @return boolean
-   *    says if a sword is stronger than the item
+   *    say if a sword is stronger than the item
    */
   boolean swordStrongerThan();
 
   /**
    * @return boolean
-   *    says if a staff is stronger than the item
+   *    say if a staff is stronger than the item
    */
   boolean staffStrongerThan();
 
   /**
    * @return boolean
-   *    says if a bow is stronger than the item
+   *    say if a bow is stronger than the item
    */
   boolean bowStrongerThan();
 
@@ -161,55 +161,55 @@ public interface IEquipableItem {
    *    is item2
    *
    * @return boolean
-   *      says if the item is weaker that item2
+   *      say if the item is weaker that item2
    */
   boolean weaker(IEquipableItem item);
 
   /**
    * @return boolean
-   *    says if an anima book is weaker than the item
+   *    say if an anima book is weaker than the item
    */
   boolean animaBookWeakerThan();
 
   /**
    * @return boolean
-   *    says if an axe is weaker than the item
+   *    say if an axe is weaker than the item
    */
   boolean axeWeakerThan();
 
   /**
    * @return boolean
-   *    says if a luz book is weaker than the item
+   *    say if a luz book is weaker than the item
    */
   boolean luzBookWeakerThan();
 
   /**
    * @return boolean
-   *    says if an oscuridad book is weaker than the item
+   *    say if an oscuridad book is weaker than the item
    */
   boolean oscuridadBookWeakerThan();
 
   /**
    * @return boolean
-   *    says if a spear is weaker than the item
+   *    say if a spear is weaker than the item
    */
   boolean spearWeakerThan();
 
   /**
    * @return boolean
-   *    says if a sword is weaker than the item
+   *    say if a sword is weaker than the item
    */
   boolean swordWeakerThan();
 
   /**
    * @return boolean
-   *    says if a staff is weaker than the item
+   *    say if a staff is weaker than the item
    */
   boolean staffWeakerThan();
 
   /**
    * @return boolean
-   *    says if a bow is weaker than the item
+   *    say if a bow is weaker than the item
    */
   boolean bowWeakerThan();
 
@@ -221,11 +221,17 @@ public interface IEquipableItem {
 
   /**
    * @return boolean
-   *    says if the item is a NullItem
+   *    say if the item is a NullItem
    */
   boolean IamNull();
 
 
+  /**
+   *
+   * @return boolean
+   *    say if the item is a staff item
+   */
+  boolean IAmStaff();
 
 
 

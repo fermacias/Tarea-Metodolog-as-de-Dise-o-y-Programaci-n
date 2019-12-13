@@ -37,6 +37,8 @@ public class GameController {
   private int roundNumber = 0;
   private int maxRoundNumber;
 
+  private Random random = new Random();
+
   // Observer/listener
   // Crea referencia bidireccional entre el listener (handler) y el observer (game controller)
   private PropertyChangeSupport
@@ -50,10 +52,34 @@ public class GameController {
   /**
    * Creates the controller for a new game.
    *
-   * @param numberOfPlayers
-   *     the number of players for this game
-   * @param mapSize
-   *     the dimensions of the map, for simplicity, all maps are squares
+   * @param numberOfPlayers the number of players for this game
+   * @param mapSize         the dimensions of the map, for simplicity, all maps are squares
+   * @param seed            the seed to the map creation
+   */
+  public GameController(int numberOfPlayers, int mapSize, long seed) {
+    // Initialize the handlers
+    final LoseHandler loseHandler = new LoseHandler(this);
+    loseNotification.addPropertyChangeListener(loseHandler);
+    final FinishedCombatHandler heroDiedHandler = new FinishedCombatHandler(this);
+    finishedCombatNotification.addPropertyChangeListener(heroDiedHandler);
+
+    // Create a new random map
+    field = new Field();
+    field.getRandom().setSeed(seed);
+    field.randomField(mapSize);
+
+    // Create the tacticians
+    for (int num = 1; num <= numberOfPlayers; num++) {
+      Tactician tactician = new Tactician("Player " + num);
+      tacticianList.add(tactician);
+    }
+  }
+
+  /**
+   * Creates the controller for a new game.
+   *
+   * @param numberOfPlayers the number of players for this game
+   * @param mapSize         the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
     // Initialize the handlers
@@ -67,13 +93,19 @@ public class GameController {
     field.randomField(mapSize);
 
     // Create the tacticians
-    for (int num=1; num<=numberOfPlayers; num++) {
+    for (int num = 1; num <= numberOfPlayers; num++) {
       Tactician tactician = new Tactician("Player " + num);
       tacticianList.add(tactician);
     }
   }
 
   /* ACCESS METHODS */
+
+  /**
+   *
+   * @return the Random of this controller
+   */
+  public Random getRandom() { return random; }
 
   /**
    * @return the list of all the tacticians participating in the game.
@@ -127,11 +159,10 @@ public class GameController {
   public void newOrder() {
     while (this.tacticianList.size()!=0) {
       int n = this.tacticianList.size()-1;
-      if(roundNumber != 0 && turnsList.size()==0) { n--; }
-      int r = (int)(Math.random()*n);
+      if(roundNumber != 1 && turnsList.size()==0) { n--; }
+      int r = (int) (random.nextDouble()*n);
       turnsList.add(tacticianList.remove(r));
     }
-
     tacticianList.addAll(turnsList);
     currentTactician = turnsList.remove(0);
     currentTactician.yourTurn();
@@ -229,25 +260,6 @@ public class GameController {
   FACTORY
    */
 
-  /**
-   * Modifies the x and y coordinates to have a free position for a new Unit
-   *
-   * @param x
-   *    the x coordinate of the last used location
-   * @param y
-   *    the y coordinate of the last used location
-   * @param mapSize
-   *    the map size
-   */
-  public void nextPosition(int x, int y, int mapSize) {
-    int s = (int)Math.sqrt(mapSize);
-    if ((x+1)*s<mapSize || y==s-1) {
-      ++x;
-      y=0;
-    }
-    else { ++y; }
-  }
-
 
   /**
    * Assign units to each tactician, and items to each unit
@@ -267,7 +279,9 @@ public class GameController {
         tactician.newUnit();
         tactician.newLocation(i, field.getCell(x, y));
         factoryList.add(factoryList.remove(0));
-        nextPosition(x, y, field.getSize());
+        int s = (int)Math.sqrt(field.getSize());
+        if ((x+1)*s<field.getSize() || y==s-1) { x++; y=0; }
+        else { y++; }
       }
     }
   }

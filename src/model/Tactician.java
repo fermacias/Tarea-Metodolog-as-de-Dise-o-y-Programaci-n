@@ -113,11 +113,7 @@ public class Tactician {
      *      delete this unit from the unitList
      */
     public void deleteUnit(IUnit unit) {
-        for (IUnit unit1 : unitList)
-            if (unit.equals(unit1)) {
-                unitList.remove(unit);
-                break;
-            }
+        unitList.remove(unit);
     }
 
 

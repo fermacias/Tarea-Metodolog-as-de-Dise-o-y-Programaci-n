@@ -46,6 +46,8 @@ public class Field {
     }
   }
 
+  public Random getRandom() { return random; }
+
 
   /**
    * Adds a cell to the map
