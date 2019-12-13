@@ -14,7 +14,7 @@ public class AlpacaFactory implements IUnitFactory {
 
     @Override
     public Alpaca create() {
-        return new Alpaca(0,0, null);
+        return new Alpaca(100,0, null);
     }
 
 }

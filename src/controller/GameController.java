@@ -159,7 +159,7 @@ public class GameController {
   public void newOrder() {
     while (this.tacticianList.size()!=0) {
       int n = this.tacticianList.size()-1;
-      if(roundNumber != 1 && turnsList.size()==0) { n--; }
+      if(roundNumber != 0 && turnsList.size()==0) { n--; }
       int r = (int) (random.nextDouble()*n);
       turnsList.add(tacticianList.remove(r));
     }
@@ -173,16 +173,14 @@ public class GameController {
    * Finishes the current player's turn.
    */
   public void endTurn() {
-    // puede haber algo mas jejjej
-    // falta completar
-    if (!turnsList.isEmpty()){
+    if (!turnsList.isEmpty()){      // si aun quedan turnos por jugar
       currentTactician.yourTurnEnds();
       currentTactician = turnsList.remove(0);
-      currentTactician.yourTurn();  // ke es ezo
+      currentTactician.yourTurn();
     }
-    else {
+    else {  // si se acabo la ronda, pero no es la ultima
       roundNumber++;
-      this.newOrder();
+      if (roundNumber!=maxRoundNumber) { this.newOrder(); }
     }
   }
 
@@ -196,6 +194,7 @@ public class GameController {
   public void removeTactician(String tactician) {
     for (Tactician tactician1 : tacticianList)
       if (tactician1.getName().equals(tactician)) {
+        if (tactician1.inTurn()) { this.endTurn(); }
         tacticianList.remove(tactician1);
         turnsList.remove(tactician1);
         tactician1.killUnits();
@@ -252,6 +251,7 @@ public class GameController {
   public void afterCombat(IUnit unit1, IUnit unit2) {
     if (!unit1.alive())
       finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unit1));
+
     if (!unit2.alive())
       finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unit2));
   }
@@ -312,8 +312,8 @@ public class GameController {
    */
   public void newDistribution() {
     // Assign units
-    this.createUnits(3, new AlpacaFactory(), new ArcherFactory(), new ClericFactory(),
-            new FighterFactory(), new HeroFactory(), new SorcererFactory(), new SwordMasterFactory());
+    this.createUnits(3, new HeroFactory(), new AlpacaFactory(), new ArcherFactory(), new ClericFactory(),
+            new FighterFactory(), new SorcererFactory(), new SwordMasterFactory());
 
     // Assign items
     this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
@@ -329,8 +329,9 @@ public class GameController {
    *  the maximum number of rounds the game can last
    */
   public void initGame(final int maxTurns) {
+    turnsList = new ArrayList<>();
     maxRoundNumber = maxTurns;
-    roundNumber++;
+    roundNumber = 0;
     this.newOrder();
     this.newDistribution();
   }
@@ -340,8 +341,9 @@ public class GameController {
    * Starts a game without a limit of rounds.
    */
   public void initEndlessGame() {
-    maxRoundNumber=-1;
-    roundNumber++;
+    turnsList = new ArrayList<>();
+    maxRoundNumber = -1;
+    roundNumber = 0;
     this.newOrder();
     this.newDistribution();
   }
@@ -352,17 +354,21 @@ public class GameController {
    */
   public List<String> getWinners() {
     List<String> winners = new ArrayList<>();
-    int max = 0;
-    for (Tactician tactician : tacticianList) {
-      if (tactician.getUnitsNumber() > max)
-        max = tactician.getUnitsNumber();
-      tactician.killUnits();
+    if (tacticianList.size() == 1) { winners.add(this.getTacticianName(0)); }
+    else if (maxRoundNumber==roundNumber) {
+      int max = 0;
+      for (Tactician tactician : tacticianList) {
+        if (tactician.getUnitsNumber() > max)
+          max = tactician.getUnitsNumber();
+      }
+      for (int i = 0; i < tacticianList.size(); i++) {
+        if (tacticianList.get(i).getUnitsNumber() == max)
+          winners.add(this.getTacticianName(i));
+        tacticianList.get(i).killUnits();
+      }
     }
-
-    for (int i=0; i<tacticianList.size(); i++)
-      if (tacticianList.get(i).getUnitsNumber() == max)
-        this.getTacticianName(i);
-
+    else
+      return null;
     return winners;
   }
 

@@ -14,6 +14,6 @@ public class HeroFactory implements IUnitFactory {
 
     @Override
     public Hero create() {
-        return new Hero(0,0, null);
+        return new Hero(100,0, null);
     }
 }

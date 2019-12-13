@@ -14,7 +14,7 @@ public class ArcherFactory implements IUnitFactory {
 
     @Override
     public Archer create() {
-        return new Archer(0,0, null);
+        return new Archer(100,0, null);
     }
 
 }

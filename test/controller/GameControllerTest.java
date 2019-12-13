@@ -3,9 +3,8 @@ package controller;
 import java.util.*;
 import java.util.stream.IntStream;
 
-import factory.UnitFactory.AlpacaFactory;
-import factory.UnitFactory.HeroFactory;
-import factory.UnitFactory.SwordMasterFactory;
+import factory.ItemFactory.*;
+import factory.UnitFactory.*;
 import model.Tactician;
 import model.map.Field;
 import model.map.Location;
@@ -33,6 +32,7 @@ class GameControllerTest {
     randomSeed = new Random().nextLong();
     controller = new GameController(4, 128, randomSeed);
     testTacticians = List.of("Player 1", "Player 2", "Player 3", "Player 4");
+
   }
 
   @Test
@@ -137,7 +137,7 @@ class GameControllerTest {
   @Test
   void getRoundNumber() {
     controller.initGame(10);
-    for (int i = 1; i < 10; i++) {
+    for (int i = 0; i < 10; i++) {
       assertEquals(i, controller.getRoundNumber());
       for (int j = 0; j < 4; j++) {
         controller.endTurn();
@@ -151,22 +151,62 @@ class GameControllerTest {
     Random randomTurnSequence = new Random();
     IntStream.range(0, 50).forEach(i -> {
       int random = randomTurnSequence.nextInt();
-      controller.initGame(random);    // nro random de rondas
+      controller.initGame(random);
       assertEquals(random, controller.getMaxRounds());
-      for (Tactician tactician : controller.getTacticians())
+      for (Tactician tactician : controller.getTacticians()) {
         tactician.killUnits();
+        controller.getTurns().remove(tactician);
+      }
     });
 
     controller.initEndlessGame();
     assertEquals(-1, controller.getMaxRounds());
   }
 
-  /*
+/*
+  @Test
+  void afterCombatTest() {
+    controller.initGame(-1);
+
+    Tactician tactician1 = controller.getTacticians().get(0);
+    Tactician tactician2 = controller.getTacticians().get(1);
+
+    IUnit heroTac1 = tactician1.getUnit(0);
+    IUnit alpacaTac1 = tactician1.getUnit(1);
+    IUnit archerTac2 = tactician2.getUnit(0);
+    IUnit clericTac2 = tactician2.getUnit(1);
+
+
+
+    // hero pierde en su turno
+    // pierde el turno
+    tactician1.yourTurn();
+    heroTac1.setCurrentHitPoints(0);
+    controller.afterCombat(heroTac1, alpacaTac2);
+    assertFalse(tactician1.inTurn());
+    assertTrue(controller.getTacticians().contains(tactician1));
+    assertFalse(tactician1.getUnitList().contains(heroTac1));
+
+    // hero pierde en otro turno
+    // pierde la partida
+    assertFalse(tactician2.inTurn());
+    heroTac2.setCurrentHitPoints(0);
+    controller.afterCombat(heroTac2, alpacaTac1);
+    assertFalse(controller.getTacticians().contains(tactician2));
+    assertFalse(tactician1.getUnitList().contains(heroTac1));
+
+
+  }
+
+ */
+
   @Test
   void endTurn() {
+    controller.getRandom().setSeed(randomSeed);
+    controller.newOrder();
     Tactician firstPlayer = controller.getTurnOwner();
-    // Nuevamente, para determinar el orden de los jugadores se debe usar una semilla
-    Tactician secondPlayer = new Tactician(); // <- Deben cambiar esto (!)
+
+    Tactician secondPlayer = controller.getTurns().get(0);
     assertNotEquals(secondPlayer.getName(), firstPlayer.getName());
 
     controller.endTurn();
@@ -174,23 +214,26 @@ class GameControllerTest {
     assertEquals(secondPlayer.getName(), controller.getTurnOwner().getName());
   }
 
+
   @Test
   void removeTactician() {
     assertEquals(4, controller.getTacticians().size());
     controller.getTacticians()
             .forEach(tactician -> Assertions.assertTrue(testTacticians.contains(tactician.getName())));
 
-    controller.removeTactician("Player 0");
+    controller.removeTactician("Player 1");
     assertEquals(3, controller.getTacticians().size());
-    controller.getTacticians().forEach(tactician -> assertNotEquals("Player 1", tactician));
+    controller.getTacticians().forEach(tactician -> assertNotEquals("Player 2", tactician));
     controller.getTacticians()
             .forEach(tactician -> Assertions.assertTrue(testTacticians.contains(tactician.getName())));
 
-    controller.removeTactician("Player 5");
+    controller.removeTactician("Player 6");
     assertEquals(3, controller.getTacticians().size());
     controller.getTacticians()
             .forEach(tactician -> Assertions.assertTrue(testTacticians.contains(tactician.getName())));
   }
+
+
 
   @Test
   void getWinners() {
@@ -202,23 +245,21 @@ class GameControllerTest {
 
     controller.initGame(2);
     IntStream.range(0, 4).forEach(i -> controller.endTurn());
-    assertNull(controller.getWinners());
-    controller.removeTactician("Player 0");
-    controller.removeTactician("Player 2");
+    assertNull(controller.getWinners());    // por qué sería null?
+    controller.removeTactician("Player 1");
+    controller.removeTactician("Player 3");
     IntStream.range(0, 2).forEach(i -> controller.endTurn());
     List<String> winners = controller.getWinners();
     assertEquals(2, winners.size());
-    assertTrue(List.of("Player 1", "Player 2").containsAll(winners));
+    assertTrue(List.of("Player 2", "Player 4").containsAll(winners));
 
     controller.initEndlessGame();
-    for (int i = 0; i < 3; i++) {
-      assertNull(controller.getWinners());
-      controller.removeTactician("Player " + i);
-    }
-    assertTrue(List.of("Player 3").containsAll(controller.getWinners()));
+    assertNull(controller.getWinners());
+    controller.removeTactician("Player " + 2);
+    assertTrue(List.of("Player 4").containsAll(controller.getWinners()));
   }
 
-  // Desde aquí en adelante, los tests deben definirlos completamente ustedes
+  // Desde aquí en adelante, los tests deben definirlos completamente ustedes uwu
   @Test
   void getSelectedUnit() {
   }
@@ -246,6 +287,5 @@ class GameControllerTest {
   @Test
   void giveItemTo() {
   }
-*/
 
 }

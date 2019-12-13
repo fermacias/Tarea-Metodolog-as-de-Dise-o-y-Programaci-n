@@ -14,6 +14,6 @@ public class FighterFactory implements IUnitFactory {
 
     @Override
     public Fighter create() {
-        return new Fighter(0,0, null);
+        return new Fighter(100,0, null);
     }
 }

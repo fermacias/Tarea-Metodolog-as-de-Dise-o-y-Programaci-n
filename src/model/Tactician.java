@@ -75,9 +75,6 @@ public class Tactician {
     public List<IUnit> getUnitList() { return unitList; }
 
 
-
-    public void deleteUnitList() { unitList.clear(); }
-
     /**
      *
      * @return
@@ -114,6 +111,15 @@ public class Tactician {
      */
     public void deleteUnit(IUnit unit) {
         unitList.remove(unit);
+
+        /*
+        for (IUnit unit1: unitList) {
+            if (unit1.equals(unit))
+                unitList.remove(unit1);
+            break;
+        }
+
+         */
     }
 
 
