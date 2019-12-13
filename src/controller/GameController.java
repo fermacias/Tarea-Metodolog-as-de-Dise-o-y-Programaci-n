@@ -73,6 +73,7 @@ public class GameController {
     }
   }
 
+
   /**
    * Creates the controller for a new game.
    *
@@ -97,6 +98,7 @@ public class GameController {
     }
   }
 
+
   /* ACCESS METHODS */
 
   /**
@@ -105,12 +107,14 @@ public class GameController {
    */
   public Random getRandom() { return random; }
 
+
   /**
    * @return the list of all the tacticians participating in the game.
    */
   public List<Tactician> getTacticians() {
     return tacticianList;
   }
+
 
   /**
    * @return the list of the tactician´s turns to play.
@@ -119,12 +123,14 @@ public class GameController {
     return turnsList;
   }
 
+
   /**
    * @return the map of the current game
    */
   public Field getGameMap() {
     return field;
   }
+
 
   /**
    * @return the tactician that's currently playing
@@ -133,6 +139,7 @@ public class GameController {
     return currentTactician;
   }
 
+
   /**
    * @return the number of rounds since the start of the game.
    */
@@ -140,12 +147,14 @@ public class GameController {
     return roundNumber;
   }
 
+
   /**
    * @return the maximum number of rounds a match can last
    */
   public int getMaxRounds() {
     return maxRoundNumber;
   }
+
 
   /**
    *
@@ -157,28 +166,17 @@ public class GameController {
 
   /**
    *
-   * @return
-   *      the game controller selected unit
+   * @return the game controller selected unit
    */
   public IUnit getGcSelectedUnit() { return this.gcSelectedUnit; }
 
 
   /**
    *
-   * @return
-   *      the game controller selected item
+   * @return the game controller selected item
    */
   public IEquipableItem getGcSelectedItem() { return this.gcSelectedItem; }
 
-
-  /**
-   *
-   * @param item
-   *      the new current selected item of this controller game
-   */
-  public void setGcSelectedItem(IEquipableItem item) {
-    this.gcSelectedItem = item;
-  }
 
   /* PLAY */
 
@@ -203,12 +201,12 @@ public class GameController {
    * Finishes the current player's turn.
    */
   public void endTurn() {
-    if (!turnsList.isEmpty()){      // si aun quedan turnos por jugar
+    if (!turnsList.isEmpty()){
       currentTactician.yourTurnEnds();
       currentTactician = turnsList.remove(0);
       currentTactician.yourTurn();
     }
-    else {  // si se acabo la ronda, pero no es la ultima
+    else {
       roundNumber++;
       if (roundNumber!=maxRoundNumber) { this.newOrder(); }
     }
@@ -231,6 +229,7 @@ public class GameController {
         break;
       }
   }
+
 
   /**
    *
@@ -285,6 +284,7 @@ public class GameController {
     if (!unit2.alive())
       finishedCombatNotification.firePropertyChange(new PropertyChangeEvent(this, "UnitDied", null, unit2));
   }
+
 
   /*
   FACTORY
@@ -349,8 +349,6 @@ public class GameController {
     this.giveItems(3, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
             new SpearFactory(), new StaffFactory(), new SwordFactory());
   }
-
-
 
 
   /**
@@ -456,6 +454,7 @@ public class GameController {
     this.afterCombat(this.getSelectedUnit(), field.getCell(x, y).getUnit());
   }
 
+
   /**
    * Selects an item from the selected unit's inventory.
    *
@@ -465,6 +464,7 @@ public class GameController {
   public void selectItem(int index) {
     gcSelectedItem = gcSelectedUnit.getItems().get(index);
   }
+
 
   /**
    * Gives the selected item to a target unit.
