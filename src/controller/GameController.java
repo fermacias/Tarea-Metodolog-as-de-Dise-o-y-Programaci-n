@@ -176,7 +176,9 @@ public class GameController {
    * @param item
    *      the new current selected item of this controller game
    */
-  public void setGcSelectedItem(IEquipableItem item) { this.gcSelectedItem = item; }
+  public void setGcSelectedItem(IEquipableItem item) {
+    this.gcSelectedItem = item;
+  }
 
   /* PLAY */
 
@@ -344,7 +346,7 @@ public class GameController {
             new FighterFactory(), new SorcererFactory(), new SwordMasterFactory());
 
     // Assign items
-    this.giveItems(4, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
+    this.giveItems(3, new AnimaBookFactory(), new AxeFactory(), new BowFactory(),
             new SpearFactory(), new StaffFactory(), new SwordFactory());
   }
 
@@ -451,6 +453,7 @@ public class GameController {
    */
   public void useItemOn(int x, int y) {
     this.getSelectedUnit().combat(field.getCell(x, y).getUnit());
+    this.afterCombat(this.getSelectedUnit(), field.getCell(x, y).getUnit());
   }
 
   /**

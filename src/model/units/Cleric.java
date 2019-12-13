@@ -54,8 +54,9 @@ public class Cleric extends AbstractUnit {
 
   @Override
   public void addEquipableItem() {
-    this.addItem(new Staff("Staff", 0, 0, 0));
+    this.addItem(new Staff("Staff", 20, 2, 10));
   }
+
 
 
 

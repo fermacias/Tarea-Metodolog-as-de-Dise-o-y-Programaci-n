@@ -67,7 +67,7 @@ public class Alpaca extends AbstractUnit {
    */
   @Override
   public void addEquipableItem() {
-    this.addItem(new OscuridadBook("OscuridadBook", 0, 0, 0));
+    this.addItem(new OscuridadBook("OscuridadBook", 20, 2, 10));
   }
 
 

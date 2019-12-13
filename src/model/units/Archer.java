@@ -49,7 +49,7 @@ public class Archer extends AbstractUnit {
 
   @Override
   public void addEquipableItem() {
-    this.addItem(new Bow("Bow", 0, 0, 0));
+    this.addItem(new Bow("Bow", 20, 2, 10));
   }
 
 

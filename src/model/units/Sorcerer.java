@@ -47,7 +47,7 @@ public class Sorcerer extends AbstractUnit{
 
     @Override
     public void addEquipableItem() {
-        this.addItem(new LuzBook("LuzBook", 0, 0, 0));
+        this.addItem(new LuzBook("LuzBook", 20, 2, 10));
     }
 
 

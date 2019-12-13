@@ -89,7 +89,7 @@ class GameControllerTest {
   @Test
   void positionUnitsTest() {
     GameController gc =  new GameController(7, 22);
-    gc.initGame(-1);
+    gc.initEndlessGame();
     for(Tactician tactician : gc.getTacticians())
       for (int i = 0; i < 3; i++)
         assertNotNull(tactician.getUnit(i).getLocation());
@@ -117,7 +117,7 @@ class GameControllerTest {
   @Test
   void getTurnOwner() {
     //controller.getRandom().setSeed(randomSeed);
-    controller.initGame(-1);
+    controller.initEndlessGame();
     List<Tactician> tacticianTestList = new ArrayList<>();
 
     Tactician lastTactician = controller.getTurns().get(2);
@@ -165,42 +165,6 @@ class GameControllerTest {
     assertEquals(-1, controller.getMaxRounds());
   }
 
-/*
-  @Test
-  void afterCombatTest() {
-    controller.initGame(-1);
-
-    Tactician tactician1 = controller.getTacticians().get(0);
-    Tactician tactician2 = controller.getTacticians().get(1);
-
-    IUnit heroTac1 = tactician1.getUnit(0);
-    IUnit alpacaTac1 = tactician1.getUnit(1);
-    IUnit archerTac2 = tactician2.getUnit(0);
-    IUnit clericTac2 = tactician2.getUnit(1);
-
-
-
-    // hero pierde en su turno
-    // pierde el turno
-    tactician1.yourTurn();
-    heroTac1.setCurrentHitPoints(0);
-    controller.afterCombat(heroTac1, alpacaTac2);
-    assertFalse(tactician1.inTurn());
-    assertTrue(controller.getTacticians().contains(tactician1));
-    assertFalse(tactician1.getUnitList().contains(heroTac1));
-
-    // hero pierde en otro turno
-    // pierde la partida
-    assertFalse(tactician2.inTurn());
-    heroTac2.setCurrentHitPoints(0);
-    controller.afterCombat(heroTac2, alpacaTac1);
-    assertFalse(controller.getTacticians().contains(tactician2));
-    assertFalse(tactician1.getUnitList().contains(heroTac1));
-
-
-  }
-
- */
 
   @Test
   void endTurn() {
@@ -235,6 +199,40 @@ class GameControllerTest {
             .forEach(tactician -> Assertions.assertTrue(testTacticians.contains(tactician.getName())));
   }
 
+  @Test
+  void finishedCombatTest() {
+    GameController gc = new GameController(4, 49, 1);
+    gc.getRandom().setSeed(1);
+    gc.initEndlessGame();
+    gc.getTurnOwner().setSelectedUnit(2);
+    IUnit unit1 = gc.getSelectedUnit();
+    IUnit unit2 = gc.getGameMap().getCell(5, 0).getUnit();
+    unit1.equipItem(unit1.getItems().get(0));
+    unit2.equipItem(unit2.getItems().get(0));
+    unit1.combat(unit2);
+    controller.afterCombat(unit1, unit2);
+
+    assertTrue(gc.getTacticians().contains(unit1.getTactician()));
+    assertTrue(gc.getTacticians().contains(unit2.getTactician()));
+  }
+
+
+
+  @Test
+  void loserTest() {
+    controller.initEndlessGame();
+
+    for (int i=0; i<3; i++) {
+      Tactician loser = controller.getTacticians().get(0);
+      controller.loser(controller.getTacticianName(0));
+      assertFalse(controller.getTacticians().contains(loser));
+      assertFalse(controller.getTurns().contains(loser));
+      assertNotEquals(loser, controller.getTurnOwner());
+      for (IUnit unit : loser.getUnitList())
+        assertNull(unit.getLocation().getUnit());
+    }
+
+  }
 
 
   @Test
@@ -317,25 +315,27 @@ class GameControllerTest {
     assertEquals(tactician.getItems(0).get(0), tactician.getUnit(0).getEquippedItem());
   }
 
-  /*
+
   @Test
   void useItemOn() {
-    controller.getRandom().setSeed(1);
-    controller.initEndlessGame();
-    controller.getTurnOwner().setSelectedUnit(2);
-    IUnit unit1 = controller.getSelectedUnit();
-    IUnit unit2 = controller.getGameMap().getCell(5, 0).getUnit();
+    GameController gc = new GameController(4, 49, 1);
+    gc.getRandom().setSeed(1);
+    gc.initEndlessGame();
+    gc.getTurnOwner().setSelectedUnit(2);
+    IUnit unit1 = gc.getSelectedUnit();
+    IUnit unit2 = gc.getGameMap().getCell(5, 0).getUnit();
     unit1.equipItem(unit1.getItems().get(0));
     unit2.equipItem(unit2.getItems().get(0));
 
-    controller.useItemOn(5,0);
+    gc.useItemOn(5,0);
 
     assertNotEquals(unit1.getCurrentHitPoints(), 100);
     assertNotEquals(unit2.getCurrentHitPoints(), 100);
+    assertTrue(gc.getTacticians().contains(unit1.getTactician()));
+    assertTrue(gc.getTacticians().contains(unit2.getTactician()));
 
   }
 
-   */
 
   @Test
   void selectItem() {
@@ -349,16 +349,17 @@ class GameControllerTest {
 
   @Test
   void giveItemTo() {
-    controller.getRandom().setSeed(1);
-    controller.initEndlessGame();
-    controller.getTurnOwner().setSelectedUnit(2);
-    IUnit unit1 = controller.getSelectedUnit();
-    IUnit unit2 = controller.getGameMap().getCell(5, 0).getUnit();
+    GameController gc = new GameController(4, 49, 1);
+    gc.getRandom().setSeed(1);
+    gc.initEndlessGame();
+
+    gc.getTurnOwner().setSelectedUnit(0);
+    IUnit unit1 = gc.getSelectedUnit();
+    IUnit unit2 = gc.getGameMap().getCell(1, 0).getUnit();  // alpaca
     IEquipableItem item = unit1.getItems().get(0);
     unit1.equipItem(unit1.getItems().get(0));
-    unit2.equipItem(unit2.getItems().get(0));
 
-    controller.giveItemTo(5, 0);
+    gc.giveItemTo(1, 0);
     assertFalse(unit1.getItems().contains(item));
     assertTrue(unit2.getItems().contains(item));
   }

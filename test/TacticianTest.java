@@ -86,7 +86,13 @@ public class TacticianTest {
         tactician1.createItems(2, factories);
         int i=0;
         for (IUnit unit : tactician1.getUnitList()) {
+            // invariantes
             assertEquals(2, unit.getItems().size());
+            assertEquals(2, unit.getItems().get(0).getMinRange());
+            assertEquals(2, unit.getItems().get(1).getMinRange());
+            assertEquals(10, unit.getItems().get(0).getMaxRange());
+            assertEquals(10, unit.getItems().get(1).getMaxRange());
+
             if (i==0 || i==2) { assertTrue(unit.getItems().get(0).IAmStaff()); }
             if (i==1) { assertFalse(unit.getItems().get(0).IAmStaff()); }
             assertFalse(unit.getItems().get(1).IAmStaff());

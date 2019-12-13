@@ -36,7 +36,7 @@ public class SwordMaster extends AbstractUnit {
 
   @Override
   public void addEquipableItem() {
-    this.addItem(new Sword("Sword", 0, 0, 0));
+    this.addItem(new Sword("Sword", 20, 2, 10));
   }
 
 }

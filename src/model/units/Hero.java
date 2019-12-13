@@ -44,7 +44,7 @@ public class Hero extends AbstractUnit {
 
   @Override
   public void addEquipableItem() {
-    this.addItem(new Spear("Spear", 0, 0, 0));
+    this.addItem(new Spear("Spear", 20, 2, 10));
   }
 
   /*
