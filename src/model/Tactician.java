@@ -125,6 +125,14 @@ public class Tactician {
 
     /**
      *
+     * @param i
+     *          the position of the new selected unit in the unit list
+     */
+    public void setSelectedUnit(int i) { this.selectedUnit = unitList.get(i); }
+
+
+    /**
+     *
      * @return the selected unit of this Tactician
      */
     public IUnit getSelectedUnit() { return selectedUnit; }
@@ -165,6 +173,18 @@ public class Tactician {
      * @return the number of units
      */
     public int getUnitsNumber() {return unitList.size(); }
+
+
+    /**
+     * Equipp to the selected item
+     *
+     * @param i
+     *          the position of the item in the items list
+     */
+    public void setEquippedItem(int i) {
+        selectedUnit.equipItem(selectedUnit.getItems().get(i));
+    }
+
 
     /**
      *

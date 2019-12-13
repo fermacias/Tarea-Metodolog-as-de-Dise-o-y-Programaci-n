@@ -58,6 +58,7 @@ class GameControllerTest {
     for (Map.Entry<String, Location> entry1 : gameMap.getMap().entrySet()) {
       String key = entry1.getKey();
       assertTrue(testMap.getMap().containsKey(key));
+      assertEquals(testMap.getMap().get(key), gameMap.getMap().get(key));
     }
   }
 

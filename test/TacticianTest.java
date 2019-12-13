@@ -109,4 +109,16 @@ public class TacticianTest {
             assertEquals(0, tactician.getUnitsNumber());
         }
     }
+
+    @Test
+    void settersTest() {
+        controller.initEndlessGame();
+        for (Tactician tactician : controller.getTacticians()) {
+            tactician.setSelectedUnit(0);
+            assertEquals(tactician.getSelectedUnit(), tactician.getUnit(0));
+            tactician.setEquippedItem(1);
+            assertEquals(tactician.getEquippedItem(), tactician.getSelectedUnit().getEquippedItem());
+        }
+
+    }
 }
