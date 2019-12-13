@@ -150,6 +150,13 @@ public class Tactician {
 
     /**
      *
+     * @return
+     *          the current selected unit item list
+     */
+    public List<IEquipableItem> getSelectedItems() { return selectedUnit.getItems(); }
+
+    /**
+     *
      * @param i
      *      the position of the unit in unit list
      * @return

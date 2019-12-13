@@ -13,7 +13,7 @@ public class SwordFactory implements IItemFactory {
 
     @Override
     public Sword create() {
-        return new Sword("Sword", 0, 0, 0);
+        return new Sword("Sword", 20, 2, 10);
     }
 
 }

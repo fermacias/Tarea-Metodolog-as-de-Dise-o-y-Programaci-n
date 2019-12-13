@@ -13,7 +13,7 @@ public class OscuridadBookFactory implements IItemFactory {
 
     @Override
     public OscuridadBook create() {
-        return new OscuridadBook("OscuridadBook", 0, 0, 0);
+        return new OscuridadBook("OscuridadBook", 20, 2, 10);
     }
 
 }

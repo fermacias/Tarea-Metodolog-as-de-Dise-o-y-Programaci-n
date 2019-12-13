@@ -13,7 +13,7 @@ public class BowFactory implements IItemFactory {
 
     @Override
     public Bow create() {
-        return new Bow("Bow", 0, 0, 0);
+        return new Bow("Bow", 20, 2, 10);
     }
 
 }

@@ -12,7 +12,7 @@ import model.items.Staff;
 public class StaffFactory implements IItemFactory {
 
     public Staff create() {
-        return new Staff("Staff", 0, 0, 0);
+        return new Staff("Staff", 20, 2, 10);
     }
 
 }

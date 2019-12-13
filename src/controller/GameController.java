@@ -3,7 +3,6 @@ package controller;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
-import java.util.stream.IntStream;
 
 
 import handlers.FinishedCombatHandler;
@@ -13,7 +12,6 @@ import factory.UnitFactory.*;
 import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Field;
-import model.map.Location;
 import model.units.IUnit;
 
 
@@ -45,8 +43,8 @@ public class GameController {
           loseNotification = new PropertyChangeSupport(this),
           finishedCombatNotification = new PropertyChangeSupport(this);
 
-  private IUnit selectedUnit;
-  private IEquipableItem selectedItem;
+  private IUnit gcSelectedUnit;
+  private IEquipableItem gcSelectedItem;
 
 
   /**
@@ -149,6 +147,36 @@ public class GameController {
     return maxRoundNumber;
   }
 
+  /**
+   *
+   * @param unit
+   *      the new current selected unit of this game controller
+   */
+  public void setGcSelectedUnit(IUnit unit) { this.gcSelectedUnit = unit; }
+
+
+  /**
+   *
+   * @return
+   *      the game controller selected unit
+   */
+  public IUnit getGcSelectedUnit() { return this.gcSelectedUnit; }
+
+
+  /**
+   *
+   * @return
+   *      the game controller selected item
+   */
+  public IEquipableItem getGcSelectedItem() { return this.gcSelectedItem; }
+
+
+  /**
+   *
+   * @param item
+   *      the new current selected item of this controller game
+   */
+  public void setGcSelectedItem(IEquipableItem item) { this.gcSelectedItem = item; }
 
   /* PLAY */
 
@@ -372,12 +400,14 @@ public class GameController {
     return winners;
   }
 
+
   /**
    * @return the current player's selected unit
    */
   public IUnit getSelectedUnit() {
     return currentTactician.getSelectedUnit();
   }
+
 
   /**
    * Selects a unit in the game map
@@ -388,15 +418,17 @@ public class GameController {
    *     vertical position of the unit
    */
   public void selectUnitIn(int x, int y) {
-    selectedUnit = field.getCell(x,y).getUnit();
+    gcSelectedUnit = field.getCell(x,y).getUnit();
   }
+
 
   /**
    * @return the inventory of the currently selected unit.
    */
   public List<IEquipableItem> getItems() {
-    return selectedUnit.getItems();
+    return currentTactician.getSelectedItems();
   }
+
 
   /**
    * Equips an item from the inventory to the currently selected unit.
@@ -405,8 +437,9 @@ public class GameController {
    *     the location of the item in the inventory.
    */
   public void equipItem(int index) {
-    selectedUnit.equipItem(this.getItems().get(index));
+    gcSelectedUnit.equipItem(gcSelectedUnit.getItems().get(index));
   }
+
 
   /**
    * Uses the equipped item on a target
@@ -417,7 +450,7 @@ public class GameController {
    *     vertical position of the target
    */
   public void useItemOn(int x, int y) {
-    selectedUnit.combat(field.getCell(x,y).getUnit());
+    this.getSelectedUnit().combat(field.getCell(x, y).getUnit());
   }
 
   /**
@@ -427,7 +460,7 @@ public class GameController {
    *     the location of the item in the inventory.
    */
   public void selectItem(int index) {
-    selectedItem = selectedUnit.getItems().get(index);
+    gcSelectedItem = gcSelectedUnit.getItems().get(index);
   }
 
   /**
@@ -439,7 +472,7 @@ public class GameController {
    *     vertical position of the target
    */
   public void giveItemTo(int x, int y) {
-    selectedUnit.giveItem(selectedItem, field.getCell(x,y).getUnit());
+    this.getSelectedUnit().giveItem(currentTactician.getEquippedItem(), field.getCell(x, y).getUnit());
   }
 }
 

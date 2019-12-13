@@ -13,7 +13,7 @@ public class AnimaBookFactory implements IItemFactory {
 
     @Override
     public AnimaBook create() {
-        return new AnimaBook("AnimaBook", 0, 0, 0);
+        return new AnimaBook("AnimaBook", 20, 2, 10);
     }
 
 }

@@ -13,7 +13,7 @@ public class SpearFactory implements IItemFactory {
 
     @Override
     public Spear create() {
-        return new Spear("Spear", 0, 0, 0);
+        return new Spear("Spear", 20, 2, 10);
     }
 
 }

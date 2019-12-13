@@ -13,7 +13,7 @@ public class LuzBookFactory implements IItemFactory {
 
     @Override
     public LuzBook create() {
-        return new LuzBook("LuzBook", 0, 0, 0);
+        return new LuzBook("LuzBook", 20, 2, 10);
     }
 
 }

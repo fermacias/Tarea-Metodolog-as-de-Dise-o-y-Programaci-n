@@ -13,6 +13,6 @@ public class AxeFactory implements IItemFactory {
 
     @Override
     public Axe create() {
-        return new Axe("Axe", 0, 0, 0);
+        return new Axe("Axe", 20, 2, 10);
     }
 }

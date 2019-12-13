@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 import factory.ItemFactory.*;
 import factory.UnitFactory.*;
 import model.Tactician;
+import model.items.IEquipableItem;
 import model.map.Field;
 import model.map.Location;
 import model.units.IUnit;
@@ -263,30 +264,103 @@ class GameControllerTest {
   // Desde aquí en adelante, los tests deben definirlos completamente ustedes uwu
   @Test
   void getSelectedUnit() {
+    controller.getRandom().setSeed(1);
+    controller.initEndlessGame();
+    Tactician currentTactician = controller.getTurnOwner();
+    assertEquals(currentTactician.getName(), "Player 3");
+    currentTactician.setSelectedUnit(2);
+    assertEquals(controller.getSelectedUnit(), currentTactician.getSelectedUnit());
   }
 
   @Test
   void selectUnitIn() {
+    controller.getRandom().setSeed(1);
+    controller.initEndlessGame();
+
+    List<IUnit> gameUnits = new ArrayList<>();
+    for(Tactician tactician : controller.getTacticians()) {
+      for (IUnit unit : tactician.getUnitList()) {
+        gameUnits.add(unit);
+        assertNotNull(unit.getLocation());
+        assertEquals(unit.getLocation().getUnit(), unit);
+      }
+    }
+
+    int x=0, y=0;
+    int s = (int)Math.sqrt(controller.getGameMap().getSize());
+    while (gameUnits.size()!=0) {
+      controller.selectUnitIn(x,y);
+      assertEquals(gameUnits.remove(0), controller.getGcSelectedUnit());
+      if ((x+1)*s<controller.getGameMap().getSize() || y==s-1) { x++; y=0; }
+      else { y++; }
+    }
   }
 
   @Test
   void getItems() {
+    controller.getRandom().setSeed(1);
+    controller.initEndlessGame();
+    for (int i=0; i<20; i++) {
+      Tactician currentTactician = controller.getTurnOwner();
+      currentTactician.setSelectedUnit(0);
+      assertEquals(currentTactician.getItems(0), controller.getItems());
+    }
   }
 
   @Test
   void equipItem() {
+    controller.getRandom().setSeed(1);
+    controller.initEndlessGame();
+    Tactician tactician = controller.getTacticians().get(1);
+    controller.setGcSelectedUnit(tactician.getUnit(0));
+    controller.equipItem(0);
+    assertEquals(tactician.getItems(0).get(0), tactician.getUnit(0).getEquippedItem());
   }
 
+  /*
   @Test
   void useItemOn() {
+    controller.getRandom().setSeed(1);
+    controller.initEndlessGame();
+    controller.getTurnOwner().setSelectedUnit(2);
+    IUnit unit1 = controller.getSelectedUnit();
+    IUnit unit2 = controller.getGameMap().getCell(5, 0).getUnit();
+    unit1.equipItem(unit1.getItems().get(0));
+    unit2.equipItem(unit2.getItems().get(0));
+
+    controller.useItemOn(5,0);
+
+    assertNotEquals(unit1.getCurrentHitPoints(), 100);
+    assertNotEquals(unit2.getCurrentHitPoints(), 100);
+
   }
+
+   */
 
   @Test
   void selectItem() {
+    controller.getRandom().setSeed(1);
+    controller.initEndlessGame();
+    Tactician tactician = controller.getTacticians().get(2);
+    controller.setGcSelectedUnit(tactician.getUnit(0));
+    controller.selectItem(0);
+    assertEquals(controller.getGcSelectedUnit().getItems().get(0), controller.getGcSelectedItem());
   }
 
   @Test
   void giveItemTo() {
+    controller.getRandom().setSeed(1);
+    controller.initEndlessGame();
+    controller.getTurnOwner().setSelectedUnit(2);
+    IUnit unit1 = controller.getSelectedUnit();
+    IUnit unit2 = controller.getGameMap().getCell(5, 0).getUnit();
+    IEquipableItem item = unit1.getItems().get(0);
+    unit1.equipItem(unit1.getItems().get(0));
+    unit2.equipItem(unit2.getItems().get(0));
+
+    controller.giveItemTo(5, 0);
+    assertFalse(unit1.getItems().contains(item));
+    assertTrue(unit2.getItems().contains(item));
   }
 
 }
